@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import api from '../../api';
 
 export const roomSlice = createSlice({
   name: 'room',
@@ -7,7 +8,7 @@ export const roomSlice = createSlice({
     rooms: []
   },
   reducers: {
-    fetchRoomAll: (state, action) => {
+    fetchAllSuccess: (state, action) => {
       state.rooms = action.payload;
     }
   }
@@ -15,5 +16,17 @@ export const roomSlice = createSlice({
 
 export default roomSlice.reducer;
 
-//Actions
-export const { fetchRoomAll } = roomSlice.actions;
+// Actions
+const { fetchAllSuccess } = roomSlice.actions;
+
+export const fetchRoomAll = () => async (dispatch) => {
+  try {
+    const res = await api.get('/rooms');
+
+    return dispatch(fetchAllSuccess(res.data.items));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// TODO: add CRUD action of room

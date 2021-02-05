@@ -8,25 +8,11 @@ import {
   CardContent,
   Divider,
   Grid,
-  Typography,
-  makeStyles
+  Typography
 } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import GetAppIcon from '@material-ui/icons/GetApp';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  statsItem: {
-    alignItems: 'center',
-    display: 'flex'
-  },
-  statsIcon: {
-    marginRight: theme.spacing(1)
-  }
-}));
+import useStyles from './styles';
 
 const RoomCard = ({ className, product, ...rest }) => {
   const classes = useStyles();
@@ -44,7 +30,7 @@ const RoomCard = ({ className, product, ...rest }) => {
         >
           <Avatar
             alt="Product"
-            src={product.media}
+            src={product.room_img_url}
             variant="square"
           />
         </Box>
@@ -54,7 +40,7 @@ const RoomCard = ({ className, product, ...rest }) => {
           gutterBottom
           variant="h4"
         >
-          {product.title}
+          {product.room_name}
         </Typography>
         <Typography
           align="center"
@@ -76,6 +62,7 @@ const RoomCard = ({ className, product, ...rest }) => {
             className={classes.statsItem}
             item
           >
+            {/* // TODO: separate and create updated time component */}
             <AccessTimeIcon
               className={classes.statsIcon}
               color="action"

@@ -1,19 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Container,
   Grid
 } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
 import { Pagination } from '@material-ui/lab';
 import Page from 'src/components/Page';
 import Toolbar from './Toolbar';
-import RoomCard from './RoomCard';
+import RoomCard from '../RoomCard/RoomCard';
 import useStyles from './styles';
-import data from './data';
+import { fetchRoomAll } from '../../../redux/room/roomSlice';
 
 const RoomList = () => {
   const classes = useStyles();
-  const [products] = useState(data);
+  const dispatch = useDispatch();
+  const { rooms } = useSelector((state) => state.room);
+
+  useEffect(() => {
+    dispatch(fetchRoomAll());
+  }, []);
+
+  console.log(rooms);
 
   return (
     <Page
@@ -27,17 +35,17 @@ const RoomList = () => {
             container
             spacing={3}
           >
-            {products.map((product) => (
+            {rooms.map((room) => (
               <Grid
                 item
-                key={product.id}
+                key={room.room_id}
                 lg={4}
                 md={6}
                 xs={12}
               >
                 <RoomCard
                   className={classes.roomCard}
-                  product={product}
+                  product={room}
                 />
               </Grid>
             ))}
