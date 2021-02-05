@@ -2,28 +2,16 @@ import React, { useState } from 'react';
 import {
   Box,
   Container,
-  Grid,
-  makeStyles
+  Grid
 } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import Page from 'src/components/Page';
 import Toolbar from './Toolbar';
-import ProductCard from './ProductCard';
+import RoomCard from './RoomCard';
+import useStyles from './styles';
 import data from './data';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.dark,
-    minHeight: '100%',
-    paddingBottom: theme.spacing(3),
-    paddingTop: theme.spacing(3)
-  },
-  productCard: {
-    height: '100%'
-  }
-}));
-
-const ProductList = () => {
+const RoomList = () => {
   const classes = useStyles();
   const [products] = useState(data);
 
@@ -47,8 +35,8 @@ const ProductList = () => {
                 md={6}
                 xs={12}
               >
-                <ProductCard
-                  className={classes.productCard}
+                <RoomCard
+                  className={classes.roomCard}
                   product={product}
                 />
               </Grid>
@@ -71,4 +59,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default RoomList;

@@ -4,24 +4,24 @@ import { Navigate } from 'react-router-dom';
 import DashboardLayout from 'src/layouts/DashboardLayout';
 import MainLayout from 'src/layouts/MainLayout';
 
-import AccountView from 'src/views/account/AccountView';
-import CustomerListView from 'src/views/customer/CustomerListView';
 import DashboardView from 'src/views/reports/DashboardView';
-import LoginView from 'src/views/auth/LoginView';
-import NotFoundView from 'src/views/errors/NotFoundView';
-import ProductListView from 'src/views/product/ProductListView';
-import RegisterView from 'src/views/auth/RegisterView';
+import BookingListView from 'src/views/booking/BookingListView';
+import RoomListView from 'src/views/room/RoomListView';
+import AccountView from 'src/views/account/AccountView';
 import SettingsView from 'src/views/settings/SettingsView';
+import LoginView from 'src/views/auth/LoginView';
+import RegisterView from 'src/views/auth/RegisterView';
+import NotFoundView from 'src/views/errors/NotFoundView';
 
 const routes = [
   {
     path: 'app',
     element: <DashboardLayout />,
     children: [
-      { path: 'account', element: <AccountView /> },
-      { path: 'customers', element: <CustomerListView /> },
       { path: 'dashboard', element: <DashboardView /> },
-      { path: 'products', element: <ProductListView /> },
+      { path: 'rooms', element: <RoomListView /> },
+      { path: 'bookings', element: <BookingListView /> },
+      { path: 'account', element: <AccountView /> },
       { path: 'settings', element: <SettingsView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
