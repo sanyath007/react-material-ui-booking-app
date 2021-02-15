@@ -19,14 +19,22 @@ export default makeStyles((theme) => ({
     justifyContent: 'center',
     backgroundColor: 'white'
   },
+  formControl: {
+    padding: theme.spacing(1)
+  },
   selectInput: {
-    margin: theme.spacing(1)
+    // margin: theme.spacing(1)
+  },
+  selectLabel: {
+    // margin: theme.spacing(1),
+    marginLeft: theme.spacing(3)
   },
   fileInput: {
     width: '97%',
     margin: '10px 0',
   },
   buttonSubmit: {
-    marginBottom: 10,
+    margin: theme.spacing(1),
+    marginBottom: 10
   }
 }));

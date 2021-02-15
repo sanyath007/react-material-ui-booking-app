@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Container,
@@ -7,11 +7,18 @@ import {
   TextField,
   Select,
   MenuItem,
-  InputLabel
+  InputLabel,
+  FormControl
 } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
 import FileBase from 'react-file-base64';
 import Page from 'src/components/Page';
 import useStyles from './styles';
+import {
+  fetchRoomTypeAll,
+  fetchRoomGroupAll,
+  fetchBuildingAll
+} from '../../../redux';
 
 const initialState = {
   room_name: '',
@@ -25,7 +32,17 @@ const initialState = {
 
 const NewRoom = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [room, setRoom] = useState(initialState);
+  const { roomTypes } = useSelector((state) => state.roomType);
+  const { roomGroups } = useSelector((state) => state.roomGroup);
+  const { buildings } = useSelector((state) => state.building);
+
+  useEffect(() => {
+    dispatch(fetchRoomTypeAll());
+    dispatch(fetchRoomGroupAll());
+    dispatch(fetchBuildingAll());
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,45 +75,55 @@ const NewRoom = () => {
               value={room.description}
               onChange={(e) => setRoom({ ...room, description: e.target.value })}
             />
-            <InputLabel id="room-type">Room Type</InputLabel>
-            <Select
-              labelId="room-type"
-              className={classes.selectInput}
-              variant="outlined"
-              name="room_type"
-              fullWidth
-              value={room.room_type}
-              onChange={(e) => setRoom({ ...room, room_type: e.target.value })}
-            >
-              <MenuItem value={1}>Type 1</MenuItem>
-              <MenuItem value={2}>Type 2</MenuItem>
-            </Select>
-            <InputLabel id="room-group">Room Group</InputLabel>
-            <Select
-              labelId="room-group"
-              className={classes.selectInput}
-              variant="outlined"
-              name="room_group"
-              fullWidth
-              value={room.room_group}
-              onChange={(e) => setRoom({ ...room, room_group: e.target.value })}
-            >
-              <MenuItem value={1}>Group 1</MenuItem>
-              <MenuItem value={2}>Group 2</MenuItem>
-            </Select>
-            <InputLabel id="room-group">อาคาร</InputLabel>
-            <Select
-              labelId="room-group"
-              className={classes.selectInput}
-              variant="outlined"
-              name="building_id"
-              fullWidth
-              value={room.building_id}
-              onChange={(e) => setRoom({ ...room, building_id: e.target.value })}
-            >
-              <MenuItem value={1}>อาคาร 1</MenuItem>
-              <MenuItem value={2}>อาคาร 2</MenuItem>
-            </Select>
+            <FormControl className={classes.formControl} fullWidth>
+              <InputLabel htmlFor="room-type" className={classes.selectLabel}>ประเภท</InputLabel>
+              <Select
+                labelId="room-type"
+                className={classes.selectInput}
+                variant="outlined"
+                name="room_type"
+                value={room.room_type}
+                onChange={(e) => setRoom({ ...room, room_type: e.target.value })}
+              >
+                {roomTypes.map((rt) => (
+                  <MenuItem key={rt.room_type_id} value={rt.room_type_id}>
+                    {rt.room_type_name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl className={classes.formControl} fullWidth>
+              <InputLabel htmlFor="room-group" className={classes.selectLabel}>กลุ่ม</InputLabel>
+              <Select
+                labelId="room-group"
+                className={classes.selectInput}
+                variant="outlined"
+                name="room_group"
+                fullWidth
+                value={room.room_group}
+                onChange={(e) => setRoom({ ...room, room_group: e.target.value })}
+              >
+                {roomGroups.map((rg) => (
+                  <MenuItem key={rg.room_group_id} value={rg.room_group_id}>
+                    {rg.room_group_name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl className={classes.formControl} fullWidth>
+              <InputLabel htmlFor="building" className={classes.selectLabel}>อาคาร</InputLabel>
+              <Select
+                labelId="building"
+                className={classes.selectInput}
+                variant="outlined"
+                name="building_id"
+                fullWidth
+                value={room.building_id}
+                onChange={(e) => setRoom({ ...room, building_id: e.target.value })}
+              >
+                { buildings.map((bd) => <MenuItem key={bd.id} value={bd.id}>{bd.name}</MenuItem>) }
+              </Select>
+            </FormControl>
             <TextField
               variant="outlined"
               name="floor"
@@ -112,7 +139,15 @@ const NewRoom = () => {
                 onDone={({ base64 }) => setRoom({ ...room, room_img_url: base64 })}
               />
             </div>
-            <Button variant="contained" color="primary" type="submit" className={classes.buttonSubmit}>บันทึก</Button>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.buttonSubmit}
+              fullWidth
+            >
+              บันทึก
+            </Button>
           </form>
         </Paper>
       </Container>
