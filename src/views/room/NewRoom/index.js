@@ -121,7 +121,11 @@ const NewRoom = () => {
                 value={room.building_id}
                 onChange={(e) => setRoom({ ...room, building_id: e.target.value })}
               >
-                { buildings.map((bd) => <MenuItem key={bd.id} value={bd.id}>{bd.name}</MenuItem>) }
+                { buildings.map((bd) => (
+                  <MenuItem key={bd.building_id} value={bd.building_id}>
+                    {bd.building_name}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
             <TextField

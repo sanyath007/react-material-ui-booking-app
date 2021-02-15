@@ -11,6 +11,7 @@ import {
   SvgIcon,
   makeStyles
 } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import { Search as SearchIcon } from 'react-feather';
 
 const useStyles = makeStyles((theme) => ({
@@ -44,8 +45,10 @@ const Toolbar = ({ className, ...rest }) => {
         <Button
           color="primary"
           variant="contained"
+          component={Link}
+          to="/app/newroom"
         >
-          Add product
+          เพิ่มห้อง
         </Button>
       </Box>
       <Box mt={3}>

@@ -2,13 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import api from '../../api';
 
 export const buildingSlice = createSlice({
-  name: 'room',
+  name: 'building',
   initialState: {
     building: {},
     buildings: []
   },
   reducers: {
-    fetchBuildingAllSuccess: (state, action) => {
+    fetchAllSuccess: (state, action) => {
       state.buildings = action.payload;
     }
   }
@@ -17,13 +17,13 @@ export const buildingSlice = createSlice({
 export default buildingSlice.reducer;
 
 // Actions
-const { fetchBuildingAllSuccess } = buildingSlice.actions;
+const { fetchAllSuccess } = buildingSlice.actions;
 
 export const fetchBuildingAll = () => async (dispatch) => {
   try {
     const res = await api.get('/buildings');
 
-    return dispatch(fetchBuildingAllSuccess(res.data.items));
+    return dispatch(fetchAllSuccess(res.data));
   } catch (error) {
     console.log(error);
   }

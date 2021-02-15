@@ -2,13 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import api from '../../api';
 
 export const roomTypeSlice = createSlice({
-  name: 'room',
+  name: 'roomType',
   initialState: {
     roomType: {},
     roomTypes: []
   },
   reducers: {
-    fetchRoomTypeAllSuccess: (state, action) => {
+    fetchAllSuccess: (state, action) => {
       state.roomTypes = action.payload;
     }
   }
@@ -17,13 +17,13 @@ export const roomTypeSlice = createSlice({
 export default roomTypeSlice.reducer;
 
 // Actions
-const { fetchRoomTypeAllSuccess } = roomTypeSlice.actions;
+const { fetchAllSuccess } = roomTypeSlice.actions;
 
 export const fetchRoomTypeAll = () => async (dispatch) => {
   try {
     const res = await api.get('/room-types');
 
-    return dispatch(fetchRoomTypeAllSuccess(res.data));
+    return dispatch(fetchAllSuccess(res.data));
   } catch (error) {
     console.log(error);
   }
