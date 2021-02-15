@@ -15,12 +15,14 @@ import FileBase from 'react-file-base64';
 import Page from 'src/components/Page';
 import useStyles from './styles';
 import {
+  addRoom,
   fetchRoomTypeAll,
   fetchRoomGroupAll,
   fetchBuildingAll
 } from '../../../redux';
 
 const initialState = {
+  room_no: '',
   room_name: '',
   description: '',
   room_type: '',
@@ -47,7 +49,17 @@ const NewRoom = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(room);
+    const formData = new FormData();
+    formData.append('room_no', room.room_no);
+    formData.append('room_name', room.room_name);
+    formData.append('description', room.description);
+    formData.append('room_type', room.room_type);
+    formData.append('room_group', room.room_group);
+    formData.append('building_id', room.building_id);
+    formData.append('floor', room.floor);
+    formData.append('room_img_url', room.room_img_url);
+
+    dispatch(addRoom(formData));
   };
 
   return (
@@ -59,6 +71,14 @@ const NewRoom = () => {
         <Paper className={classes.paper}>
           <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
             <Typography variant="h5">เพิ่มรายการห้องใหม่</Typography>
+            <TextField
+              variant="outlined"
+              name="room_no"
+              label="เลขที่ห้อง"
+              fullWidth
+              value={room.room_no}
+              onChange={(e) => setRoom({ ...room, room_no: e.target.value })}
+            />
             <TextField
               variant="outlined"
               name="room_name"
