@@ -11,5 +11,9 @@ export default makeStyles((theme) => ({
   },
   statsIcon: {
     marginRight: theme.spacing(1)
-  }
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
 }));

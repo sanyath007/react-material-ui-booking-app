@@ -5,13 +5,17 @@ import {
   Avatar,
   Box,
   Card,
+  CardHeader,
+  CardMedia,
   CardContent,
   Divider,
   Grid,
+  IconButton,
   Typography
 } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import useStyles from './styles';
 
 const RoomCard = ({ className, product, ...rest }) => {
@@ -22,28 +26,28 @@ const RoomCard = ({ className, product, ...rest }) => {
       className={clsx(classes.root, className)}
       {...rest}
     >
+      <CardHeader
+        avatar={(
+          <Avatar aria-label="recipe" className={classes.avatar}>
+            R
+          </Avatar>
+        )}
+        action={(
+          <IconButton aria-label="settings">
+            <MoreVertIcon />
+          </IconButton>
+        )}
+        title={product.room_name}
+        subheader="September 14, 2016"
+      />
+      <CardMedia
+        className={classes.media}
+        image={product.room_img_url ? product.room_img_url : '/static/images/products/product_5.png'}
+        title={product.room_name}
+      />
       <CardContent>
-        <Box
-          display="flex"
-          justifyContent="center"
-          mb={3}
-        >
-          <Avatar
-            alt="Product"
-            src={product.room_img_url}
-            variant="square"
-          />
-        </Box>
         <Typography
-          align="center"
-          color="textPrimary"
-          gutterBottom
-          variant="h4"
-        >
-          {product.room_name}
-        </Typography>
-        <Typography
-          align="center"
+          align="left"
           color="textPrimary"
           variant="body1"
         >
