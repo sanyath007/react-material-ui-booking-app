@@ -53,6 +53,13 @@ const RoomCard = ({ className, product, ...rest }) => {
         >
           {product.description}
         </Typography>
+        <Typography
+          color="textSecondary"
+          display="inline"
+          variant="body2"
+        >
+          {product.building?.building_name}
+        </Typography>
       </CardContent>
       <Box flexGrow={1} />
       <Divider />
