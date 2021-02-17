@@ -15,8 +15,11 @@ import {
   TablePagination,
   TableRow,
   Typography,
-  makeStyles
+  makeStyles,
+  Button
 } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import getInitials from 'src/utils/getInitials';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Results = ({ className, customers, ...rest }) => {
+const Results = ({ className, bookings, ...rest }) => {
   const classes = useStyles();
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
@@ -36,7 +39,7 @@ const Results = ({ className, customers, ...rest }) => {
     let newSelectedCustomerIds;
 
     if (event.target.checked) {
-      newSelectedCustomerIds = customers.map((customer) => customer.id);
+      newSelectedCustomerIds = bookings.map((booking) => booking.book_id);
     } else {
       newSelectedCustomerIds = [];
     }
@@ -84,43 +87,47 @@ const Results = ({ className, customers, ...rest }) => {
               <TableRow>
                 <TableCell padding="checkbox">
                   <Checkbox
-                    checked={selectedCustomerIds.length === customers.length}
+                    // checked={selectedCustomerIds.length === bookings.length}
                     color="primary"
                     indeterminate={
                       selectedCustomerIds.length > 0
-                      && selectedCustomerIds.length < customers.length
+                      && selectedCustomerIds.length < bookings.length
                     }
                     onChange={handleSelectAll}
                   />
                 </TableCell>
                 <TableCell>
-                  Name
+                  ผู้ป่วย
                 </TableCell>
-                <TableCell>
-                  Email
+                <TableCell align="center" width="8%">
+                  วันที่ Admit
                 </TableCell>
-                <TableCell>
-                  Location
+                <TableCell align="center" width="8%">
+                  วันที่จอง
                 </TableCell>
-                <TableCell>
-                  Phone
+                <TableCell align="center" width="8%">
+                  เบอร์ติดต่อ
                 </TableCell>
-                <TableCell>
-                  Registration date
+                <TableCell width="20%">
+                  วอร์ด
+                </TableCell>
+                <TableCell align="center" width="10%">
+                  Actions
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {customers.slice(0, limit).map((customer) => (
+
+              {bookings.slice(0, limit).map((booking) => (
                 <TableRow
                   hover
-                  key={customer.id}
-                  selected={selectedCustomerIds.indexOf(customer.id) !== -1}
+                  key={booking.book_id}
+                  selected={selectedCustomerIds.indexOf(booking.book_id) !== -1}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedCustomerIds.indexOf(customer.id) !== -1}
-                      onChange={(event) => handleSelectOne(event, customer.id)}
+                      checked={selectedCustomerIds.indexOf(booking.book_id) !== -1}
+                      onChange={(event) => handleSelectOne(event, booking.book_id)}
                       value="true"
                     />
                   </TableCell>
@@ -131,39 +138,48 @@ const Results = ({ className, customers, ...rest }) => {
                     >
                       <Avatar
                         className={classes.avatar}
-                        src={customer.avatarUrl}
+                        src={booking.avatarUrl}
                       >
-                        {getInitials(customer.name)}
+                        {getInitials('DN Hospital')}
                       </Avatar>
                       <Typography
                         color="textPrimary"
                         variant="body1"
                       >
-                        {customer.name}
+                        {`${booking.an?.patient?.pname}${booking.an?.patient?.fname} ${booking.an?.patient?.lname}`}
                       </Typography>
                     </Box>
                   </TableCell>
-                  <TableCell>
-                    {customer.email}
+                  <TableCell align="center">
+                    {moment(booking.an.reg_date).format('DD/MM/YYYY')}
+                  </TableCell>
+                  <TableCell align="center">
+                    {moment(booking.book_date).format('DD/MM/YYYY')}
+                  </TableCell>
+                  <TableCell align="center">
+                    {`${booking.an?.patient?.hometel}`}
                   </TableCell>
                   <TableCell>
-                    {`${customer.address.city}, ${customer.address.state}, ${customer.address.country}`}
+                    {booking.an?.ward[0]?.name}
                   </TableCell>
-                  <TableCell>
-                    {customer.phone}
-                  </TableCell>
-                  <TableCell>
-                    {moment(customer.createdAt).format('DD/MM/YYYY')}
+                  <TableCell align="center">
+                    <Button size="small">
+                      <EditIcon color="secondary" />
+                    </Button>
+                    <Button size="small">
+                      <DeleteIcon color="error" />
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
+
             </TableBody>
           </Table>
         </Box>
       </PerfectScrollbar>
       <TablePagination
         component="div"
-        count={customers.length}
+        count={bookings.length}
         onChangePage={handlePageChange}
         onChangeRowsPerPage={handleLimitChange}
         page={page}
@@ -176,7 +192,7 @@ const Results = ({ className, customers, ...rest }) => {
 
 Results.propTypes = {
   className: PropTypes.string,
-  customers: PropTypes.array.isRequired
+  bookings: PropTypes.array.isRequired
 };
 
 export default Results;

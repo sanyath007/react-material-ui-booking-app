@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Container,
@@ -8,15 +8,13 @@ import Page from 'src/components/Page';
 import Results from './Results';
 import Toolbar from './Toolbar';
 import useStyles from './styles';
-import data from './data';
 import { fetchBookingAll } from '../../../redux';
 
 const BookingListView = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [customers] = useState(data);
-  const bookings = useSelector(state => state.bookings);
-
+  const { bookings } = useSelector((state) => state.booking);
+  console.log(bookings);
   useEffect(() => {
     dispatch(fetchBookingAll());
   }, []);
@@ -29,7 +27,7 @@ const BookingListView = () => {
       <Container maxWidth={false}>
         <Toolbar />
         <Box mt={3}>
-          <Results customers={customers} />
+          <Results bookings={bookings} />
         </Box>
       </Container>
     </Page>
