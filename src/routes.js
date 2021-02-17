@@ -6,6 +6,7 @@ import MainLayout from 'src/layouts/MainLayout';
 
 import DashboardView from 'src/views/reports/DashboardView';
 import BookingListView from 'src/views/booking/BookingListView';
+import NewBooking from 'src/views/booking/NewBooking';
 import RoomListView from 'src/views/room/RoomListView';
 import NewRoom from 'src/views/room/NewRoom';
 import AccountView from 'src/views/account/AccountView';
@@ -23,6 +24,7 @@ const routes = [
       { path: 'rooms', element: <RoomListView /> },
       { path: 'newroom', element: <NewRoom /> },
       { path: 'bookings', element: <BookingListView /> },
+      { path: 'newbooking', element: <NewBooking /> },
       { path: 'account', element: <AccountView /> },
       { path: 'settings', element: <SettingsView /> },
       { path: '*', element: <Navigate to="/404" /> }
