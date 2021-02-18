@@ -1,9 +1,19 @@
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { fetchIpAll } from '../../../redux';
 
 function PatientModal({ isOpen, hideModal, onSelected }) {
+  const dispatch = useDispatch();
+  const { ips } = useSelector((state) => state.ip);
+
+  useEffect(() => {
+    dispatch(fetchIpAll());
+  }, []);
+
+  console.log(ips);
 
   return (
     <>

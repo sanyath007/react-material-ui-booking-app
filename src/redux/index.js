@@ -3,6 +3,8 @@ import { fetchRoomTypeAll } from './roomType/roomTypeSlice';
 import { fetchRoomGroupAll } from './roomGroup/roomGroupSlice';
 import { fetchBuildingAll } from './building/buildingSlice';
 import { fetchBookingAll } from './booking/bookingSlice';
+import { fetchPatientAll } from './patient/patientSlice';
+import { fetchIpAll } from './ip/ipSlice';
 
 export {
   fetchRoomAll,
@@ -10,5 +12,7 @@ export {
   fetchRoomTypeAll,
   fetchRoomGroupAll,
   fetchBuildingAll,
-  fetchBookingAll
+  fetchBookingAll,
+  fetchPatientAll,
+  fetchIpAll,
 };
