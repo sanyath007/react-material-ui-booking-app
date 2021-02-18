@@ -9,7 +9,7 @@ import {
   FormLabel,
   FormControl,
   FormControlLabel,
-  FormHelperText,
+  // FormHelperText,
   Typography,
   TextField,
 } from '@material-ui/core';
@@ -37,7 +37,6 @@ function NewBooking() {
   const { roomTypes } = useSelector((state) => state.roomType);
   const [booking, setBooking] = useState(initialBooking);
   const [openModal, setOpenModal] = useState(false);
-  // const [roomTypeIds, setRoomTypeIds] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,8 +44,20 @@ function NewBooking() {
     console.log(booking);
   };
 
-  const handleRoomTypeChecked = () => {
+  const handleRoomTypeChecked = (e) => {
+    const index = booking.room_types.indexOf(e.target.name);
+    let newSelectedRoomTypeIds = [];
 
+    if (index === -1) {
+      newSelectedRoomTypeIds = newSelectedRoomTypeIds.concat(booking.room_types, e.target.name);
+    } else {
+      newSelectedRoomTypeIds = newSelectedRoomTypeIds.concat(
+        booking.room_types.splice(0, index),
+        booking.room_types.splice(index + 1)
+      );
+    }
+
+    setBooking({ ...booking, room_types: newSelectedRoomTypeIds });
   };
 
   const handleAnOnFocus = (e) => {
@@ -75,21 +86,19 @@ function NewBooking() {
       <Container maxWidth={false}>
         <Paper className={classes.paper}>
           <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
-            <Grid container direction="row" justify="center" alignItems="flex-start" spacing={1}>
-              <Grid container spacing={1} justify="center">
-                <Grid item>
+            <Grid container direction="row" justify="center" alignItems="flex-start">
+              <Grid container justify="center" spacing={2}>
+                <Grid item sm={12} xs={12} style={{ textAlign: 'center', border: '1px solid black' }}>
                   <Typography variant="h5">เพิ่มรายการจองห้อง</Typography>
                 </Grid>
-              </Grid>
 
-              <PatientModal
-                isOpen={openModal}
-                hideModal={handleOnHideModal}
-                onSelected={handleOnSelectAn}
-              />
+                <PatientModal
+                  isOpen={openModal}
+                  hideModal={handleOnHideModal}
+                  onSelected={handleOnSelectAn}
+                />
 
-              <Grid container spacing={2}>
-                <Grid item sm={6} xs={12}>
+                <Grid item sm={6} xs={12} style={{ border: '1px solid black' }}>
                   <TextField
                     variant="standard"
                     name="an"
@@ -100,9 +109,10 @@ function NewBooking() {
                     onClick={(e) => handleAnOnFocus(e)}
                   />
                 </Grid>
-                <Grid item sm={6} xs={12}>
+                <Grid item sm={6} xs={12} style={{ border: '1px solid black' }}>
                   <DatePicker
                     autoOk
+                    disableToolbar
                     variant="inline"
                     label="วันที่จอง"
                     format="DD/MM/yyyy"
@@ -110,22 +120,8 @@ function NewBooking() {
                     onChange={(date) => setBooking({ ...booking, book_date: date })}
                     fullWidth
                   />
-                  {/* <TextField
-                    variant="standard"
-                    name="book_date"
-                    label="วันที่จอง"
-                    type="date"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    fullWidth
-                    value={booking.book_date}
-                    onChange={(e) => setBooking({ ...booking, book_date: e.target.value })}
-                  /> */}
                 </Grid>
-              </Grid>
-              <Grid container spacing={2}>
-                <Grid item sm={6} xs={12}>
+                <Grid item sm={6} xs={12} style={{ border: '1px solid black' }}>
                   <FormControl component="fieldset" className={classes.formControl}>
                     <FormLabel component="legend">ต้องการจองห้องประเภท (เลือกได้มากกว่า 1)</FormLabel>
                     <FormGroup>
@@ -144,22 +140,22 @@ function NewBooking() {
                         />
                       ))}
                     </FormGroup>
-                    <FormHelperText>Be careful</FormHelperText>
+                    {/* <FormHelperText>Be careful</FormHelperText> */}
                   </FormControl>
                 </Grid>
-                <Grid item sm={6} xs={12}>
+                <Grid item sm={6} xs={12} style={{ border: '1px solid black' }}>
                   <TextField
                     variant="standard"
-                    name="remark"
+                    name="description"
                     label="เพิ่มเติม"
                     multiline
                     rows={7}
                     fullWidth
+                    value={booking.description}
+                    onChange={(e) => setBooking({ ...booking, description: e.target.value })}
                   />
                 </Grid>
-              </Grid>
-              <Grid container spacing={2}>
-                <Grid item sm={12} xs={12}>
+                <Grid item sm={12} xs={12} style={{ border: '1px solid black' }}>
                   <Button
                     type="submit"
                     variant="contained"
