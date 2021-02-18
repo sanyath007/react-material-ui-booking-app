@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Page from 'src/components/Page';
 import { fetchRoomTypeAll } from '../../../redux';
 import useStyles from './styles';
+import PatientModal from './PatientModal';
 
 const initialBooking = {
   book_date: moment().format('DD/MM/YYYY'),
@@ -34,11 +35,28 @@ function NewBooking() {
   const dispatch = useDispatch();
   const { roomTypes } = useSelector((state) => state.roomType);
   const [booking, setBooking] = useState(initialBooking);
+  const [openModal, setOpenModal] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     console.log(booking);
+  };
+
+  const handleAnOnFocus = (e) => {
+    console.log('On focus is called !!!');
+    e.preventDefault();
+
+    setOpenModal(true);
+  };
+
+  const handleOnHideModal = () => {
+    console.log('On hide is called !!!');
+    setOpenModal(false);
+  };
+
+  const handleOnSelectAn = (an) => {
+    console.log(`Selected an is ${an}`);
   };
 
   useEffect(() => {
@@ -60,6 +78,12 @@ function NewBooking() {
                 </Grid>
               </Grid>
 
+              <PatientModal
+                isOpen={openModal}
+                hideModal={handleOnHideModal}
+                onSelected={handleOnSelectAn}
+              />
+
               <Grid container spacing={2}>
                 <Grid item sm={6} xs={12}>
                   <TextField
@@ -69,6 +93,7 @@ function NewBooking() {
                     fullWidth
                     value={booking.an}
                     onChange={(e) => setBooking({ ...booking, an: e.target.value })}
+                    onClick={(e) => handleAnOnFocus(e)}
                   />
                 </Grid>
                 <Grid item sm={6} xs={12}>
