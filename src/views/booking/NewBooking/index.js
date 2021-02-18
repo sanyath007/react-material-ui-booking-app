@@ -87,8 +87,8 @@ function NewBooking() {
         <Paper className={classes.paper}>
           <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
             <Grid container direction="row" justify="center" alignItems="flex-start">
-              <Grid container justify="center" spacing={2}>
-                <Grid item sm={12} xs={12} style={{ textAlign: 'center', border: '1px solid black' }}>
+              <Grid container justify="center" spacing={1}>
+                <Grid item sm={12} xs={12} style={{ textAlign: 'center' }}>
                   <Typography variant="h5">เพิ่มรายการจองห้อง</Typography>
                 </Grid>
 
@@ -98,7 +98,7 @@ function NewBooking() {
                   onSelected={handleOnSelectAn}
                 />
 
-                <Grid item sm={6} xs={12} style={{ border: '1px solid black' }}>
+                <Grid item sm={6} xs={12}>
                   <TextField
                     variant="standard"
                     name="an"
@@ -109,7 +109,7 @@ function NewBooking() {
                     onClick={(e) => handleAnOnFocus(e)}
                   />
                 </Grid>
-                <Grid item sm={6} xs={12} style={{ border: '1px solid black' }}>
+                <Grid item sm={6} xs={12}>
                   <DatePicker
                     autoOk
                     disableToolbar
@@ -121,7 +121,7 @@ function NewBooking() {
                     fullWidth
                   />
                 </Grid>
-                <Grid item sm={6} xs={12} style={{ border: '1px solid black' }}>
+                <Grid item sm={6} xs={12}>
                   <FormControl component="fieldset" className={classes.formControl}>
                     <FormLabel component="legend">ต้องการจองห้องประเภท (เลือกได้มากกว่า 1)</FormLabel>
                     <FormGroup>
@@ -143,7 +143,7 @@ function NewBooking() {
                     {/* <FormHelperText>Be careful</FormHelperText> */}
                   </FormControl>
                 </Grid>
-                <Grid item sm={6} xs={12} style={{ border: '1px solid black' }}>
+                <Grid item sm={6} xs={12}>
                   <TextField
                     variant="standard"
                     name="description"
@@ -155,7 +155,19 @@ function NewBooking() {
                     onChange={(e) => setBooking({ ...booking, description: e.target.value })}
                   />
                 </Grid>
-                <Grid item sm={12} xs={12} style={{ border: '1px solid black' }}>
+                <Grid item sm={12} xs={12}>
+                  <TextField
+                    variant="standard"
+                    name="remark"
+                    label="หมายเหตุ"
+                    multiline
+                    rows={3}
+                    fullWidth
+                    value={booking.remark}
+                    onChange={(e) => setBooking({ ...booking, remark: e.target.value })}
+                  />
+                </Grid>
+                <Grid item sm={12} xs={12}>
                   <Button
                     type="submit"
                     variant="contained"
