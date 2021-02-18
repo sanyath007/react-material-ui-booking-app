@@ -1,24 +1,34 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button, Modal } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  Button,
+  Col,
+  Row,
+  Modal,
+  Pagination
+} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { fetchIpAll } from '../../../redux';
+import { fetchIpAll, fetchIpAllWithPage } from '../../../redux';
 
 function PatientModal({ isOpen, hideModal, onSelected }) {
   const dispatch = useDispatch();
-  const { ips } = useSelector((state) => state.ip);
+  const { ips, pager } = useSelector((state) => state.ip);
 
   useEffect(() => {
     dispatch(fetchIpAll());
   }, []);
 
-  console.log(ips);
+  console.log(pager);
+
+  const handlePageItemClick = (url) => {
+    dispatch(fetchIpAllWithPage(url));
+  };
 
   return (
     <>
-      <Modal show={isOpen} onHide={hideModal} style={{ top: '100px' }} size="xl">
-        <Modal.Header>กรุณาเลือกผู้ป่วย</Modal.Header>
+      <Modal show={isOpen} onHide={hideModal} style={{ top: '50px' }} size="xl">
+        <Modal.Header closeButton>กรุณาเลือกผู้ป่วย</Modal.Header>
         <Modal.Body>
           <table className="table table-bordered">
             <thead>
@@ -33,29 +43,67 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td style={{ textAlign: 'center' }}>640002016</td>
-                <td style={{ textAlign: 'center' }}>0329895</td>
-                <td>xxxx xxxxxx</td>
-                <td style={{ textAlign: 'center' }}>2021-02-16</td>
-                <td>cc</td>
-                <td style={{ textAlign: 'center' }}>
-                  <Button onClick={() => {
-                    onSelected('640002016');
-                    hideModal();
-                  }}
-                  >
-                    เลือก
-                  </Button>
-                </td>
-              </tr>
+              {ips && ips.map((ip, index) => (
+                <tr key={ip.an}>
+                  <td style={{ textAlign: 'center' }}>{pager.from + index}</td>
+                  <td style={{ textAlign: 'center' }}>{ip.an}</td>
+                  <td style={{ textAlign: 'center' }}>{ip.hn}</td>
+                  <td>{`${ip.patient?.pname}${ip.patient?.fname} ${ip.patient?.lname}`}</td>
+                  <td style={{ textAlign: 'center' }}>{ip.regdate}</td>
+                  <td>{ip.ward?.name}</td>
+                  <td style={{ textAlign: 'center' }}>
+                    <Button onClick={() => {
+                      onSelected(ip.an);
+                      hideModal();
+                    }}
+                    >
+                      เลือก
+                    </Button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
+
+          <Row>
+            <Col>
+              จำนวนทั้งหมด
+              <span style={{ margin: 'auto 5px', fontWeight: 'bold' }}>{pager?.total}</span>
+              ราย
+            </Col>
+            <Col>
+              <Pagination className="float-right">
+                <Pagination.First
+                  onClick={() => handlePageItemClick(pager?.first_page_url)}
+                  disabled={pager?.current_page === 1}
+                />
+                <Pagination.Prev
+                  onClick={() => handlePageItemClick(pager?.prev_page_url)}
+                  disabled={pager?.current_page === 1}
+                />
+                {/* <Pagination.Item>{1}</Pagination.Item>
+                <Pagination.Ellipsis />
+
+                <Pagination.Item>{10}</Pagination.Item>
+                <Pagination.Item>{11}</Pagination.Item>
+                <Pagination.Item active>{12}</Pagination.Item>
+                <Pagination.Item>{13}</Pagination.Item>
+                <Pagination.Item disabled>{14}</Pagination.Item>
+
+                <Pagination.Ellipsis />
+                <Pagination.Item>{20}</Pagination.Item> */}
+                <Pagination.Next
+                  onClick={() => handlePageItemClick(pager?.next_page_url)}
+                  disabled={pager?.current_page === pager?.last_page}
+                />
+                <Pagination.Last
+                  onClick={() => handlePageItemClick(pager?.last_page_url)}
+                  disabled={pager?.current_page === pager?.last_page}
+                />
+              </Pagination>
+            </Col>
+          </Row>
         </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={hideModal}>ปิด</Button>
-        </Modal.Footer>
       </Modal>
     </>
   );

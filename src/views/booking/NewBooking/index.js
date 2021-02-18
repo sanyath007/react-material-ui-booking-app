@@ -55,9 +55,7 @@ function NewBooking() {
     setOpenModal(false);
   };
 
-  const handleOnSelectAn = (an) => {
-    console.log(`Selected an is ${an}`);
-  };
+  const handleOnSelectAn = (an) => setBooking({ ...booking, an });
 
   useEffect(() => {
     dispatch(fetchRoomTypeAll());
