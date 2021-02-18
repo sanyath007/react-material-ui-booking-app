@@ -37,7 +37,7 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
                 <th>ชื่อ-สกุล</th>
                 <th style={{ width: '12%', textAlign: 'center' }}>วันที่ Admit</th>
                 <th style={{ width: '20%' }}>วอร์ด</th>
-                <th style={{ width: '10%', textAlign: 'center' }}>เลือก</th>
+                <th style={{ width: '8%', textAlign: 'center' }}>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -51,7 +51,7 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
                   <td>{ip.ward?.name}</td>
                   <td style={{ textAlign: 'center' }}>
                     <Button onClick={() => {
-                      onSelected(ip.an);
+                      onSelected(`${ip.an}-${ip.patient?.pname}${ip.patient?.fname} ${ip.patient?.lname}`);
                       hideModal();
                     }}
                     >
