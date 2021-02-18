@@ -81,7 +81,7 @@ const Results = ({ className, bookings, ...rest }) => {
       {...rest}
     >
       <PerfectScrollbar>
-        <Box minWidth={1050}>
+        <Box>
           <Table>
             <TableHead>
               <TableRow>
@@ -105,7 +105,7 @@ const Results = ({ className, bookings, ...rest }) => {
                 <TableCell align="center" width="8%">
                   วันที่จอง
                 </TableCell>
-                <TableCell align="center" width="8%">
+                <TableCell align="center" width="12%">
                   เบอร์ติดต่อ
                 </TableCell>
                 <TableCell width="20%">
@@ -151,7 +151,7 @@ const Results = ({ className, bookings, ...rest }) => {
                     </Box>
                   </TableCell>
                   <TableCell align="center">
-                    {moment(booking.an.reg_date).format('DD/MM/YYYY')}
+                    {moment(booking.an?.regdate).format('DD/MM/YYYY')}
                   </TableCell>
                   <TableCell align="center">
                     {moment(booking.book_date).format('DD/MM/YYYY')}

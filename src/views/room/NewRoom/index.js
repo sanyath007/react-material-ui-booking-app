@@ -21,7 +21,7 @@ import {
   fetchBuildingAll
 } from '../../../redux';
 
-const initialState = {
+const initialRoom = {
   room_no: '',
   room_name: '',
   description: '',
@@ -35,7 +35,7 @@ const initialState = {
 const NewRoom = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [room, setRoom] = useState(initialState);
+  const [room, setRoom] = useState(initialRoom);
   const { roomTypes } = useSelector((state) => state.roomType);
   const { roomGroups } = useSelector((state) => state.roomGroup);
   const { buildings } = useSelector((state) => state.building);
@@ -65,7 +65,7 @@ const NewRoom = () => {
   return (
     <Page
       className={classes.root}
-      title="Products"
+      title="Rooms"
     >
       <Container maxWidth={false}>
         <Paper className={classes.paper}>
