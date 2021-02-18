@@ -13,7 +13,8 @@ import {
   Typography,
   TextField,
 } from '@material-ui/core';
-import moment from 'moment';
+import { DatePicker } from '@material-ui/pickers';
+// import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import Page from 'src/components/Page';
 import { fetchRoomTypeAll } from '../../../redux';
@@ -21,7 +22,7 @@ import useStyles from './styles';
 import PatientModal from './PatientModal';
 
 const initialBooking = {
-  book_date: moment().format('DD/MM/YYYY'),
+  book_date: new Date(),
   an: '',
   description: '',
   remark: '',
@@ -36,11 +37,16 @@ function NewBooking() {
   const { roomTypes } = useSelector((state) => state.roomType);
   const [booking, setBooking] = useState(initialBooking);
   const [openModal, setOpenModal] = useState(false);
+  // const [roomTypeIds, setRoomTypeIds] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     console.log(booking);
+  };
+
+  const handleRoomTypeChecked = () => {
+
   };
 
   const handleAnOnFocus = (e) => {
@@ -95,7 +101,16 @@ function NewBooking() {
                   />
                 </Grid>
                 <Grid item sm={6} xs={12}>
-                  <TextField
+                  <DatePicker
+                    autoOk
+                    variant="inline"
+                    label="วันที่จอง"
+                    format="DD/MM/yyyy"
+                    value={booking.book_date}
+                    onChange={(date) => setBooking({ ...booking, book_date: date })}
+                    fullWidth
+                  />
+                  {/* <TextField
                     variant="standard"
                     name="book_date"
                     label="วันที่จอง"
@@ -106,7 +121,7 @@ function NewBooking() {
                     fullWidth
                     value={booking.book_date}
                     onChange={(e) => setBooking({ ...booking, book_date: e.target.value })}
-                  />
+                  /> */}
                 </Grid>
               </Grid>
               <Grid container spacing={2}>
@@ -116,7 +131,14 @@ function NewBooking() {
                     <FormGroup>
                       {roomTypes.map((rt) => (
                         <FormControlLabel
-                          control={<Checkbox name="room_types" />}
+                          control={
+                            (
+                              <Checkbox
+                                name={rt.room_type_id}
+                                onChange={handleRoomTypeChecked}
+                              />
+                            )
+                          }
                           key={rt.room_type_id}
                           label={rt.room_type_name}
                         />

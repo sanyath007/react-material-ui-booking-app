@@ -19,8 +19,6 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
     dispatch(fetchIpAll());
   }, []);
 
-  console.log(pager);
-
   const handlePageItemClick = (url) => {
     dispatch(fetchIpAllWithPage(url));
   };
