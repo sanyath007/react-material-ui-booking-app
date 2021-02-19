@@ -25,7 +25,12 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
 
   return (
     <>
-      <Modal show={isOpen} onHide={hideModal} style={{ top: '50px' }} size="xl">
+      <Modal
+        show={isOpen}
+        onHide={hideModal}
+        size="xl"
+        style={{ top: '50px' }}
+      >
         <Modal.Header closeButton>กรุณาเลือกผู้ป่วย</Modal.Header>
         <Modal.Body>
           <table className="table table-bordered">

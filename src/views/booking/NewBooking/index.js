@@ -14,10 +14,10 @@ import {
   TextField,
 } from '@material-ui/core';
 import { DatePicker } from '@material-ui/pickers';
-// import moment from 'moment';
+import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import Page from 'src/components/Page';
-import { fetchRoomTypeAll } from '../../../redux';
+import { fetchRoomTypeAll, addBooking } from '../../../redux';
 import useStyles from './styles';
 import PatientModal from './PatientModal';
 
@@ -26,8 +26,6 @@ const initialBooking = {
   an: '',
   description: '',
   remark: '',
-  user_id: '',
-  queue: 0,
   room_types: []
 };
 
@@ -41,7 +39,19 @@ function NewBooking() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(booking);
+    const data = {
+      book_date: moment(booking.book_date).format('YYYY-MM-DD'),
+      an: booking.an,
+      description: booking.description,
+      remark: booking.remark,
+      queue: 0,
+      user: '1300200009261',
+      ward: '01',
+      room_types: booking.room_types.toString()
+    };
+
+    // TODO: set user to logged in user and user's ward
+    dispatch(addBooking(data));
   };
 
   const handleRoomTypeChecked = (e) => {

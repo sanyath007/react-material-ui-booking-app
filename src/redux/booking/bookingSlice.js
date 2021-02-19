@@ -35,11 +35,7 @@ export const fetchBookingAll = () => async (dispatch) => {
 
 export const addBooking = (data) => async (dispatch) => {
   try {
-    const res = await api.post('/bookings', data, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
+    const res = await api.post('/bookings', data);
     console.log(res);
 
     dispatch(addSuccess(res.data));
