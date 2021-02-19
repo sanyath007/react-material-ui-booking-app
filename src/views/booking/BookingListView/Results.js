@@ -20,6 +20,8 @@ import {
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import getInitials from 'src/utils/getInitials';
 
 const useStyles = makeStyles((theme) => ({
@@ -114,7 +116,7 @@ const Results = ({ className, bookings, ...rest }) => {
                 <TableCell width="15%">
                   ผู้จอง
                 </TableCell>
-                <TableCell align="center" width="8%">
+                <TableCell align="center" width="12%">
                   Actions
                 </TableCell>
               </TableRow>
@@ -166,14 +168,20 @@ const Results = ({ className, bookings, ...rest }) => {
                     {booking.an?.ward?.name}
                   </TableCell>
                   <TableCell>
-                    {booking.user_id}
+                    {`${booking.user?.person_firstname} ${booking.user?.person_lastname}`}
                   </TableCell>
                   <TableCell align="center">
-                    <a href="#">
+                    <a href="#" title="รายละเอียด">
+                      <VisibilityIcon color="primary" />
+                    </a>
+                    <a href="#" title="แก้ไข">
                       <EditIcon color="secondary" />
                     </a>
-                    <a href="#">
+                    <a href="#" title="ลบ">
                       <DeleteIcon color="error" />
+                    </a>
+                    <a href="#" title="Checkin ห้อง">
+                      <AssignmentIndIcon color="action" />
                     </a>
                   </TableCell>
                 </TableRow>
