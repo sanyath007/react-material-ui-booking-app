@@ -39,6 +39,8 @@ function NewBooking() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // TODO: to validate data before store to db
+    
     const data = {
       book_date: moment(booking.book_date).format('YYYY-MM-DD'),
       an: booking.an,
@@ -51,6 +53,7 @@ function NewBooking() {
     };
 
     // TODO: set user to logged in user and user's ward
+
     dispatch(addBooking(data));
   };
 
