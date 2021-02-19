@@ -40,10 +40,10 @@ function NewBooking() {
     e.preventDefault();
 
     // TODO: to validate data before store to db
-    
+
     const data = {
       book_date: moment(booking.book_date).format('YYYY-MM-DD'),
-      an: booking.an,
+      an: booking.an.split('-')[0],
       description: booking.description,
       remark: booking.remark,
       queue: 0,
