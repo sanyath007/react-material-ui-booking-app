@@ -16,7 +16,7 @@ import {
   TableRow,
   Typography,
   makeStyles,
-  Button
+  // Button
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -108,10 +108,13 @@ const Results = ({ className, bookings, ...rest }) => {
                 <TableCell align="center" width="12%">
                   เบอร์ติดต่อ
                 </TableCell>
-                <TableCell width="20%">
+                <TableCell width="15%">
                   วอร์ด
                 </TableCell>
-                <TableCell align="center" width="10%">
+                <TableCell width="15%">
+                  ผู้จอง
+                </TableCell>
+                <TableCell align="center" width="8%">
                   Actions
                 </TableCell>
               </TableRow>
@@ -160,15 +163,18 @@ const Results = ({ className, bookings, ...rest }) => {
                     {`${booking.an?.patient?.hometel}`}
                   </TableCell>
                   <TableCell>
-                    {booking.an?.ward[0]?.name}
+                    {booking.an?.ward?.name}
+                  </TableCell>
+                  <TableCell>
+                    {booking.user_id}
                   </TableCell>
                   <TableCell align="center">
-                    <Button size="small">
+                    <a href="#">
                       <EditIcon color="secondary" />
-                    </Button>
-                    <Button size="small">
+                    </a>
+                    <a href="#">
                       <DeleteIcon color="error" />
-                    </Button>
+                    </a>
                   </TableCell>
                 </TableRow>
               ))}
