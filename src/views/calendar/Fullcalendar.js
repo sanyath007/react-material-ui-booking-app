@@ -9,6 +9,7 @@ function Fullcalendar({ data }) {
       plugins={[dayGridPlugin]}
       initialView="dayGridMonth"
       events={data}
+      locale="th"
     />
   );
 }
