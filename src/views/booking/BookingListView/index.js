@@ -14,7 +14,7 @@ const BookingListView = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { bookings } = useSelector((state) => state.booking);
-  console.log(bookings);
+
   useEffect(() => {
     dispatch(fetchBookingAll());
   }, []);
