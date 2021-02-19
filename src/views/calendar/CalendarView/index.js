@@ -12,6 +12,8 @@ const events = [
 function CalendarView() {
   const classes = useStyles();
 
+  // TODO: get events data from db and render to Fullcalendar
+  
   return (
     <Page
       className={classes.root}
