@@ -27,7 +27,7 @@ export default makeStyles((theme) => ({
   },
   selectLabel: {
     // margin: theme.spacing(1),
-    marginLeft: theme.spacing(3)
+    marginLeft: theme.spacing(1)
   },
   fileInput: {
     width: '97%',

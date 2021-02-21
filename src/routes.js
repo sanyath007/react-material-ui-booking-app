@@ -9,7 +9,7 @@ import CalendarView from 'src/views/calendar/CalendarView';
 import BookingListView from 'src/views/booking/BookingListView';
 import NewBooking from 'src/views/booking/NewBooking';
 import RoomListView from 'src/views/room/RoomListView';
-import NewRoom from 'src/views/room/NewRoom';
+import NewRoom from 'src/views/room/NewRoomView';
 import AccountView from 'src/views/account/AccountView';
 import SettingsView from 'src/views/settings/SettingsView';
 import LoginView from 'src/views/auth/LoginView';
