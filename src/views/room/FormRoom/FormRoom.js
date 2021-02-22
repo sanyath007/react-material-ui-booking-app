@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -9,7 +9,9 @@ import {
   InputLabel,
   FormControl
 } from '@material-ui/core';
-import FileBase from 'react-file-base64';
+// import FileBase from 'react-file-base64';
+import { Formik, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import useStyles from './styles';
 
 const initialRoom = {
@@ -27,148 +29,142 @@ function FormRoom({
   roomTypes,
   roomGroups,
   buildings,
-  handleSubmit
+  // handleSubmit
 }) {
   const classes = useStyles();
-  const [room, setRoom] = useState(initialRoom);
-  const [errors, setErrors] = useState({});
 
-  const validate = () => {
-    const error = {};
-    console.log('Validate is called');
+  const roomSchema = Yup.object().shape({
+    room_no: Yup.string().required('Room No is required'),
+    room_name: Yup.string().required('Room Name is required'),
+  });
 
-    error.room_no = room.room_no ? '' : 'Room no is required!!';
-    error.room_name = room.room_name ? '' : 'Room name is required!!';
-
-    setErrors({ ...error });
-
-    return Object.values(error).every((el) => el === '');
-  };
-
-  const onSubmit = () => {
-    if (!validate()) {
-      window.alert('You have invalid data!!');
-    } else {
-
+  const onSubmit = (values) => {
+    if (values) {
+      console.log(values);
     }
   };
 
-  console.log(errors);
-
   return (
-    <form
-      autoComplete="off"
-      noValidate
-      className={`${classes.root} ${classes.form}`}
-      onSubmit={(e) => handleSubmit(e, room)}
+    <Formik
+      initialValues={initialRoom}
+      validationSchema={roomSchema}
+      onSubmit={onSubmit}
     >
-      <Typography variant="h5">เพิ่มรายการห้องใหม่</Typography>
-      <TextField
-        variant="standard"
-        name="room_no"
-        label="เลขที่ห้อง"
-        fullWidth
-        value={room.room_no}
-        onChange={(e) => setRoom({ ...room, room_no: e.target.value })}
-        error={room.room_no === ''}
-        helperText={room.room_no === '' ? 'Room no is required!' : ''}
-      />
-      <TextField
-        variant="standard"
-        name="room_name"
-        label="ชื่อห้อง"
-        fullWidth
-        value={room.room_name}
-        onChange={(e) => setRoom({ ...room, room_name: e.target.value })}
-        error={room.room_name === ''}
-        helperText={room.room_name === '' ? 'Room name is required!' : ''}
-      />
-      <TextField
-        variant="standard"
-        name="description"
-        label="คำอธิบาย"
-        fullWidth
-        value={room.description}
-        onChange={(e) => setRoom({ ...room, description: e.target.value })}
-      />
-      <FormControl className={classes.formControl} fullWidth>
-        <InputLabel htmlFor="room-type" className={classes.selectLabel}>ประเภท</InputLabel>
-        <Select
-          labelId="room-type"
-          className={classes.selectInput}
-          variant="standard"
-          name="room_type"
-          value={room.room_type}
-          onChange={(e) => setRoom({ ...room, room_type: e.target.value })}
-        >
-          {roomTypes.map((rt) => (
-            <MenuItem key={rt.room_type_id} value={rt.room_type_id}>
-              {rt.room_type_name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl className={classes.formControl} fullWidth>
-        <InputLabel htmlFor="room-group" className={classes.selectLabel}>กลุ่ม</InputLabel>
-        <Select
-          labelId="room-group"
-          className={classes.selectInput}
-          variant="standard"
-          name="room_group"
-          fullWidth
-          value={room.room_group}
-          onChange={(e) => setRoom({ ...room, room_group: e.target.value })}
-        >
-          {roomGroups.map((rg) => (
-            <MenuItem key={rg.room_group_id} value={rg.room_group_id}>
-              {rg.room_group_name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl className={classes.formControl} fullWidth>
-        <InputLabel htmlFor="building" className={classes.selectLabel}>อาคาร</InputLabel>
-        <Select
-          labelId="building"
-          className={classes.selectInput}
-          variant="standard"
-          name="building_id"
-          fullWidth
-          value={room.building_id}
-          onChange={(e) => setRoom({ ...room, building_id: e.target.value })}
-        >
-          { buildings.map((bd) => (
-            <MenuItem key={bd.building_id} value={bd.building_id}>
-              {bd.building_name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <TextField
-        variant="standard"
-        name="floor"
-        label="ชั้น"
-        fullWidth
-        value={room.floor}
-        onChange={(e) => setRoom({ ...room, floor: e.target.value })}
-      />
-      <div className={classes.fileInput}>
-        <FileBase
-          type="file"
-          multiple={false}
-          onDone={({ base64 }) => setRoom({ ...room, room_img_url: base64 })}
-        />
-      </div>
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        className={classes.buttonSubmit}
-        fullWidth
-      >
-        บันทึก
-      </Button>
-    </form>
+      {(formik) => {
+        return (
+          <Form>
+            <Typography variant="h5">เพิ่มรายการห้องใหม่</Typography>
+            <TextField
+              variant="standard"
+              name="room_no"
+              label="เลขที่ห้อง"
+              fullWidth
+              value={formik.values.room_no}
+              onChange={formik.handleChange}
+              error={formik.errors.room_no && formik.touched.room_no}
+              helperText={<ErrorMessage name="room_no" />}
+            />
+            <TextField
+              variant="standard"
+              name="room_name"
+              label="ชื่อห้อง"
+              fullWidth
+              value={formik.values.room_name}
+              onChange={formik.handleChange}
+              error={formik.errors.room_name && formik.touched.room_name}
+              helperText={<ErrorMessage name="room_name" />}
+            />
+            <TextField
+              variant="standard"
+              name="description"
+              label="คำอธิบาย"
+              fullWidth
+              multiline
+              rows={7}
+              value={formik.values.description}
+              onChange={formik.handleChange}
+            />
+            <FormControl className={classes.formControl} fullWidth>
+              <InputLabel htmlFor="room-type" className={classes.selectLabel}>ประเภท</InputLabel>
+              <Select
+                labelId="room-type"
+                className={classes.selectInput}
+                variant="standard"
+                name="room_type"
+                value={formik.values.room_type}
+                onChange={formik.handleChange}
+              >
+                {roomTypes.map((rt) => (
+                  <MenuItem key={rt.room_type_id} value={rt.room_type_id}>
+                    {rt.room_type_name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl className={classes.formControl} fullWidth>
+              <InputLabel htmlFor="room-group" className={classes.selectLabel}>กลุ่ม</InputLabel>
+              <Select
+                labelId="room-group"
+                className={classes.selectInput}
+                variant="standard"
+                name="room_group"
+                fullWidth
+                value={formik.values.room_group}
+                onChange={formik.handleChange}
+              >
+                {roomGroups.map((rg) => (
+                  <MenuItem key={rg.room_group_id} value={rg.room_group_id}>
+                    {rg.room_group_name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl className={classes.formControl} fullWidth>
+              <InputLabel htmlFor="building" className={classes.selectLabel}>อาคาร</InputLabel>
+              <Select
+                labelId="building"
+                className={classes.selectInput}
+                variant="standard"
+                name="building_id"
+                fullWidth
+                value={formik.values.building_id}
+                onChange={formik.handleChange}
+              >
+                { buildings.map((bd) => (
+                  <MenuItem key={bd.building_id} value={bd.building_id}>
+                    {bd.building_name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <TextField
+              variant="standard"
+              name="floor"
+              label="ชั้น"
+              fullWidth
+              value={formik.values.floor}
+              onChange={formik.handleChange}
+            />
+            {/* <div className={classes.fileInput}>
+              <FileBase
+                type="file"
+                multiple={false}
+                onDone={({ base64 }) => setRoom({ ...room, room_img_url: base64 })}
+              />
+            </div> */}
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.buttonSubmit}
+              fullWidth
+            >
+              บันทึก
+            </Button>
+          </Form>
+        );
+      }}
+    </Formik>
   );
 }
 
@@ -176,7 +172,7 @@ FormRoom.propTypes = {
   roomTypes: PropTypes.array,
   roomGroups: PropTypes.array,
   buildings: PropTypes.array,
-  handleSubmit: PropTypes.func,
+  // handleSubmit: PropTypes.func,
 };
 
 export default FormRoom;

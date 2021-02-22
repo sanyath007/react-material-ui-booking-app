@@ -24,9 +24,7 @@ const NewRoom = () => {
     dispatch(fetchBuildingAll());
   }, []);
 
-  const handleSubmit = async (e, room) => {
-    e.preventDefault();
-
+  const handleSubmit = async (room) => {
     const formData = new FormData();
 
     formData.append('room_no', room.room_no);
