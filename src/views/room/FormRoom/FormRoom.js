@@ -31,6 +31,29 @@ function FormRoom({
 }) {
   const classes = useStyles();
   const [room, setRoom] = useState(initialRoom);
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    const error = {};
+    console.log('Validate is called');
+
+    error.room_no = room.room_no ? '' : 'Room no is required!!';
+    error.room_name = room.room_name ? '' : 'Room name is required!!';
+
+    setErrors({ ...error });
+
+    return Object.values(error).every((el) => el === '');
+  };
+
+  const onSubmit = () => {
+    if (!validate()) {
+      window.alert('You have invalid data!!');
+    } else {
+
+    }
+  };
+
+  console.log(errors);
 
   return (
     <form
