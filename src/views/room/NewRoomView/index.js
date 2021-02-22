@@ -32,7 +32,7 @@ const NewRoom = () => {
     formData.append('description', room.description);
     formData.append('room_type', room.room_type);
     formData.append('room_group', room.room_group);
-    formData.append('building_id', room.building_id);
+    formData.append('building', room.building);
     formData.append('floor', room.floor);
     formData.append('room_img_url', room.room_img_url);
 

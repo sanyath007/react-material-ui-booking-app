@@ -7,9 +7,10 @@ import {
   Select,
   MenuItem,
   InputLabel,
-  FormControl
+  FormControl,
+  FormHelperText
 } from '@material-ui/core';
-// import FileBase from 'react-file-base64';
+// import FormControls from 'src/components/Forms';
 import { Formik, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import useStyles from './styles';
@@ -20,7 +21,7 @@ const initialRoom = {
   description: '',
   room_type: '',
   room_group: '',
-  building_id: '',
+  building: '',
   floor: '',
   room_img_url: ''
 };
@@ -36,6 +37,10 @@ function FormRoom({
   const roomSchema = Yup.object().shape({
     room_no: Yup.string().required('Room No is required'),
     room_name: Yup.string().required('Room Name is required'),
+    room_type: Yup.string().required('Room Type is required'),
+    room_group: Yup.string().required('Room Group is required'),
+    building_id: Yup.string().required('Building is required'),
+    floor: Yup.number().typeError('Floor shold be number').required('Floor is required'),
   });
 
   const onSubmit = (values) => {
@@ -93,6 +98,7 @@ function FormRoom({
                 name="room_type"
                 value={formik.values.room_type}
                 onChange={formik.handleChange}
+                error={formik.errors.room_type && formik.touched.room_type}
               >
                 {roomTypes.map((rt) => (
                   <MenuItem key={rt.room_type_id} value={rt.room_type_id}>
@@ -100,6 +106,9 @@ function FormRoom({
                   </MenuItem>
                 ))}
               </Select>
+              <FormHelperText error>
+                <ErrorMessage name="room_type" />
+              </FormHelperText>
             </FormControl>
             <FormControl className={classes.formControl} fullWidth>
               <InputLabel htmlFor="room-group" className={classes.selectLabel}>กลุ่ม</InputLabel>
@@ -111,6 +120,7 @@ function FormRoom({
                 fullWidth
                 value={formik.values.room_group}
                 onChange={formik.handleChange}
+                error={formik.errors.room_group && formik.touched.room_group}
               >
                 {roomGroups.map((rg) => (
                   <MenuItem key={rg.room_group_id} value={rg.room_group_id}>
@@ -118,6 +128,9 @@ function FormRoom({
                   </MenuItem>
                 ))}
               </Select>
+              <FormHelperText error>
+                <ErrorMessage name="room_group" />
+              </FormHelperText>
             </FormControl>
             <FormControl className={classes.formControl} fullWidth>
               <InputLabel htmlFor="building" className={classes.selectLabel}>อาคาร</InputLabel>
@@ -125,17 +138,21 @@ function FormRoom({
                 labelId="building"
                 className={classes.selectInput}
                 variant="standard"
-                name="building_id"
+                name="building"
                 fullWidth
-                value={formik.values.building_id}
+                value={formik.values.building}
                 onChange={formik.handleChange}
+                error={formik.errors.building && formik.touched.building}
               >
                 { buildings.map((bd) => (
-                  <MenuItem key={bd.building_id} value={bd.building_id}>
+                  <MenuItem key={bd.building} value={bd.building}>
                     {bd.building_name}
                   </MenuItem>
                 ))}
               </Select>
+              <FormHelperText error>
+                <ErrorMessage name="building" />
+              </FormHelperText>
             </FormControl>
             <TextField
               variant="standard"
@@ -144,14 +161,18 @@ function FormRoom({
               fullWidth
               value={formik.values.floor}
               onChange={formik.handleChange}
+              error={formik.errors.floor && formik.touched.floor}
+              helperText={<ErrorMessage name="floor" />}
             />
-            {/* <div className={classes.fileInput}>
-              <FileBase
-                type="file"
-                multiple={false}
-                onDone={({ base64 }) => setRoom({ ...room, room_img_url: base64 })}
-              />
-            </div> */}
+            <TextField
+              variant="standard"
+              type="file"
+              name="room_img_url"
+              label="รูป"
+              fullWidth
+              value={formik.values.room_img_url}
+              onChange={formik.handleChange}
+            />
             <Button
               type="submit"
               variant="contained"

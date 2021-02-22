@@ -8,7 +8,13 @@ import {
 } from '@material-ui/core';
 import useStyles from './styles';
 
-function SelectInput({ name, label, value, handleChange, options }) {
+function SelectInput({
+  name,
+  label,
+  value,
+  handleChange,
+  options
+}) {
   const classes = useStyles();
 
   return (
@@ -22,7 +28,7 @@ function SelectInput({ name, label, value, handleChange, options }) {
         value={value}
         onChange={handleChange}
       >
-        {options.map((opt) => (
+        {options && options.map((opt) => (
           <MenuItem key={opt.id} value={opt.id}>
             {opt.name}
           </MenuItem>
@@ -31,5 +37,13 @@ function SelectInput({ name, label, value, handleChange, options }) {
     </FormControl>
   );
 }
+
+SelectInput.propTypes = {
+  name: PropTypes.string,
+  label: PropTypes.string,
+  value: PropTypes.string,
+  handleChange: PropTypes.func,
+  options: PropTypes.array,
+};
 
 export default SelectInput;
