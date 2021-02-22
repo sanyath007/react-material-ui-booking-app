@@ -4,8 +4,10 @@ import {
   Select,
   MenuItem,
   InputLabel,
-  FormControl
+  FormControl,
+  FormHelperText
 } from '@material-ui/core';
+import { ErrorMessage } from 'formik';
 import useStyles from './styles';
 
 function SelectInput({
@@ -34,6 +36,9 @@ function SelectInput({
           </MenuItem>
         ))}
       </Select>
+      <FormHelperText error>
+        <ErrorMessage name={name} />
+      </FormHelperText>
     </FormControl>
   );
 }

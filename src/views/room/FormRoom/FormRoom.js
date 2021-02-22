@@ -39,7 +39,7 @@ function FormRoom({
     room_name: Yup.string().required('Room Name is required'),
     room_type: Yup.string().required('Room Type is required'),
     room_group: Yup.string().required('Room Group is required'),
-    building_id: Yup.string().required('Building is required'),
+    building: Yup.string().required('Building is required'),
     floor: Yup.number().typeError('Floor shold be number').required('Floor is required'),
   });
 
@@ -145,7 +145,7 @@ function FormRoom({
                 error={formik.errors.building && formik.touched.building}
               >
                 { buildings.map((bd) => (
-                  <MenuItem key={bd.building} value={bd.building}>
+                  <MenuItem key={bd.building_id} value={bd.building_id}>
                     {bd.building_name}
                   </MenuItem>
                 ))}
