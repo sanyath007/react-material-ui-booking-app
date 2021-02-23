@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -9,6 +9,8 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
+  FormGroup,
+  FormLabel,
   FormHelperText
 } from '@material-ui/core';
 import FormControls from 'src/components/Forms';
@@ -24,7 +26,20 @@ const initialRoom = {
   room_group: '',
   building: '',
   floor: '',
-  room_img_url: ''
+  room_img_url: '',
+  amenities: []
+};
+
+const initialAmenities = {
+  bathroom: false,
+  waterheater: false,
+  refrigerator: false,
+  wardrobe: false,
+  television: false,
+  microwave: false,
+  diningtable: false,
+  air: false,
+  bed: false,
 };
 
 function FormRoom({
@@ -34,6 +49,7 @@ function FormRoom({
   handleSubmit
 }) {
   const classes = useStyles();
+  const [amenities, setAmenities] = useState(initialAmenities);
 
   const roomSchema = Yup.object().shape({
     room_no: Yup.string().required('Room No is required'),
@@ -48,6 +64,10 @@ function FormRoom({
     if (values) {
       handleSubmit(values);
     }
+  };
+
+  const onCheckboxChange = (e) => {
+    setAmenities({ ...amenities, [e.target.name]: e.target.value });
   };
 
   return (
@@ -169,6 +189,67 @@ function FormRoom({
                   error={formik.errors.floor && formik.touched.floor}
                   helperText={<ErrorMessage name="floor" />}
                 />
+              </Grid>
+              <Grid item sm={12}>
+                <div className={classes.checkboxGroup}>
+                  <FormGroup row>
+                    <FormLabel component="legend">สิ่งอำนวยความสะดวก (เลือกได้มากกว่า 1 รายการ)</FormLabel>
+                    <FormControls.CheckboxInput
+                      name="refrigerator"
+                      label="ตู้เย็น"
+                      value={amenities.refrigerator}
+                      handleChange={onCheckboxChange}
+                    />
+                    <FormControls.CheckboxInput
+                      name="wardrobe"
+                      label="ตู้เสื้อผ้า"
+                      value={amenities.wardrobe}
+                      handleChange={onCheckboxChange}
+                    />
+                    <FormControls.CheckboxInput
+                      name="television"
+                      label="ทีวี"
+                      value={amenities.television}
+                      handleChange={onCheckboxChange}
+                    />
+                    <FormControls.CheckboxInput
+                      name="microwave"
+                      label="ไมโครเวฟ"
+                      value={amenities.microwave}
+                      handleChange={onCheckboxChange}
+                    />
+                    <FormControls.CheckboxInput
+                      name="bed"
+                      label="เตียงญาติ"
+                      value={amenities.bed}
+                      handleChange={onCheckboxChange}
+                    />
+                    <FormControls.CheckboxInput
+                      name="bathroom"
+                      label="ห้องน้ำ"
+                      value={amenities.bathroom}
+                      handleChange={onCheckboxChange}
+                    />
+                    <FormControls.CheckboxInput
+                      name="waterheater"
+                      label="เครื่องทำน้ำอุ่น"
+                      value={amenities.waterheater}
+                      handleChange={onCheckboxChange}
+                    />
+                    <FormControls.CheckboxInput
+                      name="diningtable"
+                      label="โต๊ะ-เก้าอี้"
+                      value={amenities.diningtable}
+                      handleChange={onCheckboxChange}
+                    />
+                    <FormControls.CheckboxInput
+                      name="air"
+                      label="แอร์"
+                      value={amenities.air}
+                      handleChange={onCheckboxChange}
+                    />
+                  </FormGroup>
+                </div>
               </Grid>
               <Grid item sm={12}>
                 <FormControls.FileUploadInput
