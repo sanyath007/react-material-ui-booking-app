@@ -30,7 +30,7 @@ function FormRoom({
   roomTypes,
   roomGroups,
   buildings,
-  // handleSubmit
+  handleSubmit
 }) {
   const classes = useStyles();
 
@@ -45,7 +45,7 @@ function FormRoom({
 
   const onSubmit = (values) => {
     if (values) {
-      console.log(values);
+      handleSubmit(values);
     }
   };
 
@@ -190,7 +190,7 @@ FormRoom.propTypes = {
   roomTypes: PropTypes.array,
   roomGroups: PropTypes.array,
   buildings: PropTypes.array,
-  // handleSubmit: PropTypes.func,
+  handleSubmit: PropTypes.func,
 };
 
 export default FormRoom;

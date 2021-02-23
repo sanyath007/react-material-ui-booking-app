@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
 import { Form } from 'react-bootstrap';
 import useStyles from './styles';
+import fileReader from '../../../utils/fileReader';
 
 function FileUploadInput({ name, label, handleChange }) {
   const [image, setImage] = useState('');
@@ -10,19 +11,14 @@ function FileUploadInput({ name, label, handleChange }) {
 
   const convertToDefEventParams = (target, value) => ({ target: { name: target, value } });
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
 
-    reader.onloadend = () => {
-      const base64String = reader.result;
+    const base64String = await fileReader.readFileAsync(file);
 
-      setImage(base64String);
+    setImage(base64String);
 
-      handleChange(convertToDefEventParams(name, base64String));
-    };
-
-    reader.readAsDataURL(file);
+    handleChange(convertToDefEventParams(name, base64String));
   };
 
   return (
