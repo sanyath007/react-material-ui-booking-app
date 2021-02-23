@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-    FormControl,
-    FormControlLabel,
-    FormLabel,
-    Radio,
-    RadioGroup
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup
 } from '@material-ui/core';
 
 function RadioInput({
@@ -24,8 +24,8 @@ function RadioInput({
         value={value}
         onChange={handleChange}
       >
-        {items.map((item, index) => (
-          <FormControlLabel key={index} value={item.id} label={item.name} control={<Radio />} />
+        {items.map((item) => (
+          <FormControlLabel key={item.id} value={item.id} label={item.name} control={<Radio />} />
         ))}
       </RadioGroup>
     </FormControl>
