@@ -10,7 +10,7 @@ import {
   FormControl,
   FormHelperText
 } from '@material-ui/core';
-// import FormControls from 'src/components/Forms';
+import FormControls from 'src/components/Forms';
 import { Formik, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import useStyles from './styles';
@@ -164,14 +164,11 @@ function FormRoom({
               error={formik.errors.floor && formik.touched.floor}
               helperText={<ErrorMessage name="floor" />}
             />
-            <TextField
-              variant="standard"
-              type="file"
+            <FormControls.FileUploadInput
               name="room_img_url"
               label="รูป"
-              fullWidth
               value={formik.values.room_img_url}
-              onChange={formik.handleChange}
+              handleChange={formik.handleChange}
             />
             <Button
               type="submit"
