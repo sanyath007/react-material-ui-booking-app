@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -9,14 +9,13 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
-  FormGroup,
-  FormLabel,
   FormHelperText
 } from '@material-ui/core';
 import FormControls from 'src/components/Forms';
 import { Formik, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import useStyles from './styles';
+import AmenityCheckboxes from './AmenityCheckboxes';
 
 const initialRoom = {
   room_no: '',
@@ -30,44 +29,28 @@ const initialRoom = {
   amenities: []
 };
 
-const initialAmenities = {
-  bathroom: false,
-  waterheater: false,
-  refrigerator: false,
-  wardrobe: false,
-  television: false,
-  microwave: false,
-  diningtable: false,
-  air: false,
-  bed: false,
-};
-
 function FormRoom({
   roomTypes,
   roomGroups,
   buildings,
-  handleSubmit
+  // handleSubmit
 }) {
   const classes = useStyles();
-  const [amenities, setAmenities] = useState(initialAmenities);
 
   const roomSchema = Yup.object().shape({
     room_no: Yup.string().required('Room No is required'),
-    room_name: Yup.string().required('Room Name is required'),
-    room_type: Yup.string().required('Room Type is required'),
-    room_group: Yup.string().required('Room Group is required'),
-    building: Yup.string().required('Building is required'),
-    floor: Yup.number().typeError('Floor shold be number').required('Floor is required'),
+    // room_name: Yup.string().required('Room Name is required'),
+    // room_type: Yup.string().required('Room Type is required'),
+    // room_group: Yup.string().required('Room Group is required'),
+    // building: Yup.string().required('Building is required'),
+    // floor: Yup.number().typeError('Floor shold be number').required('Floor is required'),
   });
 
   const onSubmit = (values) => {
     if (values) {
-      handleSubmit(values);
+      console.log(values);
+      // handleSubmit(values);
     }
-  };
-
-  const onCheckboxChange = (e) => {
-    setAmenities({ ...amenities, [e.target.name]: e.target.value });
   };
 
   return (
@@ -191,65 +174,11 @@ function FormRoom({
                 />
               </Grid>
               <Grid item sm={12}>
-                <div className={classes.checkboxGroup}>
-                  <FormGroup row>
-                    <FormLabel component="legend">สิ่งอำนวยความสะดวก (เลือกได้มากกว่า 1 รายการ)</FormLabel>
-                    <FormControls.CheckboxInput
-                      name="refrigerator"
-                      label="ตู้เย็น"
-                      value={amenities.refrigerator}
-                      handleChange={onCheckboxChange}
-                    />
-                    <FormControls.CheckboxInput
-                      name="wardrobe"
-                      label="ตู้เสื้อผ้า"
-                      value={amenities.wardrobe}
-                      handleChange={onCheckboxChange}
-                    />
-                    <FormControls.CheckboxInput
-                      name="television"
-                      label="ทีวี"
-                      value={amenities.television}
-                      handleChange={onCheckboxChange}
-                    />
-                    <FormControls.CheckboxInput
-                      name="microwave"
-                      label="ไมโครเวฟ"
-                      value={amenities.microwave}
-                      handleChange={onCheckboxChange}
-                    />
-                    <FormControls.CheckboxInput
-                      name="bed"
-                      label="เตียงญาติ"
-                      value={amenities.bed}
-                      handleChange={onCheckboxChange}
-                    />
-                    <FormControls.CheckboxInput
-                      name="bathroom"
-                      label="ห้องน้ำ"
-                      value={amenities.bathroom}
-                      handleChange={onCheckboxChange}
-                    />
-                    <FormControls.CheckboxInput
-                      name="waterheater"
-                      label="เครื่องทำน้ำอุ่น"
-                      value={amenities.waterheater}
-                      handleChange={onCheckboxChange}
-                    />
-                    <FormControls.CheckboxInput
-                      name="diningtable"
-                      label="โต๊ะ-เก้าอี้"
-                      value={amenities.diningtable}
-                      handleChange={onCheckboxChange}
-                    />
-                    <FormControls.CheckboxInput
-                      name="air"
-                      label="แอร์"
-                      value={amenities.air}
-                      handleChange={onCheckboxChange}
-                    />
-                  </FormGroup>
-                </div>
+                <AmenityCheckboxes
+                  name="amenities"
+                  value={formik.values.amenities}
+                  handleChange={formik.handleChange}
+                />
               </Grid>
               <Grid item sm={12}>
                 <FormControls.FileUploadInput
@@ -282,7 +211,7 @@ FormRoom.propTypes = {
   roomTypes: PropTypes.array,
   roomGroups: PropTypes.array,
   buildings: PropTypes.array,
-  handleSubmit: PropTypes.func,
+  // handleSubmit: PropTypes.func,
 };
 
 export default FormRoom;

@@ -26,14 +26,7 @@ export default makeStyles((theme) => ({
     // margin: theme.spacing(1)
   },
   selectLabel: {
-    // margin: theme.spacing(1),
     marginLeft: theme.spacing(1)
-  },
-  checkboxGroup: {
-    marginLeft: '8px',
-    padding: '0px',
-    flexDirection: 'column',
-    justifyContent: 'space-around'
   },
   buttonSubmit: {
     margin: theme.spacing(1),
