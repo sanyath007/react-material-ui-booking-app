@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   FormGroup,
@@ -6,6 +6,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import FormControls from 'src/components/Forms';
+import api from '../../../api';
 
 const useStyles = makeStyles(() => ({
   checkboxGroup: {
@@ -16,34 +17,25 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const initialAmenities = {
-  bathroom: false,
-  waterheater: false,
-  refrigerator: false,
-  wardrobe: false,
-  television: false,
-  microwave: false,
-  diningtable: false,
-  air: false,
-  bed: false,
-};
-
 const AmenityCheckboxes = ({ name, handleChange }) => {
   const classes = useStyles();
-  const [amenities, setAmenities] = useState(initialAmenities);
+  const [amenities, setAmenities] = useState([]);
   const [amenityIds, setAmenityIds] = useState([]);
 
   const createAmenityLists = (id) => {
-    const index = amenityIds.indexOf(id);
+    const selectedIndex = amenityIds.indexOf(id);
     let newCheckedAmenityIds = [];
-    console.log(index);
 
-    if (index === -1) {
+    if (selectedIndex === -1) {
       newCheckedAmenityIds = newCheckedAmenityIds.concat(amenityIds, id);
-    } else {
+    } else if (selectedIndex === 0) {
+      newCheckedAmenityIds = newCheckedAmenityIds.concat(amenityIds.slice(1));
+    } else if (selectedIndex === amenityIds.length - 1) {
+      newCheckedAmenityIds = newCheckedAmenityIds.concat(amenityIds.slice(0, -1));
+    } else if (selectedIndex > 0) {
       newCheckedAmenityIds = newCheckedAmenityIds.concat(
-        amenityIds.splice(0, index),
-        amenityIds.splice(index + 1)
+        amenityIds.slice(0, selectedIndex),
+        amenityIds.slice(selectedIndex + 1)
       );
     }
 
@@ -53,10 +45,18 @@ const AmenityCheckboxes = ({ name, handleChange }) => {
   };
 
   const onCheckboxChange = (e) => {
-    setAmenities({ ...amenities, [e.target.name]: e.target.value });
-
     createAmenityLists(e.target.name);
   };
+
+  useEffect(() => {
+    async function fetchAmenities() {
+      const res = await api.get('/amenities');
+
+      setAmenities(res.data);
+    }
+
+    fetchAmenities();
+  }, []);
 
   console.log(amenityIds);
 
@@ -64,60 +64,14 @@ const AmenityCheckboxes = ({ name, handleChange }) => {
     <div className={classes.checkboxGroup}>
       <FormGroup row>
         <FormLabel component="legend">สิ่งอำนวยความสะดวก (เลือกได้มากกว่า 1 รายการ)</FormLabel>
-        <FormControls.CheckboxInput
-          name="refrigerator"
-          label="ตู้เย็น"
-          value={amenities.refrigerator}
-          handleChange={onCheckboxChange}
-        />
-        <FormControls.CheckboxInput
-          name="wardrobe"
-          label="ตู้เสื้อผ้า"
-          value={amenities.wardrobe}
-          handleChange={onCheckboxChange}
-        />
-        <FormControls.CheckboxInput
-          name="television"
-          label="ทีวี"
-          value={amenities.television}
-          handleChange={onCheckboxChange}
-        />
-        <FormControls.CheckboxInput
-          name="microwave"
-          label="ไมโครเวฟ"
-          value={amenities.microwave}
-          handleChange={onCheckboxChange}
-        />
-        <FormControls.CheckboxInput
-          name="bed"
-          label="เตียงญาติ"
-          value={amenities.bed}
-          handleChange={onCheckboxChange}
-        />
-        <FormControls.CheckboxInput
-          name="bathroom"
-          label="ห้องน้ำ"
-          value={amenities.bathroom}
-          handleChange={onCheckboxChange}
-        />
-        <FormControls.CheckboxInput
-          name="waterheater"
-          label="เครื่องทำน้ำอุ่น"
-          value={amenities.waterheater}
-          handleChange={onCheckboxChange}
-        />
-        <FormControls.CheckboxInput
-          name="diningtable"
-          label="โต๊ะ-เก้าอี้"
-          value={amenities.diningtable}
-          handleChange={onCheckboxChange}
-        />
-        <FormControls.CheckboxInput
-          name="air"
-          label="แอร์"
-          value={amenities.air}
-          handleChange={onCheckboxChange}
-        />
+        {amenities.map((am) => (
+          <FormControls.CheckboxInput
+            key={am.amenity_id}
+            name={am.amenity_id}
+            label={am.amenity_desc}
+            handleChange={onCheckboxChange}
+          />
+        ))}
       </FormGroup>
     </div>
   );
