@@ -33,23 +33,24 @@ function FormRoom({
   roomTypes,
   roomGroups,
   buildings,
-  // handleSubmit
+  handleSubmit
 }) {
   const classes = useStyles();
 
   const roomSchema = Yup.object().shape({
     room_no: Yup.string().required('Room No is required'),
-    // room_name: Yup.string().required('Room Name is required'),
-    // room_type: Yup.string().required('Room Type is required'),
-    // room_group: Yup.string().required('Room Group is required'),
-    // building: Yup.string().required('Building is required'),
-    // floor: Yup.number().typeError('Floor shold be number').required('Floor is required'),
+    room_name: Yup.string().required('Room Name is required'),
+    room_type: Yup.string().required('Room Type is required'),
+    room_group: Yup.string().required('Room Group is required'),
+    building: Yup.string().required('Building is required'),
+    floor: Yup.number().typeError('Floor shold be number').required('Floor is required'),
   });
 
-  const onSubmit = (values) => {
+  const onSubmit = (values, props) => {
     if (values) {
-      console.log(values);
-      // handleSubmit(values);
+      handleSubmit(values);
+
+      props.resetForm();
     }
   };
 
@@ -211,7 +212,8 @@ FormRoom.propTypes = {
   roomTypes: PropTypes.array,
   roomGroups: PropTypes.array,
   buildings: PropTypes.array,
-  // handleSubmit: PropTypes.func,
+  handleSubmit: PropTypes.func,
+  resetForm: PropTypes.func,
 };
 
 export default FormRoom;
