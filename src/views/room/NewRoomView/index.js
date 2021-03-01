@@ -35,6 +35,7 @@ const NewRoom = () => {
     formData.append('building', room.building);
     formData.append('floor', room.floor);
     formData.append('room_img_url', room.room_img_url);
+    formData.append('amenities', room.amenities);
 
     dispatch(addRoom(formData));
   };
@@ -42,7 +43,7 @@ const NewRoom = () => {
   return (
     <Page
       className={classes.root}
-      title="Rooms"
+      title="Add New Rooms"
     >
       <Container maxWidth={false}>
         <Paper className={classes.paper}>

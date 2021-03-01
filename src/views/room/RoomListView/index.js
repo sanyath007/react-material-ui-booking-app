@@ -26,7 +26,7 @@ const RoomList = () => {
   return (
     <Page
       className={classes.root}
-      title="Products"
+      title="Rooms"
     >
       <Container maxWidth={false}>
         <Toolbar />
