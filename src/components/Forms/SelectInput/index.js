@@ -21,9 +21,9 @@ function SelectInput({
 
   return (
     <FormControl className={classes.formControl} fullWidth>
-      <InputLabel htmlFor="room-type" className={classes.selectLabel}>{label}</InputLabel>
+      <InputLabel htmlFor={label} className={classes.selectLabel}>{label}</InputLabel>
       <Select
-        labelId="room-type"
+        labelId={label}
         className={classes.selectInput}
         variant="standard"
         name={name}

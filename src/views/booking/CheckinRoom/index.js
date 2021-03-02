@@ -1,14 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Container,
   Grid,
   Paper,
-  // FormGroup,
-  // FormLabel,
-  // FormControl,
-  // FormControlLabel,
-  // FormHelperText,
   Typography,
   TextField,
 } from '@material-ui/core';
@@ -17,7 +12,10 @@ import * as Yup from 'yup';
 import moment from 'moment';
 import FormControls from 'src/components/Forms';
 import Page from 'src/components/Page';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { fetchBuildingAll } from '../../../redux';
 import useStyles from './styles';
+import api from '../../../api';
 
 const initialValues = {
   checkin_date: moment(),
@@ -30,11 +28,41 @@ const initialValues = {
 
 const CheckinRoom = () => {
   const classes = useStyles();
+  const [buildings, setBuildings] = useState([]);
+  const [building, setBuilding] = useState('');
+  const [rooms, setRooms] = useState([]);
+  // const dispatch = useDispatch();
+  // const buildings = useSelector((state) => state.building);
+
+  const fetchBuildingAll = async () => {
+    const res = await api.get('/buildings');
+    const arrBuildings = res.data.map((b) => ({ id: b.building_id, name: b.building_name }));
+
+    setBuildings(arrBuildings);
+  };
+
+  const fetchRoomByBuilding = async (bid) => {
+    const res = await api.get(`/rooms/building/${bid}`);
+    const arrRooms = res.data.map((r) => ({ id: r.room_id, name: r.room_name }));
+
+    setRooms(arrRooms);
+  };
+
+  useEffect(() => {
+    fetchBuildingAll();
+  }, []);
 
   const checkinSchema = Yup.object().shape({
     checkin_date: Yup.string().required('Check in date is required'),
     checkin_time: Yup.string().required('Check in time is required'),
+    room_id: Yup.string().required('กรุณาเลือกห้องก่อน'),
   });
+
+  const handleBuildingChange = (e) => {
+    setBuilding(e.target.value);
+
+    fetchRoomByBuilding(e.target.value);
+  };
 
   const onSubmit = (values, props) => {
     console.log(values, props);
@@ -78,25 +106,21 @@ const CheckinRoom = () => {
                       />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}>
-                      <TextField
-                        variant="standard"
-                        name="room_id"
+                      <FormControls.SelectInput
+                        name="building"
                         label="อาคาร"
-                        fullWidth
-                        value={formik.values.room_id}
-                        onChange={formik.handleChange}
-                        helperText={<ErrorMessage name="room_id" />}
+                        value={building}
+                        handleChange={handleBuildingChange}
+                        options={buildings}
                       />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}>
-                      <TextField
-                        variant="standard"
+                      <FormControls.SelectInput
                         name="room_id"
                         label="ห้อง"
-                        fullWidth
                         value={formik.values.room_id}
-                        onChange={formik.handleChange}
-                        helperText={<ErrorMessage name="room_id" />}
+                        handleChange={formik.handleChange}
+                        options={rooms}
                       />
                     </Grid>
                     <Grid item xs={12} sm={12} md={12}>
@@ -110,23 +134,25 @@ const CheckinRoom = () => {
                     <Grid item xs={12} sm={12} md={6}>
                       <TextField
                         variant="standard"
-                        name="room_id"
+                        name="observer_name"
                         label="ชื่อ-สกุลญาติผู้เฝ้า"
                         fullWidth
-                        value={formik.values.room_id}
+                        value={formik.values.observer_name}
                         onChange={formik.handleChange}
-                        helperText={<ErrorMessage name="room_id" />}
+                        helperText={<ErrorMessage name="observer_name" />}
+                        disabled={!formik.values.haveObserver}
                       />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}>
                       <TextField
                         variant="standard"
-                        name="room_id"
+                        name="observer_tel"
                         label="โทรศัพท์ญาติผู้เฝ้า"
                         fullWidth
-                        value={formik.values.room_id}
+                        value={formik.values.observer_tel}
                         onChange={formik.handleChange}
-                        helperText={<ErrorMessage name="room_id" />}
+                        helperText={<ErrorMessage name="observer_tel" />}
+                        disabled={!formik.values.haveObserver}
                       />
                     </Grid>
                     <Grid item sm={12}>
