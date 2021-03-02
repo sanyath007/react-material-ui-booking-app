@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Avatar,
@@ -180,9 +181,9 @@ const Results = ({ className, bookings, ...rest }) => {
                     <a href="#" title="ลบ">
                       <DeleteIcon color="error" />
                     </a>
-                    <a href="#" title="Checkin ห้อง">
+                    <Link to="/app/checkin" title="Checkin ห้อง">
                       <AssignmentIndIcon color="action" />
-                    </a>
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))}
