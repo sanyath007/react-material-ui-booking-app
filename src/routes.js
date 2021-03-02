@@ -9,6 +9,7 @@ import BookingListView from 'src/views/booking/BookingListView';
 import NewBooking from 'src/views/booking/NewBooking';
 import CheckinRoom from 'src/views/booking/CheckinRoom';
 import CalendarView from 'src/views/calendar/CalendarView';
+import RoomsStatusView from 'src/views/room/RoomsStatus';
 import RoomListView from 'src/views/room/RoomListView';
 import NewRoom from 'src/views/room/NewRoomView';
 import AccountView from 'src/views/account/AccountView';
@@ -27,6 +28,7 @@ const routes = [
       { path: 'newbooking', element: <NewBooking /> },
       { path: 'checkin/:bookId', element: <CheckinRoom /> },
       { path: 'calendar', element: <CalendarView /> },
+      { path: 'rooms-status', element: <RoomsStatusView /> },
       { path: 'rooms', element: <RoomListView /> },
       { path: 'newroom', element: <NewRoom /> },
       { path: 'account', element: <AccountView /> },
