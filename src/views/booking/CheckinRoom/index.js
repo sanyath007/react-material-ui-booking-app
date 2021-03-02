@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import {
   Button,
   Container,
@@ -18,12 +19,12 @@ import useStyles from './styles';
 import api from '../../../api';
 
 const initialValues = {
-  checkin_date: moment(),
-  checkin_time: moment().format('HH:MM'),
-  room_id: '',
+  checkinDate: moment(),
+  checkinTime: moment().format('HH:MM'),
+  roomId: '',
   haveObserver: false,
-  observer_name: '',
-  observer_tel: '',
+  observerName: '',
+  observerTel: '',
 };
 
 const CheckinRoom = () => {
@@ -33,6 +34,7 @@ const CheckinRoom = () => {
   const [rooms, setRooms] = useState([]);
   // const dispatch = useDispatch();
   // const buildings = useSelector((state) => state.building);
+  const { bookId } = useParams();
 
   const fetchBuildingAll = async () => {
     const res = await api.get('/buildings');
@@ -53,9 +55,9 @@ const CheckinRoom = () => {
   }, []);
 
   const checkinSchema = Yup.object().shape({
-    checkin_date: Yup.string().required('Check in date is required'),
-    checkin_time: Yup.string().required('Check in time is required'),
-    room_id: Yup.string().required('กรุณาเลือกห้องก่อน'),
+    checkinDate: Yup.string().required('Check in date is required'),
+    checkinTime: Yup.string().required('Check in time is required'),
+    roomId: Yup.string().required('กรุณาเลือกห้องก่อน'),
   });
 
   const handleBuildingChange = (e) => {
@@ -65,7 +67,29 @@ const CheckinRoom = () => {
   };
 
   const onSubmit = (values, props) => {
-    console.log(values, props);
+    const {
+      roomId,
+      checkinDate,
+      checkinTime,
+      haveObserver,
+      observerName,
+      observerTel
+    } = values;
+
+    const data = {
+      bookId,
+      roomId,
+      checkinDate: moment(checkinDate).format('YYYY-MM-DD'),
+      checkinTime: `${checkinTime}:00`,
+      haveObserver: haveObserver ? 1 : 0,
+      observerName,
+      observerTel
+    };
+
+    console.log(data);
+    // TODO: to dispatch to add booking_room data to db
+
+    props.resetForm();
   };
 
   return (
@@ -84,25 +108,25 @@ const CheckinRoom = () => {
             {(formik) => {
               return (
                 <Form>
-                  <Grid container spacing={5}>
+                  <Grid container spacing={4}>
                     <Grid item xs={12} sm={12} md={6}>
                       <FormControls.DatePickerInput
                         variant="standard"
-                        name="checkin_date"
+                        name="checkinDate"
                         label="วันที่รับเข้า"
                         fullWidth
-                        value={formik.values.checkin_date}
+                        value={formik.values.checkinDate}
                         onChange={formik.handleChange}
-                        helperText={<ErrorMessage name="checkin_date" />}
+                        helperText={<ErrorMessage name="checkinDate" />}
                       />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}>
                       <FormControls.TimePickerInput
-                        name="checkin_time"
+                        name="checkinTime"
                         label="เวลารับเข้า"
-                        value={formik.values.checkin_time}
+                        value={formik.values.checkinTime}
                         onChange={formik.handleChange}
-                        helperText={<ErrorMessage name="checkin_time" />}
+                        helperText={<ErrorMessage name="checkinTime" />}
                       />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}>
@@ -116,9 +140,9 @@ const CheckinRoom = () => {
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}>
                       <FormControls.SelectInput
-                        name="room_id"
+                        name="roomId"
                         label="ห้อง"
-                        value={formik.values.room_id}
+                        value={formik.values.roomId}
                         handleChange={formik.handleChange}
                         options={rooms}
                       />
@@ -134,24 +158,24 @@ const CheckinRoom = () => {
                     <Grid item xs={12} sm={12} md={6}>
                       <TextField
                         variant="standard"
-                        name="observer_name"
+                        name="observerName"
                         label="ชื่อ-สกุลญาติผู้เฝ้า"
                         fullWidth
-                        value={formik.values.observer_name}
+                        value={formik.values.observerName}
                         onChange={formik.handleChange}
-                        helperText={<ErrorMessage name="observer_name" />}
+                        helperText={<ErrorMessage name="observerName" />}
                         disabled={!formik.values.haveObserver}
                       />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}>
                       <TextField
                         variant="standard"
-                        name="observer_tel"
+                        name="observerTel"
                         label="โทรศัพท์ญาติผู้เฝ้า"
                         fullWidth
-                        value={formik.values.observer_tel}
+                        value={formik.values.observerTel}
                         onChange={formik.handleChange}
-                        helperText={<ErrorMessage name="observer_tel" />}
+                        helperText={<ErrorMessage name="observerTel" />}
                         disabled={!formik.values.haveObserver}
                       />
                     </Grid>

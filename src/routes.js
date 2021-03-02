@@ -25,7 +25,7 @@ const routes = [
       { path: 'dashboard', element: <DashboardView /> },
       { path: 'bookings', element: <BookingListView /> },
       { path: 'newbooking', element: <NewBooking /> },
-      { path: 'checkin', element: <CheckinRoom /> },
+      { path: 'checkin/:bookId', element: <CheckinRoom /> },
       { path: 'calendar', element: <CalendarView /> },
       { path: 'rooms', element: <RoomListView /> },
       { path: 'newroom', element: <NewRoom /> },

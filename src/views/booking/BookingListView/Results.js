@@ -181,7 +181,7 @@ const Results = ({ className, bookings, ...rest }) => {
                     <a href="#" title="ลบ">
                       <DeleteIcon color="error" />
                     </a>
-                    <Link to="/app/checkin" title="Checkin ห้อง">
+                    <Link to={`/app/checkin/${booking.book_id}`} title="Checkin ห้อง">
                       <AssignmentIndIcon color="action" />
                     </Link>
                   </TableCell>
