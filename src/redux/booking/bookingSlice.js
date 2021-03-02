@@ -14,14 +14,25 @@ export const bookingSlice = createSlice({
     },
     addSuccess: (state, action) => {
       state.bookings = [...state.bookings, action.payload];
-    }
+    },
+    checkinSuccess: (state, action) => {
+      const newBookings = state.bookings.filter((booking) => {
+        return booking.book_id !== action.payload.book_id;
+      });
+
+      state.bookings = [...newBookings];
+    },
   }
 });
 
 export default bookingSlice.reducer;
 
 // Actions
-const { fetchAllSuccess, addSuccess } = bookingSlice.actions;
+const {
+  fetchAllSuccess,
+  addSuccess,
+  checkinSuccess,
+} = bookingSlice.actions;
 
 export const fetchBookingAll = () => async (dispatch) => {
   try {
@@ -45,3 +56,15 @@ export const addBooking = (data) => async (dispatch) => {
 };
 
 // TODO: add CRUD action of booking
+
+export const checkin = (data) => async (dispatch) => {
+  try {
+    const res = await api.post('/bookings/checkin', data);
+    console.log(res);
+
+    dispatch(checkinSuccess(res.data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+// TODO: checkout action

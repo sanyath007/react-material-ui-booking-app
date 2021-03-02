@@ -13,8 +13,8 @@ import * as Yup from 'yup';
 import moment from 'moment';
 import FormControls from 'src/components/Forms';
 import Page from 'src/components/Page';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { fetchBuildingAll } from '../../../redux';
+import { useDispatch } from 'react-redux';
+import { checkin } from '../../../redux/booking/bookingSlice';
 import useStyles from './styles';
 import api from '../../../api';
 
@@ -32,7 +32,7 @@ const CheckinRoom = () => {
   const [buildings, setBuildings] = useState([]);
   const [building, setBuilding] = useState('');
   const [rooms, setRooms] = useState([]);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const buildings = useSelector((state) => state.building);
   const { bookId } = useParams();
 
@@ -76,7 +76,7 @@ const CheckinRoom = () => {
       observerTel
     } = values;
 
-    const data = {
+    dispatch(checkin({
       bookId,
       roomId,
       checkinDate: moment(checkinDate).format('YYYY-MM-DD'),
@@ -84,10 +84,7 @@ const CheckinRoom = () => {
       haveObserver: haveObserver ? 1 : 0,
       observerName,
       observerTel
-    };
-
-    console.log(data);
-    // TODO: to dispatch to add booking_room data to db
+    }));
 
     props.resetForm();
   };
