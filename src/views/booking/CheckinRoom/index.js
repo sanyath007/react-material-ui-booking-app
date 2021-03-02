@@ -20,8 +20,8 @@ import Page from 'src/components/Page';
 import useStyles from './styles';
 
 const initialValues = {
-  checkin_date: moment().format('YYYY-MM-DD'),
-  checkin_time: moment().format('HH:MM:SS'),
+  checkin_date: moment(),
+  checkin_time: moment().format('HH:MM'),
   room_id: '',
   haveObserver: false,
   observer_name: '',
@@ -36,8 +36,8 @@ const CheckinRoom = () => {
     checkin_time: Yup.string().required('Check in time is required'),
   });
 
-  const onSubmit = () => {
-
+  const onSubmit = (values, props) => {
+    console.log(values, props);
   };
 
   return (
@@ -58,7 +58,7 @@ const CheckinRoom = () => {
                 <Form>
                   <Grid container spacing={5}>
                     <Grid item xs={12} sm={12} md={6}>
-                      <TextField
+                      <FormControls.DatePickerInput
                         variant="standard"
                         name="checkin_date"
                         label="วันที่รับเข้า"
@@ -69,11 +69,9 @@ const CheckinRoom = () => {
                       />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}>
-                      <TextField
-                        variant="standard"
+                      <FormControls.TimePickerInput
                         name="checkin_time"
                         label="เวลารับเข้า"
-                        fullWidth
                         value={formik.values.checkin_time}
                         onChange={formik.handleChange}
                         helperText={<ErrorMessage name="checkin_time" />}
