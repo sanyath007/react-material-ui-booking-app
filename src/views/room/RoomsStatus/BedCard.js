@@ -18,8 +18,12 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import useStyles from './styles';
 
-const BedCard = ({ className, product, ...rest }) => {
+const BedCard = ({ className, room, ...rest }) => {
   const classes = useStyles();
+  const bookingRoom = { ...room.booking_room };
+  const booking = { ...bookingRoom.booking };
+  const ipData = { ...booking.an };
+  const patient = { ...ipData.patient };
 
   return (
     <Card
@@ -37,29 +41,30 @@ const BedCard = ({ className, product, ...rest }) => {
             <MoreVertIcon />
           </IconButton>
         )}
-        title={product.room_name}
+        title={room.room_name}
         subheader="September 14, 2016"
       />
       <CardMedia
         className={classes.media}
-        image={product.room_img_url ? product.room_img_url : '/static/images/products/product_5.png'}
-        title={product.room_name}
+        image={room.room_img_url ? room.room_img_url : '/static/images/products/product_5.png'}
+        title={room.room_name}
       />
       <CardContent>
-        <Typography
-          align="left"
-          color="textPrimary"
-          variant="body1"
-        >
-          {product.description}
-        </Typography>
-        <Typography
-          color="textSecondary"
-          display="inline"
-          variant="body2"
-        >
-          {product.building?.building_name}
-        </Typography>
+        <span>
+          {`HN : ${ipData.hn} `}
+        </span>
+        <span>
+          {`AN : ${ipData.an}`}
+        </span>
+        <p>
+          {`ผู้ป่วย : ${patient.pname}${patient.fname} ${patient.lname}`}
+        </p>
+        <p>
+          {`วันที่ Admit : ${ipData.regdate}`}
+        </p>
+        <p>
+          {`วันที่ย้ายเข้า : ${bookingRoom.checkin_date}`}
+        </p>
       </CardContent>
       <Box flexGrow={1} />
       <Divider />
@@ -73,7 +78,6 @@ const BedCard = ({ className, product, ...rest }) => {
             className={classes.statsItem}
             item
           >
-            {/* // TODO: separate and create updated time component */}
             <AccessTimeIcon
               className={classes.statsIcon}
               color="action"
@@ -99,7 +103,7 @@ const BedCard = ({ className, product, ...rest }) => {
               display="inline"
               variant="body2"
             >
-              {product.totalDownloads}
+              {room.totalDownloads}
               {' '}
               Checkout
             </Typography>
@@ -112,7 +116,7 @@ const BedCard = ({ className, product, ...rest }) => {
 
 BedCard.propTypes = {
   className: PropTypes.string,
-  product: PropTypes.object.isRequired
+  room: PropTypes.object.isRequired
 };
 
 export default BedCard;

@@ -7,4 +7,7 @@ export default makeStyles((theme) => ({
     paddingBottom: theme.spacing(3),
     paddingTop: theme.spacing(3)
   },
+  bedCard: {
+    height: '100%'
+  }
 }));
