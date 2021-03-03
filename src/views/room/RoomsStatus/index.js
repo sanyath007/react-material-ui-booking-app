@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from '@material-ui/core';
 import Page from 'src/components/Page';
-// import BedCard from './BedCard';
 import api from '../../../api';
 import useStyles from './styles';
 import FloorCard from './FloorCard';
