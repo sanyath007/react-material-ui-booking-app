@@ -1,122 +1,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import {
-  Avatar,
-  Box,
-  Card,
-  CardHeader,
-  CardMedia,
-  CardContent,
-  Divider,
-  Grid,
-  IconButton,
-  Typography
-} from '@material-ui/core';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import GetAppIcon from '@material-ui/icons/GetApp';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import useStyles from './styles';
+import { Card, CardContent } from '@material-ui/core';
+import { Alert, Button } from 'react-bootstrap';
 
-const BedCard = ({ className, room, ...rest }) => {
-  const classes = useStyles();
-  const bookingRoom = { ...room.booking_room };
-  const booking = { ...bookingRoom.booking };
-  const ipData = { ...booking.an };
-  const patient = { ...ipData.patient };
+const BedCard = ({ room, usability }) => {
+  // TODO: create onClick function
 
   return (
-    <Card
-      className={clsx(classes.root, className)}
-      {...rest}
-    >
-      <CardHeader
-        avatar={(
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
+    <Card>
+      {/* // TODO: styling CardContent */}
+      <CardContent style={{ height: '320px' }}>
+        <h5>{room.room_name}</h5>
+
+        {usability ? (
+          <Alert variant="danger" style={{ padding: '10px' }}>
+            <div style={{ height: '180px' }}>
+              <p>{`AN : ${usability.booking_room?.booking?.an?.an} HN: ${usability.booking_room?.booking?.an?.hn}`}</p>
+              <p>{`ผู้ป่วย : ${usability.booking_room?.booking?.an?.patient?.pname}${usability.booking_room?.booking?.an?.patient?.fname} ${usability.booking_room?.booking?.an?.patient?.lname}`}</p>
+              <p>
+                {`วันที่ Admit : ${usability.booking_room?.booking?.an?.regdate}`}
+              </p>
+              <p>
+                {`วันที่ย้ายเข้า : ${usability.booking_room?.checkin_date} ${usability.booking_room?.checkin_time}`}
+              </p>
+            </div>
+          </Alert>
+        ) : (
+          <Alert variant="success" style={{ padding: '10px' }}>
+            <div style={{ height: '180px' }}>
+              ห้องว่าง
+            </div>
+          </Alert>
         )}
-        action={(
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        )}
-        title={room.room_name}
-        subheader="September 14, 2016"
-      />
-      <CardMedia
-        className={classes.media}
-        image={room.room_img_url ? room.room_img_url : '/static/images/products/product_5.png'}
-        title={room.room_name}
-      />
-      <CardContent>
-        <span>
-          {`HN : ${ipData.hn} `}
-        </span>
-        <span>
-          {`AN : ${ipData.an}`}
-        </span>
-        <p>
-          {`ผู้ป่วย : ${patient.pname}${patient.fname} ${patient.lname}`}
-        </p>
-        <p>
-          {`วันที่ Admit : ${ipData.regdate}`}
-        </p>
-        <p>
-          {`วันที่ย้ายเข้า : ${bookingRoom.checkin_date}`}
-        </p>
+        {/* // TODO: set onClick function */}
+        {usability && (<Button variant="danger">จำหน่าย</Button>)}
       </CardContent>
-      <Box flexGrow={1} />
-      <Divider />
-      <Box p={2}>
-        <Grid
-          container
-          justify="space-between"
-          spacing={2}
-        >
-          <Grid
-            className={classes.statsItem}
-            item
-          >
-            <AccessTimeIcon
-              className={classes.statsIcon}
-              color="action"
-            />
-            <Typography
-              color="textSecondary"
-              display="inline"
-              variant="body2"
-            >
-              Updated 2hr ago
-            </Typography>
-          </Grid>
-          <Grid
-            className={classes.statsItem}
-            item
-          >
-            <GetAppIcon
-              className={classes.statsIcon}
-              color="action"
-            />
-            <Typography
-              color="textSecondary"
-              display="inline"
-              variant="body2"
-            >
-              {room.totalDownloads}
-              {' '}
-              Checkout
-            </Typography>
-          </Grid>
-        </Grid>
-      </Box>
     </Card>
   );
 };
 
 BedCard.propTypes = {
-  className: PropTypes.string,
-  room: PropTypes.object.isRequired
+  room: PropTypes.object.isRequired,
+  usability: PropTypes.object
 };
 
 export default BedCard;
