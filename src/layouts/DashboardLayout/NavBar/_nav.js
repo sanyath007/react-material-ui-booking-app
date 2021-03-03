@@ -7,7 +7,8 @@ import {
   User as UserIcon,
   UserPlus as UserPlusIcon,
   Home as HomeIcon,
-  Calendar as CalendarIcon
+  Calendar as CalendarIcon,
+  Sliders as SlidersIcon
 } from 'react-feather';
 
 const items = [
@@ -25,6 +26,11 @@ const items = [
     href: '/app/calendar',
     icon: CalendarIcon,
     title: 'ตารางการจองห้อง'
+  },
+  {
+    href: '/app/rooms-status',
+    icon: SlidersIcon,
+    title: 'สถานะการใช้ห้อง'
   },
   {
     href: '/app/rooms',
