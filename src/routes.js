@@ -28,7 +28,7 @@ const routes = [
       { path: 'newbooking', element: <NewBooking /> },
       { path: 'checkin/:bookId', element: <CheckinRoom /> },
       { path: 'calendar', element: <CalendarView /> },
-      { path: 'rooms-status', element: <RoomsStatusView /> },
+      { path: 'status', element: <RoomsStatusView /> },
       { path: 'rooms', element: <RoomListView /> },
       { path: 'newroom', element: <NewRoom /> },
       { path: 'account', element: <AccountView /> },

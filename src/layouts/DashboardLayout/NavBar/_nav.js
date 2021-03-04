@@ -28,7 +28,7 @@ const items = [
     title: 'ตารางการจองห้อง'
   },
   {
-    href: '/app/rooms-status',
+    href: '/app/status',
     icon: SlidersIcon,
     title: 'สถานะการใช้ห้อง'
   },
