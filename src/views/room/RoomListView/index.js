@@ -20,6 +20,7 @@ const RoomList = () => {
 
   const showFilteredRoom = (floor) => {
     const tmpRooms = rooms.filter((room) => parseInt(room.floor, 10) === floor);
+
     setFilteredRoom(tmpRooms);
   };
 

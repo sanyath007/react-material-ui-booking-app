@@ -7,9 +7,9 @@ import {
   Card,
   CardContent,
   Grid,
-  TextField,
-  InputAdornment,
-  SvgIcon,
+  // TextField,
+  // InputAdornment,
+  // SvgIcon,
   FormControl,
   InputLabel,
   Select,
@@ -17,7 +17,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { Search as SearchIcon } from 'react-feather';
+// import { Search as SearchIcon } from 'react-feather';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -80,7 +80,7 @@ const Toolbar = ({ className, showFilteredRoom, ...rest }) => {
                   <Select
                     labelId="floor"
                     variant="standard"
-                    name="selectedFloor"
+                    name="floor"
                     value={selectedFloor}
                     onChange={(e) => {
                       setSelectedFloor(e.target.value);
@@ -96,7 +96,7 @@ const Toolbar = ({ className, showFilteredRoom, ...rest }) => {
                 </FormControl>
               </Grid>
 
-              <Grid item md={6}>
+              {/* <Grid item md={6}>
                 <TextField
                   fullWidth
                   InputProps={{
@@ -114,7 +114,7 @@ const Toolbar = ({ className, showFilteredRoom, ...rest }) => {
                   placeholder="Search Room Name"
                   variant="outlined"
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
           </CardContent>
         </Card>
