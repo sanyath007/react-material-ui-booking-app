@@ -38,7 +38,14 @@ const BedCard = ({ room, usability, onDischargeClick }) => {
         )}
         {/* // TODO: set onClick function */}
         {usability && (
-          <Button size="sm" variant="danger" style={{ margin: '0' }} onClick={onDischargeClick}>
+          <Button
+            size="sm"
+            variant="danger"
+            style={{ margin: '0' }}
+            onClick={() => {
+              onDischargeClick(usability.booking_room.book_id, usability.booking_room.room_id);
+            }}
+          >
             จำหน่าย
           </Button>
         )}

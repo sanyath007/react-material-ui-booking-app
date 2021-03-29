@@ -74,7 +74,7 @@ export const checkin = (data) => async (dispatch) => {
 
 export const checkout = (bookId, roomId) => async (dispatch) => {
   try {
-    const res = await api.put(`/bookings/checkin/${bookId}/${roomId}`);
+    const res = await api.put(`/bookings/checkout/${bookId}/${roomId}`);
     console.log(res);
 
     dispatch(checkoutSuccess(res.data));

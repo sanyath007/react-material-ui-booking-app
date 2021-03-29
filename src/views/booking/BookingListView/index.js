@@ -8,7 +8,7 @@ import Page from 'src/components/Page';
 import Results from './Results';
 import Toolbar from './Toolbar';
 import useStyles from './styles';
-import { fetchBookingAll } from '../../../redux';
+import { bookingActions } from '../../../redux';
 
 const BookingListView = () => {
   const classes = useStyles();
@@ -16,7 +16,7 @@ const BookingListView = () => {
   const { bookings } = useSelector((state) => state.booking);
 
   useEffect(() => {
-    dispatch(fetchBookingAll());
+    dispatch(bookingActions.fetchBookingAll());
   }, []);
 
   return (

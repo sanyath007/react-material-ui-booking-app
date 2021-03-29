@@ -5,7 +5,7 @@ import Page from 'src/components/Page';
 import api from '../../../api';
 import useStyles from './styles';
 import FloorCard from './FloorCard';
-import { booking } from '../../../redux';
+import { bookingActions } from '../../../redux';
 
 const RoomsStatus = () => {
   const classes = useStyles();
@@ -27,6 +27,7 @@ const RoomsStatus = () => {
     setRooms1(floor1);
     setRooms2(floor2);
     setRooms3(floor3);
+
     setStatus(res.data.status);
   };
 
@@ -34,10 +35,10 @@ const RoomsStatus = () => {
     fetchRoomsStatus();
   }, []);
 
-  const handleDischargeClick = (e) => {
-    console.log(e);
+  const handleDischargeClick = (bookId, roomId) => {
+    dispatch(bookingActions.checkout(bookId, roomId));
 
-    dispatch(booking.checkout());
+    fetchRoomsStatus();
   };
 
   return (

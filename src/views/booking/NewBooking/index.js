@@ -17,7 +17,7 @@ import { DatePicker } from '@material-ui/pickers';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import Page from 'src/components/Page';
-import { fetchRoomTypeAll, addBooking } from '../../../redux';
+import { bookingActions } from '../../../redux';
 import useStyles from './styles';
 import PatientModal from './PatientModal';
 
@@ -54,7 +54,7 @@ function NewBooking() {
 
     // TODO: set user to logged in user and user's ward
 
-    dispatch(addBooking(data));
+    dispatch(bookingActions.addBooking(data));
   };
 
   const handleRoomTypeChecked = (e) => {
@@ -88,7 +88,7 @@ function NewBooking() {
   const handleOnSelectAn = (an) => setBooking({ ...booking, an });
 
   useEffect(() => {
-    dispatch(fetchRoomTypeAll());
+    dispatch(bookingActions.fetchRoomTypeAll());
   }, []);
 
   return (
