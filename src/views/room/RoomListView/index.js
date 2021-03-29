@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Container,
@@ -16,12 +16,16 @@ const RoomList = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { rooms } = useSelector((state) => state.room);
+  const [filteredRoom, setFilteredRoom] = useState([]);
+
+  const showFilteredRoom = (floor) => {
+    const tmpRooms = rooms.filter((room) => parseInt(room.floor, 10) === floor);
+    setFilteredRoom(tmpRooms);
+  };
 
   useEffect(() => {
     dispatch(roomActions.fetchRoomAll());
   }, []);
-
-  console.log(rooms);
 
   return (
     <Page
@@ -29,14 +33,14 @@ const RoomList = () => {
       title="Rooms"
     >
       <Container maxWidth={false}>
-        <Toolbar />
+        <Toolbar showFilteredRoom={showFilteredRoom} />
 
         <Box mt={3}>
           <Grid
             container
             spacing={3}
           >
-            {rooms.map((room) => (
+            {filteredRoom && filteredRoom.map((room) => (
               <Grid
                 item
                 key={room.room_id}
