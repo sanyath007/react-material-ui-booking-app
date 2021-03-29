@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import api from '../../api';
+import { fetchRoomsStatus } from '../room/roomSlice';
 
 export const bookingSlice = createSlice({
   name: 'booking',
@@ -78,6 +79,7 @@ export const checkout = (bookId, roomId) => async (dispatch) => {
     console.log(res);
 
     dispatch(checkoutSuccess(res.data));
+    dispatch(fetchRoomsStatus());
   } catch (error) {
     console.log(error);
   }
