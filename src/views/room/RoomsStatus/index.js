@@ -49,9 +49,26 @@ const RoomsStatus = () => {
         <>
           <h2>อาคารผู้ป่วยใน 10 ชั้น</h2>
         </>
-        <FloorCard floor="ชั้น 1" rooms={rooms1} usabilities={status} handleDischargeClick={handleDischargeClick} />
-        <FloorCard floor="ชั้น 2" rooms={rooms2} usabilities={status} handleDischargeClick={handleDischargeClick} />
-        <FloorCard floor="ชั้น 3" rooms={rooms3} usabilities={status} handleDischargeClick={handleDischargeClick} />
+        <FloorCard
+          floor="ชั้น 1"
+          rooms={rooms1}
+          usabilities={status}
+          handleDischargeClick={handleDischargeClick}
+        />
+
+        <FloorCard
+          floor="ชั้น 2"
+          rooms={rooms2}
+          usabilities={status}
+          handleDischargeClick={handleDischargeClick}
+        />
+
+        <FloorCard
+          floor="ชั้น 3"
+          rooms={rooms3}
+          usabilities={status}
+          handleDischargeClick={handleDischargeClick}
+        />
       </Container>
     </Page>
   );

@@ -18,7 +18,7 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import useStyles from './styles';
 
-const RoomCard = ({ className, product, ...rest }) => {
+const RoomCard = ({ className, room, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -37,13 +37,13 @@ const RoomCard = ({ className, product, ...rest }) => {
             <MoreVertIcon />
           </IconButton>
         )}
-        title={product.room_name}
+        title={room.room_name}
         subheader="September 14, 2016"
       />
       <CardMedia
         className={classes.media}
-        image={product.room_img_url ? product.room_img_url : '/static/images/products/product_5.png'}
-        title={product.room_name}
+        image={room.room_img_url ? room.room_img_url : '/static/images/products/product_5.png'}
+        title={room.room_name}
       />
       <CardContent>
         <Typography
@@ -51,14 +51,14 @@ const RoomCard = ({ className, product, ...rest }) => {
           color="textPrimary"
           variant="body1"
         >
-          {product.description}
+          {room.description}
         </Typography>
         <Typography
           color="textSecondary"
           display="inline"
           variant="body2"
         >
-          {product.building?.building_name}
+          {room.building?.building_name}
         </Typography>
       </CardContent>
       <Box flexGrow={1} />
@@ -99,7 +99,7 @@ const RoomCard = ({ className, product, ...rest }) => {
               display="inline"
               variant="body2"
             >
-              {product.totalDownloads}
+              {room.totalDownloads}
               {' '}
               Downloads
             </Typography>
@@ -112,7 +112,7 @@ const RoomCard = ({ className, product, ...rest }) => {
 
 RoomCard.propTypes = {
   className: PropTypes.string,
-  product: PropTypes.object.isRequired
+  room: PropTypes.object.isRequired
 };
 
 export default RoomCard;

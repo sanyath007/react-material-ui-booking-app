@@ -33,6 +33,7 @@ function NewBooking() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { roomTypes } = useSelector((state) => state.roomType);
+
   const [booking, setBooking] = useState(initialBooking);
   const [openModal, setOpenModal] = useState(false);
 

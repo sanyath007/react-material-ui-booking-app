@@ -30,6 +30,7 @@ const RoomList = () => {
     >
       <Container maxWidth={false}>
         <Toolbar />
+
         <Box mt={3}>
           <Grid
             container
@@ -45,7 +46,7 @@ const RoomList = () => {
               >
                 <RoomCard
                   className={classes.roomCard}
-                  product={room}
+                  room={room}
                 />
               </Grid>
             ))}

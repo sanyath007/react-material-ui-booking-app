@@ -27,7 +27,16 @@ const FloorCard = ({
             const roomStatus = usability.length > 0 ? usability[0] : null;
 
             return (
-              <Grid item xs={12} sm={6} md={4} lg={4} xl={3} key={tmp.room_id} style={{ padding: '10px' }}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                lg={4}
+                xl={3}
+                key={tmp.room_id}
+                style={{ padding: '10px' }}
+              >
                 <BedCard
                   room={room}
                   usability={roomStatus}
