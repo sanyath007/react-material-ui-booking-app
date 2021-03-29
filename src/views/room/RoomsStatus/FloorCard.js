@@ -7,11 +7,11 @@ import BedCard from './BedCard';
 const FloorCard = ({
   floor,
   rooms,
-  usabilities,
+  usedRooms,
   handleDischargeClick
 }) => {
   const tmpRooms = rooms.map((room) => {
-    room.usability = usabilities.filter((us) => us.room_id === room.room_id);
+    room.used = usedRooms.filter((us) => us.room_id === room.room_id);
 
     return room;
   });
@@ -23,8 +23,8 @@ const FloorCard = ({
         <h3>{floor}</h3>
         <Grid container>
           {tmpRooms.map((tmp) => {
-            const { usability, ...room } = tmp;
-            const roomStatus = usability.length > 0 ? usability[0] : null;
+            const { used, ...room } = tmp;
+            const roomStatus = used.length > 0 ? used[0] : null;
 
             return (
               <Grid
@@ -54,7 +54,7 @@ const FloorCard = ({
 FloorCard.propTypes = {
   floor: PropTypes.string,
   rooms: PropTypes.array,
-  usabilities: PropTypes.array,
+  usedRooms: PropTypes.array,
   handleDischargeClick: PropTypes.func,
 };
 

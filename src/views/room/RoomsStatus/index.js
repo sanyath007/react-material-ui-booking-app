@@ -14,12 +14,10 @@ const RoomsStatus = () => {
   const [rooms1, setRooms1] = useState([]);
   const [rooms2, setRooms2] = useState([]);
   const [rooms3, setRooms3] = useState([]);
-  // TODO: rename of status
-  const [status, setStatus] = useState([]);
+  const [usedRooms, setUsedRooms] = useState([]);
 
   const fetchRoomsStatus = async () => {
     const res = await api.get('/rooms-status');
-    console.log(res);
 
     const floor1 = res.data.rooms.filter((room) => parseInt(room.floor, 10) === 1);
     const floor2 = res.data.rooms.filter((room) => parseInt(room.floor, 10) === 2);
@@ -29,7 +27,7 @@ const RoomsStatus = () => {
     setRooms2(floor2);
     setRooms3(floor3);
 
-    setStatus(res.data.status);
+    setUsedRooms(res.data.usedRooms);
   };
 
   useEffect(() => {
@@ -52,21 +50,21 @@ const RoomsStatus = () => {
         <FloorCard
           floor="ชั้น 1"
           rooms={rooms1}
-          usabilities={status}
+          usedRooms={usedRooms}
           handleDischargeClick={handleDischargeClick}
         />
 
         <FloorCard
           floor="ชั้น 2"
           rooms={rooms2}
-          usabilities={status}
+          usedRooms={usedRooms}
           handleDischargeClick={handleDischargeClick}
         />
 
         <FloorCard
           floor="ชั้น 3"
           rooms={rooms3}
-          usabilities={status}
+          usedRooms={usedRooms}
           handleDischargeClick={handleDischargeClick}
         />
       </Container>
