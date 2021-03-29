@@ -10,21 +10,14 @@ const FloorCard = ({
   usedRooms,
   handleDischargeClick
 }) => {
-  const tmpRooms = rooms.map((room) => {
-    room.used = usedRooms.filter((us) => us.room_id === room.room_id);
-
-    return room;
-  });
-
   return (
     <Row>
       {/* // TODO: styleing col */}
       <Col style={{ border: '1px solid black', margin: '10px', padding: '10px' }}>
         <h3>{floor}</h3>
         <Grid container>
-          {tmpRooms.map((tmp) => {
-            const { used, ...room } = tmp;
-            const roomStatus = used.length > 0 ? used[0] : null;
+          {rooms.map((room) => {
+            const used = usedRooms.filter((us) => us.room_id === room.room_id);
 
             return (
               <Grid
@@ -34,12 +27,12 @@ const FloorCard = ({
                 md={4}
                 lg={4}
                 xl={3}
-                key={tmp.room_id}
+                key={room.room_id}
                 style={{ padding: '10px' }}
               >
                 <BedCard
                   room={room}
-                  usability={roomStatus}
+                  used={used.length > 0 ? used[0] : null}
                   onDischargeClick={handleDischargeClick}
                 />
               </Grid>

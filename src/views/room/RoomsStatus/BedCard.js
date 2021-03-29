@@ -4,27 +4,27 @@ import { Card, CardContent } from '@material-ui/core';
 import { Alert, Button } from 'react-bootstrap';
 import moment from 'moment';
 
-const BedCard = ({ room, usability, onDischargeClick }) => {
+const BedCard = ({ room, used, onDischargeClick }) => {
   return (
     <Card>
       {/* // TODO: styling CardContent */}
       <CardContent style={{ height: '200px', fontSize: '14px' }}>
         <h5>{room.room_name}</h5>
 
-        {usability ? (
+        {used ? (
           <Alert variant="danger" style={{ padding: '10px', marginBottom: '5px' }}>
             <div style={{ height: '80px' }}>
               <p style={{ margin: '0' }}>
-                {`AN : ${usability.booking_room?.booking?.an?.an} HN: ${usability.booking_room?.booking?.an?.hn}`}
+                {`AN : ${used.booking_room?.booking?.an?.an} HN: ${used.booking_room?.booking?.an?.hn}`}
               </p>
               <p style={{ margin: '0' }}>
-                {`ผู้ป่วย : ${usability.booking_room?.booking?.an?.patient?.pname}${usability.booking_room?.booking?.an?.patient?.fname} ${usability.booking_room?.booking?.an?.patient?.lname}`}
+                {`ผู้ป่วย : ${used.booking_room?.booking?.an?.patient?.pname}${used.booking_room?.booking?.an?.patient?.fname} ${used.booking_room?.booking?.an?.patient?.lname}`}
               </p>
               <p style={{ margin: '0' }}>
-                {`วันที่ Admit : ${moment(usability.booking_room?.booking?.an?.regdate).format('DD/MM/YYYY')}`}
+                {`วันที่ Admit : ${moment(used.booking_room?.booking?.an?.regdate).format('DD/MM/YYYY')}`}
               </p>
               <p style={{ margin: '0' }}>
-                {`วันที่ย้ายเข้า : ${moment(usability.booking_room?.checkin_date).format('DD/MM/YYYY')} ${usability.booking_room?.checkin_time}`}
+                {`วันที่ย้ายเข้า : ${moment(used.booking_room?.checkin_date).format('DD/MM/YYYY')} ${used.booking_room?.checkin_time}`}
               </p>
             </div>
           </Alert>
@@ -36,13 +36,13 @@ const BedCard = ({ room, usability, onDischargeClick }) => {
           </Alert>
         )}
 
-        {usability && (
+        {used && (
           <Button
             size="sm"
             variant="danger"
             style={{ margin: '0' }}
             onClick={() => {
-              onDischargeClick(usability.booking_room.book_id, usability.booking_room.room_id);
+              onDischargeClick(used.booking_room.book_id, used.booking_room.room_id);
             }}
           >
             จำหน่าย
@@ -55,7 +55,7 @@ const BedCard = ({ room, usability, onDischargeClick }) => {
 
 BedCard.propTypes = {
   room: PropTypes.object.isRequired,
-  usability: PropTypes.object,
+  used: PropTypes.object,
   onDischargeClick: PropTypes.func,
 };
 

@@ -1,37 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Container } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Page from 'src/components/Page';
-import api from '../../../api';
+// import api from '../../../api';
 import useStyles from './styles';
 import FloorCard from './FloorCard';
-import { bookingActions } from '../../../redux';
+import {
+  bookingActions,
+  roomActions
+} from '../../../redux';
 
 const RoomsStatus = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-
-  const [rooms1, setRooms1] = useState([]);
-  const [rooms2, setRooms2] = useState([]);
-  const [rooms3, setRooms3] = useState([]);
-  const [usedRooms, setUsedRooms] = useState([]);
-
-  const fetchRoomsStatus = async () => {
-    const res = await api.get('/rooms-status');
-
-    const floor1 = res.data.rooms.filter((room) => parseInt(room.floor, 10) === 1);
-    const floor2 = res.data.rooms.filter((room) => parseInt(room.floor, 10) === 2);
-    const floor3 = res.data.rooms.filter((room) => parseInt(room.floor, 10) === 3);
-
-    setRooms1(floor1);
-    setRooms2(floor2);
-    setRooms3(floor3);
-
-    setUsedRooms(res.data.usedRooms);
-  };
+  const {
+    floor1,
+    floor2,
+    floor3,
+    usedRooms
+  } = useSelector((state) => state.room);
 
   useEffect(() => {
-    fetchRoomsStatus();
+    dispatch(roomActions.fetchRoomsStatus());
   }, []);
 
   const handleDischargeClick = (bookId, roomId) => {
@@ -49,21 +39,21 @@ const RoomsStatus = () => {
         </>
         <FloorCard
           floor="ชั้น 1"
-          rooms={rooms1}
+          rooms={floor1}
           usedRooms={usedRooms}
           handleDischargeClick={handleDischargeClick}
         />
 
         <FloorCard
           floor="ชั้น 2"
-          rooms={rooms2}
+          rooms={floor2}
           usedRooms={usedRooms}
           handleDischargeClick={handleDischargeClick}
         />
 
         <FloorCard
           floor="ชั้น 3"
-          rooms={rooms3}
+          rooms={floor3}
           usedRooms={usedRooms}
           handleDischargeClick={handleDischargeClick}
         />
