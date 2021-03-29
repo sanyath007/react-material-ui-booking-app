@@ -10,7 +10,7 @@ import Page from 'src/components/Page';
 import Toolbar from './Toolbar';
 import RoomCard from '../RoomCard/RoomCard';
 import useStyles from './styles';
-import { fetchRoomAll } from '../../../redux/room/roomSlice';
+import { roomActions } from '../../../redux';
 
 const RoomList = () => {
   const classes = useStyles();
@@ -18,7 +18,7 @@ const RoomList = () => {
   const { rooms } = useSelector((state) => state.room);
 
   useEffect(() => {
-    dispatch(fetchRoomAll());
+    dispatch(roomActions.fetchRoomAll());
   }, []);
 
   console.log(rooms);

@@ -19,6 +19,7 @@ const RoomsStatus = () => {
 
   const fetchRoomsStatus = async () => {
     const res = await api.get('/rooms-status');
+    console.log(res);
 
     const floor1 = res.data.rooms.filter((room) => parseInt(room.floor, 10) === 1);
     const floor2 = res.data.rooms.filter((room) => parseInt(room.floor, 10) === 2);
@@ -37,8 +38,6 @@ const RoomsStatus = () => {
 
   const handleDischargeClick = (bookId, roomId) => {
     dispatch(bookingActions.checkout(bookId, roomId));
-
-    fetchRoomsStatus();
   };
 
   return (

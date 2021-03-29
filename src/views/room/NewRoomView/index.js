@@ -4,24 +4,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import Page from 'src/components/Page';
 import useStyles from './styles';
 import {
-  addRoom,
-  fetchRoomTypeAll,
-  fetchRoomGroupAll,
-  fetchBuildingAll
+  roomActions,
+  roomTypeActions,
+  roomGroupActions,
+  buildingActions
 } from '../../../redux';
 import FormRoom from '../FormRoom/FormRoom';
 
 const NewRoom = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
   const { roomTypes } = useSelector((state) => state.roomType);
   const { roomGroups } = useSelector((state) => state.roomGroup);
   const { buildings } = useSelector((state) => state.building);
 
   useEffect(() => {
-    dispatch(fetchRoomTypeAll());
-    dispatch(fetchRoomGroupAll());
-    dispatch(fetchBuildingAll());
+    dispatch(roomTypeActions.fetchRoomTypeAll());
+    dispatch(roomGroupActions.fetchRoomGroupAll());
+    dispatch(buildingActions.fetchBuildingAll());
   }, []);
 
   const handleSubmit = async (room) => {
@@ -37,7 +38,7 @@ const NewRoom = () => {
     formData.append('room_img_url', room.room_img_url);
     formData.append('amenities', room.amenities);
 
-    dispatch(addRoom(formData));
+    dispatch(roomActions.addRoom(formData));
   };
 
   return (
