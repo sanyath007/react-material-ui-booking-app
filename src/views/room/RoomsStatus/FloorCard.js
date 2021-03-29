@@ -4,7 +4,12 @@ import { Row, Col } from 'react-bootstrap';
 import { Grid } from '@material-ui/core';
 import BedCard from './BedCard';
 
-const FloorCard = ({ floor, rooms, usabilities }) => {
+const FloorCard = ({
+  floor,
+  rooms,
+  usabilities,
+  handleDischargeClick
+}) => {
   const tmpRooms = rooms.map((room) => {
     room.usability = usabilities.filter((us) => us.room_id === room.room_id);
 
@@ -23,7 +28,11 @@ const FloorCard = ({ floor, rooms, usabilities }) => {
 
             return (
               <Grid item xs={12} sm={6} md={4} lg={4} xl={3} key={tmp.room_id} style={{ padding: '10px' }}>
-                <BedCard room={room} usability={roomStatus} />
+                <BedCard
+                  room={room}
+                  usability={roomStatus}
+                  onDischargeClick={handleDischargeClick}
+                />
               </Grid>
             );
           })}
@@ -37,6 +46,7 @@ FloorCard.propTypes = {
   floor: PropTypes.string,
   rooms: PropTypes.array,
   usabilities: PropTypes.array,
+  handleDischargeClick: PropTypes.func,
 };
 
 export default FloorCard;

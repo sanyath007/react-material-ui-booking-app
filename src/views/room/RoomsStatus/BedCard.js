@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Card, CardContent } from '@material-ui/core';
 import { Alert, Button } from 'react-bootstrap';
 
-const BedCard = ({ room, usability }) => {
+const BedCard = ({ room, usability, onDischargeClick }) => {
   // TODO: create onClick function
 
   return (
@@ -38,7 +38,7 @@ const BedCard = ({ room, usability }) => {
         )}
         {/* // TODO: set onClick function */}
         {usability && (
-          <Button size="sm" variant="danger" style={{ margin: '0' }}>
+          <Button size="sm" variant="danger" style={{ margin: '0' }} onClick={onDischargeClick}>
             จำหน่าย
           </Button>
         )}
@@ -49,7 +49,8 @@ const BedCard = ({ room, usability }) => {
 
 BedCard.propTypes = {
   room: PropTypes.object.isRequired,
-  usability: PropTypes.object
+  usability: PropTypes.object,
+  onDischargeClick: PropTypes.func,
 };
 
 export default BedCard;

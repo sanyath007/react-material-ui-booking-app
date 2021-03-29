@@ -22,6 +22,9 @@ export const bookingSlice = createSlice({
 
       state.bookings = [...newBookings];
     },
+    checkoutSuccess: (state) => {
+      return state;
+    }
   }
 });
 
@@ -32,6 +35,7 @@ const {
   fetchAllSuccess,
   addSuccess,
   checkinSuccess,
+  checkoutSuccess,
 } = bookingSlice.actions;
 
 export const fetchBookingAll = () => async (dispatch) => {
@@ -67,4 +71,14 @@ export const checkin = (data) => async (dispatch) => {
     console.log(error);
   }
 };
-// TODO: checkout action
+
+export const checkout = (bookId, roomId) => async (dispatch) => {
+  try {
+    const res = await api.put(`/bookings/checkin/${bookId}/${roomId}`);
+    console.log(res);
+
+    dispatch(checkoutSuccess(res.data));
+  } catch (error) {
+    console.log(error);
+  }
+};
