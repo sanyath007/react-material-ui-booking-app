@@ -14,13 +14,16 @@ export const ipSlice = createSlice({
       state.ips = action.payload.items;
       state.pager = action.payload.pager;
     },
+    fetchIpByAnSuccess: (state, action) => {
+      state.ip = action.payload;
+    },
   }
 });
 
 export default ipSlice.reducer;
 
 // Actions
-const { fetchAllSuccess } = ipSlice.actions;
+const { fetchAllSuccess, fetchIpByAnSuccess } = ipSlice.actions;
 
 export const fetchIpAll = () => async (dispatch) => {
   try {
@@ -35,8 +38,20 @@ export const fetchIpAll = () => async (dispatch) => {
 export const fetchIpAllWithPage = (url) => async (dispatch) => {
   try {
     const res = await axios.get(url);
-    console.log(res);
+
     return dispatch(fetchAllSuccess(res.data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchIpByAn = (an) => async (dispatch) => {
+  try {
+    console.log(an);
+    const res = await api.get(`/ips/${an}`);
+    console.log(res);
+
+    return dispatch(fetchIpByAnSuccess(res.data));
   } catch (error) {
     console.log(error);
   }

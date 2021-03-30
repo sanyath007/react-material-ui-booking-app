@@ -4,7 +4,7 @@ import * as roomGroupActions from './roomGroup/roomGroupSlice';
 import * as buildingActions from './building/buildingSlice';
 import * as bookingActions from './booking/bookingSlice';
 import { fetchPatientAll } from './patient/patientSlice';
-import { fetchIpAll, fetchIpAllWithPage } from './ip/ipSlice';
+import * as ipActions from './ip/ipSlice';
 
 export {
   roomActions,
@@ -13,6 +13,5 @@ export {
   buildingActions,
   bookingActions,
   fetchPatientAll,
-  fetchIpAll,
-  fetchIpAllWithPage,
+  ipActions,
 };

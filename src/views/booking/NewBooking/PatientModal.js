@@ -9,18 +9,18 @@ import {
   Pagination
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { fetchIpAll, fetchIpAllWithPage } from '../../../redux';
+import { ipActions } from '../../../redux';
 
 function PatientModal({ isOpen, hideModal, onSelected }) {
   const dispatch = useDispatch();
   const { ips, pager } = useSelector((state) => state.ip);
 
   useEffect(() => {
-    dispatch(fetchIpAll());
+    dispatch(ipActions.fetchIpAll());
   }, []);
 
   const handlePageItemClick = (url) => {
-    dispatch(fetchIpAllWithPage(url));
+    dispatch(ipActions.fetchIpAllWithPage(url));
   };
 
   return (

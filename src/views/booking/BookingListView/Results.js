@@ -177,7 +177,7 @@ const Results = ({
                     {`${booking.user?.person_firstname} ${booking.user?.person_lastname}`}
                   </TableCell>
                   <TableCell align="center">
-                    <a href="#" title="รายละเอียด" onClick={onViewDetailClick}>
+                    <a href="#" title="รายละเอียด" onClick={() => onViewDetailClick(booking.an.an)}>
                       <VisibilityIcon color="primary" />
                     </a>
                     <a href="#" title="แก้ไข">

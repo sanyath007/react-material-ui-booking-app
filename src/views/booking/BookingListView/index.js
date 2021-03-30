@@ -17,14 +17,17 @@ const BookingListView = () => {
   const { bookings } = useSelector((state) => state.booking);
 
   const [openModal, setOpenModal] = useState(false);
+  const [selectedAn, setSelectedAn] = useState('');
 
   const handleOnHideModal = () => {
     console.log('On hide is called !!!');
     setOpenModal(false);
   };
 
-  const handleViewDetailClick = () => {
+  const handleViewDetailClick = (an) => {
     setOpenModal(true);
+
+    setSelectedAn(an);
   };
 
   useEffect(() => {
@@ -40,6 +43,7 @@ const BookingListView = () => {
       <PatientProfileModal
         isOpen={openModal}
         hideModal={handleOnHideModal}
+        an={selectedAn}
       />
 
       <Container maxWidth={false}>

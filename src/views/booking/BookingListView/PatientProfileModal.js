@@ -1,28 +1,51 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Box,
+  Avatar,
   Card,
   CardContent,
-  Divider,
+  // Divider,
   Grid,
   Typography,
-  // makeStyles
+  makeStyles
 } from '@material-ui/core';
 import {
   Modal,
 } from 'react-bootstrap';
+import moment from 'moment';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { fetchIpAll } from '../../../redux';
+import { ipActions } from '../../../redux';
 
-const PatientProfileModal = ({ isOpen, hideModal }) => {
+const user = {
+  avatar: '/static/images/avatars/avatar_3.png',
+  city: 'Los Angeles',
+  country: 'USA',
+  jobTitle: 'Senior Developer',
+  name: 'Kobe Jr',
+  timezone: 'GTM-7'
+};
+
+const useStyles = makeStyles(() => ({
+  root: {},
+  avatar: {
+    height: 100,
+    width: 100,
+    marginBottom: '10px'
+  }
+}));
+
+const PatientProfileModal = ({ isOpen, hideModal, an }) => {
+  const classes = useStyles();
   const dispatch = useDispatch();
-  // const { ips, pager } = useSelector((state) => state.ip);
+  const { ip } = useSelector((state) => state.ip);
 
   useEffect(() => {
-    dispatch(fetchIpAll());
-  }, []);
+    if (an) dispatch(ipActions.fetchIpByAn(an));
+  }, [an]);
+
+  console.log(ip);
 
   return (
     <>
@@ -34,65 +57,143 @@ const PatientProfileModal = ({ isOpen, hideModal }) => {
       >
         <Modal.Header closeButton>ข้อมูลผู้ป่วย</Modal.Header>
         <Modal.Body>
-          <Card>
-            <CardContent>
-              <Grid
-                container
-                spacing={3}
-              >
-                <Grid
-                  item
-                  md={6}
-                  xs={12}
-                >
-                  <Typography>Test</Typography>
-                </Grid>
-                <Grid
-                  item
-                  md={6}
-                  xs={12}
-                >
-                  <Typography>Test</Typography>
-                </Grid>
-                <Grid
-                  item
-                  md={6}
-                  xs={12}
-                >
-                  <Typography>Test</Typography>
-                </Grid>
-                <Grid
-                  item
-                  md={6}
-                  xs={12}
-                >
-                  <Typography>Test</Typography>
-                </Grid>
-                <Grid
-                  item
-                  md={6}
-                  xs={12}
-                >
-                  <Typography>Test</Typography>
-                </Grid>
-                <Grid
-                  item
-                  md={6}
-                  xs={12}
-                >
-                  <Typography>Test</Typography>
-                </Grid>
-              </Grid>
-            </CardContent>
-            <Divider />
-            <Box
-              display="flex"
-              justifyContent="flex-end"
-              p={2}
+          <Grid
+            container
+            spacing={3}
+          >
+            <Grid
+              item
+              lg={4}
+              md={4}
+              xs={12}
             >
-              <Typography>Test</Typography>
-            </Box>
-          </Card>
+              <Card>
+                <CardContent>
+                  <Box
+                    alignItems="center"
+                    display="flex"
+                    flexDirection="column"
+                  >
+                    <Avatar
+                      className={classes.avatar}
+                      src={user.avatar}
+                    />
+                    <Typography
+                      color="textPrimary"
+                      gutterBottom
+                      variant="h4"
+                    >
+                      {`${ip.patient?.pname}${ip.patient?.fname} ${ip.patient?.lname}`}
+                    </Typography>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid
+              item
+              lg={8}
+              md={8}
+              xs={12}
+            >
+              <Card>
+                <CardContent>
+                  <Grid
+                    container
+                    spacing={3}
+                  >
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <Typography variant="h4">AN</Typography>
+                      <Typography>{ip.an}</Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <Typography variant="h4">HN</Typography>
+                      <Typography>{ip.hn}</Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <Typography variant="h4">ว/ด/ป เกิด</Typography>
+                      <Typography>{moment(ip.patient?.birthday).format('DD/MM/YYYYY')}</Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <Typography variant="h4">ที่อยู่</Typography>
+                      <Typography>{`${ip.patient?.addrpart} ${ip.patient?.address?.full_name}`}</Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <Typography variant="h4">สิทธิการรักษา</Typography>
+                      <Typography>{`${ip.pttype?.pttype}-${ip.pttype?.name}`}</Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <Typography variant="h4">วอร์ด</Typography>
+                      <Typography>{`${ip.ward?.ward}-${ip.ward?.name}`}</Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <Typography variant="h4">วันที่ Admit</Typography>
+                      <Typography>{ip.regdate}</Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <Typography variant="h4">เวลา</Typography>
+                      <Typography>{ip.regtime}</Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <Typography variant="h4">แพทย์ผู้ Admit</Typography>
+                      <Typography>{`${ip.admdoctor.code}-${ip.admdoctor.name}`}</Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <Typography variant="h4">Pre Dx</Typography>
+                      <Typography>{ip.prediag}</Typography>
+                    </Grid>
+                  </Grid>
+                </CardContent>
+                {/* <Divider />
+                <Box
+                  display="flex"
+                  justifyContent="flex-end"
+                  p={2}
+                >
+                  <Typography>Test</Typography>
+                </Box> */}
+              </Card>
+            </Grid>
+          </Grid>
         </Modal.Body>
       </Modal>
     </>
@@ -102,6 +203,7 @@ const PatientProfileModal = ({ isOpen, hideModal }) => {
 PatientProfileModal.propTypes = {
   isOpen: PropTypes.bool,
   hideModal: PropTypes.func,
+  an: PropTypes.string.isRequired,
 };
 
 export default PatientProfileModal;
