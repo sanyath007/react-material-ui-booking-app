@@ -28,7 +28,7 @@ const { fetchAllSuccess, fetchIpByAnSuccess } = ipSlice.actions;
 export const fetchIpAll = () => async (dispatch) => {
   try {
     const res = await api.get('/ips');
-    console.log(res);
+
     return dispatch(fetchAllSuccess(res.data));
   } catch (error) {
     console.log(error);
@@ -47,9 +47,7 @@ export const fetchIpAllWithPage = (url) => async (dispatch) => {
 
 export const fetchIpByAn = (an) => async (dispatch) => {
   try {
-    console.log(an);
     const res = await api.get(`/ips/${an}`);
-    console.log(res);
 
     return dispatch(fetchIpByAnSuccess(res.data));
   } catch (error) {
