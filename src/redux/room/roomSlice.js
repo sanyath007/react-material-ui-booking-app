@@ -37,7 +37,7 @@ export const fetchRoomAll = () => async (dispatch) => {
   try {
     const res = await api.get('/rooms');
 
-    return dispatch(fetchAllSuccess(res.data));
+    return dispatch(fetchAllSuccess(res.data.items));
   } catch (error) {
     console.log(error);
   }

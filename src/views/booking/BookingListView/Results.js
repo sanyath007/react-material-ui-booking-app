@@ -32,7 +32,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Results = ({ className, bookings, ...rest }) => {
+const Results = ({
+  className,
+  bookings,
+  onViewDetailClick,
+  ...rest
+}) => {
   const classes = useStyles();
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
@@ -172,7 +177,7 @@ const Results = ({ className, bookings, ...rest }) => {
                     {`${booking.user?.person_firstname} ${booking.user?.person_lastname}`}
                   </TableCell>
                   <TableCell align="center">
-                    <a href="#" title="รายละเอียด">
+                    <a href="#" title="รายละเอียด" onClick={onViewDetailClick}>
                       <VisibilityIcon color="primary" />
                     </a>
                     <a href="#" title="แก้ไข">
@@ -207,7 +212,8 @@ const Results = ({ className, bookings, ...rest }) => {
 
 Results.propTypes = {
   className: PropTypes.string,
-  bookings: PropTypes.array.isRequired
+  bookings: PropTypes.array.isRequired,
+  onViewDetailClick: PropTypes.func,
 };
 
 export default Results;

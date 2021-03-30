@@ -102,6 +102,7 @@ function NewBooking() {
           <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
             <Grid container direction="row" justify="center" alignItems="flex-start">
               <Grid container justify="center" spacing={1}>
+
                 <Grid item sm={12} xs={12} style={{ textAlign: 'center' }}>
                   <Typography variant="h5">เพิ่มการจองห้องพิเศษ</Typography>
                 </Grid>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Container,
@@ -9,11 +9,23 @@ import Results from './Results';
 import Toolbar from './Toolbar';
 import useStyles from './styles';
 import { bookingActions } from '../../../redux';
+import PatientProfileModal from './PatientProfileModal';
 
 const BookingListView = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { bookings } = useSelector((state) => state.booking);
+
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOnHideModal = () => {
+    console.log('On hide is called !!!');
+    setOpenModal(false);
+  };
+
+  const handleViewDetailClick = () => {
+    setOpenModal(true);
+  };
 
   useEffect(() => {
     dispatch(bookingActions.fetchBookingAll());
@@ -24,10 +36,17 @@ const BookingListView = () => {
       className={classes.root}
       title="รายการจองห้องพิเศษ"
     >
+
+      <PatientProfileModal
+        isOpen={openModal}
+        hideModal={handleOnHideModal}
+      />
+
       <Container maxWidth={false}>
         <Toolbar />
+
         <Box mt={3}>
-          <Results bookings={bookings} />
+          <Results bookings={bookings} onViewDetailClick={handleViewDetailClick} />
         </Box>
       </Container>
     </Page>
