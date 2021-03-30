@@ -21,7 +21,8 @@ import {
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+// import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import getInitials from 'src/utils/getInitials';
 
@@ -186,8 +187,8 @@ const Results = ({
                     <a href="#" title="ลบ">
                       <DeleteIcon color="error" />
                     </a>
-                    <Link to={`/app/checkin/${booking.book_id}`} title="Checkin ห้อง">
-                      <AssignmentIndIcon color="action" />
+                    <Link to={`/app/checkin/${booking.book_id}`} title="รับผู้ป่วยเข้าห้อง">
+                      <ExitToAppIcon color="action" />
                     </Link>
                   </TableCell>
                 </TableRow>

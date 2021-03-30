@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -12,6 +13,7 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { Modal } from 'react-bootstrap';
 import moment from 'moment';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -197,14 +199,18 @@ const PatientProfileModal = ({ isOpen, hideModal, an }) => {
                   </Grid>
                 </Grid>
               </CardContent>
-              {/* <Divider />
+              <Divider />
               <Box
                 display="flex"
-                justifyContent="flex-end"
+                justifyContent="center"
                 p={2}
               >
-                <Button variant="contained" color="primary">รับผู้ป่วยเข้าห้อง</Button>
-              </Box> */}
+                <Link to={`/app/checkin/${booking.book_id}`}>
+                  <Button variant="contained" color="primary" endIcon={<ExitToAppIcon />}>
+                    รับผู้ป่วยเข้าห้อง
+                  </Button>
+                </Link>
+              </Box>
             </Card>
           </Grid>
         </Grid>
