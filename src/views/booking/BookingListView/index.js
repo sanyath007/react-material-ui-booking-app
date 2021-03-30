@@ -30,6 +30,14 @@ const BookingListView = () => {
     setSelectedAn(an);
   };
 
+  const handleCancelClick = (bookId) => {
+    if (window.confirm(`คุณต้องการยกเลิกการจองห้องพิเศษรหัส ${bookId} ใช่หรือไม่ ?`)) {
+      console.log(bookId);
+
+      // TODO: to cancel booking data from db
+    }
+  };
+
   useEffect(() => {
     dispatch(bookingActions.fetchBookingAll());
   }, []);
@@ -43,6 +51,7 @@ const BookingListView = () => {
       <PatientProfileModal
         isOpen={openModal}
         hideModal={handleOnHideModal}
+        onCancelClick={handleCancelClick}
         an={selectedAn}
       />
 

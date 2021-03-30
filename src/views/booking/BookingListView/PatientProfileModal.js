@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
   Box,
-  Button,
+  Button as MuiButton,
   Avatar,
   Card,
   CardContent,
@@ -14,7 +14,8 @@ import {
   makeStyles
 } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { Modal } from 'react-bootstrap';
+import EventBusyIcon from '@material-ui/icons/EventBusy';
+import { Modal, Button } from 'react-bootstrap';
 import moment from 'moment';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ipActions, bookingActions } from '../../../redux';
@@ -28,7 +29,12 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const PatientProfileModal = ({ isOpen, hideModal, an }) => {
+const PatientProfileModal = ({
+  isOpen,
+  hideModal,
+  onCancelClick,
+  an
+}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { ip } = useSelector((state) => state.ip);
@@ -202,14 +208,20 @@ const PatientProfileModal = ({ isOpen, hideModal, an }) => {
               <Divider />
               <Box
                 display="flex"
-                justifyContent="center"
+                justifyContent="space-between"
                 p={2}
+                spacing={5}
               >
                 <Link to={`/app/checkin/${booking.book_id}`}>
-                  <Button variant="contained" color="primary" endIcon={<ExitToAppIcon />}>
+                  <MuiButton variant="contained" color="primary" endIcon={<ExitToAppIcon />}>
                     รับผู้ป่วยเข้าห้อง
-                  </Button>
+                  </MuiButton>
                 </Link>
+
+                <Button variant="danger" onClick={() => onCancelClick(booking.book_id)}>
+                  ยกเลิกจองห้องพิเศษ
+                  <EventBusyIcon style={{ marginLeft: '5px' }} />
+                </Button>
               </Box>
             </Card>
           </Grid>
@@ -222,6 +234,7 @@ const PatientProfileModal = ({ isOpen, hideModal, an }) => {
 PatientProfileModal.propTypes = {
   isOpen: PropTypes.bool,
   hideModal: PropTypes.func,
+  onCancelClick: PropTypes.func,
   an: PropTypes.string.isRequired,
 };
 
