@@ -14,6 +14,7 @@ import {
   TextField,
 } from '@material-ui/core';
 import { DatePicker } from '@material-ui/pickers';
+import FormControls from 'src/components/Forms';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import Page from 'src/components/Page';
@@ -24,6 +25,7 @@ import PatientModal from './PatientModal';
 const initialBooking = {
   book_date: new Date(),
   an: '',
+  isOfficer: false,
   description: '',
   remark: '',
   room_types: []
@@ -45,6 +47,7 @@ function NewBooking() {
     const data = {
       book_date: moment(booking.book_date).format('YYYY-MM-DD'),
       an: booking.an.split('-')[0],
+      is_officer: booking.isOfficer,
       description: booking.description,
       remark: booking.remark,
       queue: 0,
@@ -136,7 +139,7 @@ function NewBooking() {
                     fullWidth
                   />
                 </Grid>
-                <Grid item sm={6} xs={12}>
+                <Grid item sm={6} xs={12} style={{ border: '1px solid black' }}>
                   <FormControl component="fieldset" className={classes.formControl}>
                     <FormLabel component="legend">ต้องการจองห้องประเภท (เลือกได้มากกว่า 1)</FormLabel>
                     <FormGroup>
@@ -158,7 +161,7 @@ function NewBooking() {
                     {/* <FormHelperText>Be careful</FormHelperText> */}
                   </FormControl>
                 </Grid>
-                <Grid item sm={6} xs={12}>
+                <Grid item sm={6} xs={12} style={{ border: '1px solid black' }}>
                   <TextField
                     variant="standard"
                     name="description"
@@ -170,7 +173,7 @@ function NewBooking() {
                     onChange={(e) => setBooking({ ...booking, description: e.target.value })}
                   />
                 </Grid>
-                <Grid item sm={12} xs={12}>
+                <Grid item sm={12} xs={12} style={{ border: '1px solid black' }}>
                   <TextField
                     variant="standard"
                     name="remark"
@@ -182,7 +185,20 @@ function NewBooking() {
                     onChange={(e) => setBooking({ ...booking, remark: e.target.value })}
                   />
                 </Grid>
-                <Grid item sm={12} xs={12}>
+
+                {/* // TODO: add check box for if patient is hospital's officer */}
+                <Grid item sm={12} xs={12} style={{ border: '1px solid black', paddingLeft: '10px' }}>
+                  <FormControls.CheckboxInput
+                    name="isOfficer"
+                    label="เป็นเจ้าหน้าที่ของ รพ."
+                    value={booking.isOfficer}
+                    handleChange={(e) => {
+                      setBooking({ ...booking, [e.target.name]: e.target.value });
+                    }}
+                  />
+                </Grid>
+
+                <Grid item sm={12} xs={12} style={{ border: '1px solid black' }}>
                   <Button
                     type="submit"
                     variant="contained"
