@@ -31,7 +31,7 @@ const RoomList = () => {
   return (
     <Page
       className={classes.root}
-      title="Rooms"
+      title="ห้องพิเศษ"
     >
       <Container maxWidth={false}>
         <Toolbar showFilteredRoom={showFilteredRoom} />

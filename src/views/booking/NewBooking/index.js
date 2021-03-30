@@ -95,7 +95,7 @@ function NewBooking() {
   return (
     <Page
       className={classes.root}
-      title="Bookings"
+      title="เพิ่มการจองห้องพิเศษ"
     >
       <Container maxWidth={false}>
         <Paper className={classes.paper}>
@@ -103,7 +103,7 @@ function NewBooking() {
             <Grid container direction="row" justify="center" alignItems="flex-start">
               <Grid container justify="center" spacing={1}>
                 <Grid item sm={12} xs={12} style={{ textAlign: 'center' }}>
-                  <Typography variant="h5">เพิ่มรายการจองห้อง</Typography>
+                  <Typography variant="h5">เพิ่มการจองห้องพิเศษ</Typography>
                 </Grid>
 
                 <PatientModal

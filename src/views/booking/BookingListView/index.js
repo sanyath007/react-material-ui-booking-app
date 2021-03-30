@@ -22,7 +22,7 @@ const BookingListView = () => {
   return (
     <Page
       className={classes.root}
-      title="Customers"
+      title="รายการจองห้องพิเศษ"
     >
       <Container maxWidth={false}>
         <Toolbar />
