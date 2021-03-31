@@ -161,7 +161,7 @@ const Results = ({
                       >
                         {`${booking.an?.patient?.pname}${booking.an?.patient?.fname} ${booking.an?.patient?.lname}`}
                       </Typography>
-                      {booking.is_officer && <StarIcon />}
+                      {booking.is_officer && <StarIcon style={{ fill: 'red' }} />}
                     </Box>
                   </TableCell>
                   <TableCell align="center">
