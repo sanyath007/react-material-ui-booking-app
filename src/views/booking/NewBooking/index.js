@@ -35,19 +35,17 @@ function NewBooking() {
   const [roomTypeIds, setRoomTypeIds] = useState([]);
 
   const bookingSchema = Yup.object().shape({
-    book_date: Yup.string().required('book date is required'),
     an: Yup.string().required('An is required'),
-    is_officer: Yup.boolean(),
+    book_date: Yup.string().required('Book Date is required'),
     // description: Yup.string().required('Description is required'),
     // remark: Yup.string().required('Remark is required'),
-    // queue: Yup.number(),
   });
 
   const handleSubmit = async (values, props) => {
     if (values) {
       const data = {
-        book_date: moment(values.book_date).format('YYYY-MM-DD'),
         an: values.an.split('-')[0],
+        book_date: moment(values.book_date).format('YYYY-MM-DD'),
         is_officer: values.isOfficer,
         description: values.description,
         remark: values.remark,
@@ -64,20 +62,17 @@ function NewBooking() {
   };
 
   const handleAnOnFocus = (e) => {
-    console.log('On focus is called !!!');
     e.preventDefault();
 
     setOpenModal(true);
   };
 
   const handleOnHideModal = () => {
-    console.log('On hide is called !!!');
     setOpenModal(false);
   };
 
-  const handleOnSelectAn = (an) => {
-    console.log(an);
-    // setBooking({ ...booking, an });
+  const handleOnSelectAn = (an, setFieldValue) => {
+    setFieldValue('an', an);
   };
 
   const handleRoomTypeChecked = (e) => {
@@ -126,7 +121,7 @@ function NewBooking() {
                       <PatientModal
                         isOpen={openModal}
                         hideModal={handleOnHideModal}
-                        onSelected={handleOnSelectAn}
+                        onSelected={(an) => handleOnSelectAn(an, formik.setFieldValue)}
                       />
 
                       <Grid item sm={6} xs={12}>
@@ -138,8 +133,8 @@ function NewBooking() {
                           value={formik.values.an}
                           onChange={formik.handleChange}
                           onClick={(e) => handleAnOnFocus(e)}
-                          error={formik.errors.room_no && formik.touched.room_no}
-                          helperText={<ErrorMessage name="room_no" />}
+                          error={formik.errors.an && formik.touched.an}
+                          helperText={<ErrorMessage name="an" />}
                         />
                       </Grid>
                       <Grid item sm={6} xs={12}>
@@ -149,9 +144,11 @@ function NewBooking() {
                           variant="inline"
                           label="วันที่จอง"
                           format="DD/MM/yyyy"
+                          fullWidth
                           value={formik.values.book_date}
                           onChange={formik.handleChange}
-                          fullWidth
+                          error={formik.errors.book_date && formik.touched.book_date}
+                          helperText={<ErrorMessage name="book_date" />}
                         />
                       </Grid>
                       <Grid item sm={12} xs={12}>
@@ -172,6 +169,8 @@ function NewBooking() {
                           fullWidth
                           value={formik.values.description}
                           onChange={formik.handleChange}
+                          error={formik.errors.description && formik.touched.description}
+                          helperText={<ErrorMessage name="description" />}
                         />
                       </Grid>
                       <Grid item sm={6} xs={12}>
@@ -184,6 +183,8 @@ function NewBooking() {
                           fullWidth
                           value={formik.values.remark}
                           onChange={formik.handleChange}
+                          error={formik.errors.remark && formik.touched.remark}
+                          helperText={<ErrorMessage name="remark" />}
                         />
                       </Grid>
 
