@@ -203,6 +203,22 @@ const PatientProfileModal = ({
                     <Typography variant="h4">เวลา</Typography>
                     <Typography>{moment(booking.created_at).format('H:mm')}</Typography>
                   </Grid>
+                  <Grid
+                    item
+                    md={6}
+                    xs={12}
+                  >
+                    <Typography variant="h4">ผู้จองห้องพิเศษ</Typography>
+                    <Typography>{booking.book_name}</Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    md={6}
+                    xs={12}
+                  >
+                    <Typography variant="h4">เบอร์ติดต่อ</Typography>
+                    <Typography>{booking.book_tel}</Typography>
+                  </Grid>
                 </Grid>
               </CardContent>
               <Divider />
