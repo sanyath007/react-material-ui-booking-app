@@ -20,9 +20,6 @@ export default makeStyles((theme) => ({
     justifyContent: 'center',
     backgroundColor: 'white'
   },
-  formControl: {
-    margin: theme.spacing(3),
-  },
   buttonSubmit: {
     marginLeft: theme.spacing(1),
     marginBottom: 10

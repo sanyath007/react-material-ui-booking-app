@@ -52,7 +52,7 @@ const PatientProfileModal = ({
       show={isOpen}
       onHide={hideModal}
       size="xl"
-      style={{ top: '50px', zIndex: '1500', position: 'absolute' }}
+      style={{ top: '50px', zIndex: '1500' }}
     >
       <Modal.Header closeButton>ข้อมูลผู้ป่วย</Modal.Header>
       <Modal.Body>
