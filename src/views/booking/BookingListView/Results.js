@@ -183,9 +183,9 @@ const Results = ({
                     <a href="#" title="รายละเอียด" onClick={() => onViewDetailClick(booking.an.an)}>
                       <VisibilityIcon color="primary" />
                     </a>
-                    <a href="#" title="แก้ไข">
+                    <Link to={`/app/bookings/edit/${booking.book_id}`} title="แก้ไข">
                       <EditIcon color="secondary" />
-                    </a>
+                    </Link>
                     <a href="#" title="ลบ">
                       <DeleteIcon color="error" />
                     </a>

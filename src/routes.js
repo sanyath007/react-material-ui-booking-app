@@ -7,6 +7,7 @@ import MainLayout from 'src/layouts/MainLayout';
 import DashboardView from 'src/views/reports/DashboardView';
 import BookingListView from 'src/views/booking/BookingListView';
 import NewBooking from 'src/views/booking/NewBooking';
+import EditBooking from 'src/views/booking/EditBooking';
 import CheckinRoom from 'src/views/booking/CheckinRoom';
 import CalendarView from 'src/views/calendar/CalendarView';
 import RoomsStatusView from 'src/views/room/RoomsStatus';
@@ -25,7 +26,8 @@ const routes = [
     children: [
       { path: 'dashboard', element: <DashboardView /> },
       { path: 'bookings', element: <BookingListView /> },
-      { path: 'newbooking', element: <NewBooking /> },
+      { path: 'bookings/new', element: <NewBooking /> },
+      { path: 'bookings/edit/:bookId', element: <EditBooking /> },
       { path: 'checkin/:bookId', element: <CheckinRoom /> },
       { path: 'calendar', element: <CalendarView /> },
       { path: 'status', element: <RoomsStatusView /> },

@@ -46,7 +46,7 @@ const Toolbar = ({ className, ...rest }) => {
           color="primary"
           variant="contained"
           component={Link}
-          to="/app/newbooking"
+          to="/app/bookings/new"
         >
           เพิ่มการจองห้อง
         </Button>
