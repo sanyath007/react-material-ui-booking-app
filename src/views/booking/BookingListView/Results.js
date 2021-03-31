@@ -22,6 +22,7 @@ import {
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import StarIcon from '@material-ui/icons/Star';
 // import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import getInitials from 'src/utils/getInitials';
@@ -160,6 +161,7 @@ const Results = ({
                       >
                         {`${booking.an?.patient?.pname}${booking.an?.patient?.fname} ${booking.an?.patient?.lname}`}
                       </Typography>
+                      {booking.is_officer && <StarIcon />}
                     </Box>
                   </TableCell>
                   <TableCell align="center">
