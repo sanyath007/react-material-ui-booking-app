@@ -19,8 +19,10 @@ import useStyles from './styles';
 import PatientModal from './PatientModal';
 
 const initialBooking = {
-  book_date: new Date(),
   an: '',
+  book_date: new Date(),
+  book_name: '',
+  book_tel: '',
   isOfficer: false,
   description: '',
   remark: '',
@@ -35,8 +37,10 @@ function NewBooking() {
   const [roomTypeIds, setRoomTypeIds] = useState([]);
 
   const bookingSchema = Yup.object().shape({
-    an: Yup.string().required('An is required'),
-    book_date: Yup.string().required('Book Date is required'),
+    an: Yup.string().required('กรุณาระบุ An ของผู้ป่วยก่อน'),
+    book_date: Yup.string().required('กรุณาระบุวันที่จองก่อน'),
+    book_name: Yup.string().required('กรุณาระบุชื่อ-สกุลผู้จองก่อน'),
+    book_tel: Yup.string().required('กรุณาระบุเบอร์ติดต่อผู้จองก่อน'),
     // description: Yup.string().required('Description is required'),
     // remark: Yup.string().required('Remark is required'),
   });
@@ -46,6 +50,8 @@ function NewBooking() {
       const data = {
         an: values.an.split('-')[0],
         book_date: moment(values.book_date).format('YYYY-MM-DD'),
+        book_name: values.book_name,
+        book_tel: values.book_tel,
         is_officer: values.isOfficer,
         description: values.description,
         remark: values.remark,
@@ -128,7 +134,7 @@ function NewBooking() {
                         <TextField
                           variant="standard"
                           name="an"
-                          label="AN"
+                          label="AN ผู้ป่วย"
                           fullWidth
                           value={formik.values.an}
                           onChange={formik.handleChange}
@@ -149,6 +155,30 @@ function NewBooking() {
                           onChange={formik.handleChange}
                           error={formik.errors.book_date && formik.touched.book_date}
                           helperText={<ErrorMessage name="book_date" />}
+                        />
+                      </Grid>
+                      <Grid item sm={6} xs={12}>
+                        <TextField
+                          variant="standard"
+                          name="book_name"
+                          label="ผู้จอง (ระบุชื่อ-สกุล)"
+                          fullWidth
+                          value={formik.values.book_name}
+                          onChange={formik.handleChange}
+                          error={formik.errors.book_name && formik.touched.book_name}
+                          helperText={<ErrorMessage name="book_name" />}
+                        />
+                      </Grid>
+                      <Grid item sm={6} xs={12}>
+                        <TextField
+                          variant="standard"
+                          name="book_tel"
+                          label="เบอร์ติดต่อ"
+                          fullWidth
+                          value={formik.values.book_tel}
+                          onChange={formik.handleChange}
+                          error={formik.errors.book_tel && formik.touched.book_tel}
+                          helperText={<ErrorMessage name="book_tel" />}
                         />
                       </Grid>
                       <Grid item sm={12} xs={12}>
