@@ -21,10 +21,9 @@ function CheckboxGroupInput({
   label,
   items,
   handleChange,
-  // itemsDirection
 }) {
   const classes = useStyles();
-  // TODO: iterate item with id and name
+  console.log(items);
 
   return (
     <FormControl component="fieldset" className={classes.formControl}>
@@ -35,13 +34,14 @@ function CheckboxGroupInput({
             control={
               (
                 <Checkbox
-                  name={item.room_type_id}
+                  name={item.id}
                   onChange={handleChange}
+                  checked={item.checked}
                 />
               )
             }
-            key={item.room_type_id}
-            label={item.room_type_name}
+            key={item.id}
+            label={item.name}
           />
         ))}
       </FormGroup>
@@ -54,7 +54,6 @@ CheckboxGroupInput.propTypes = {
   label: PropTypes.string,
   items: PropTypes.array,
   handleChange: PropTypes.func,
-  // itemsDirection: PropTypes.string
 };
 
 export default CheckboxGroupInput;

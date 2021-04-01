@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Button } from 'react-bootstrap';
@@ -34,6 +34,41 @@ const FormBooking = ({
   handleRoomTypeChecked
 }) => {
   const classes = useStyles();
+  const [rtypes, setRtypes] = useState([]);
+
+  useEffect(() => {
+    const bookingRoomTypes = booking?.room_types?.split(',');
+    const newRoomTypes = roomTypes.map((rt) => {
+      const roomTypesId = bookingRoomTypes && bookingRoomTypes.find((brt) => {
+        return brt === rt.room_type_id;
+      });
+
+      return {
+        id: rt.room_type_id,
+        name: rt.room_type_name,
+        checked: roomTypesId !== undefined && true,
+      };
+    });
+
+    setRtypes(newRoomTypes);
+  }, [roomTypes]);
+  console.log(roomTypes);
+
+  const onRoomTypeChecked = (e) => {
+    console.log(e.target.checked);
+
+    const newRoomTypes = rtypes.map((rt) => {
+      return {
+        id: rt.id,
+        name: rt.name,
+        checked: rt.id === e.target.name ? e.target.checked : rt.checked,
+      };
+    });
+
+    setRtypes(newRoomTypes);
+    handleRoomTypeChecked(e.target.name);
+  };
+
   // const [openModal, setOpenModal] = useState(false);
 
   // const handleAnOnFocus = (e) => {
@@ -133,8 +168,8 @@ const FormBooking = ({
                 <Grid item sm={12} xs={12}>
                   <FormControls.CheckboxGroupInput
                     label="ต้องการจองห้องประเภท (เลือกได้มากกว่า 1)"
-                    handleChange={handleRoomTypeChecked}
-                    items={roomTypes} // TODO: change all elements of items with id and name
+                    handleChange={onRoomTypeChecked}
+                    items={rtypes} // TODO: change all elements of items with id and name
                     itemsDirection="row"
                   />
                 </Grid>
