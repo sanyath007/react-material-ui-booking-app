@@ -52,12 +52,12 @@ function EditBooking() {
     }
   };
 
-  const handleRoomTypeChecked = (e) => {
-    const index = roomTypeIds.indexOf(e.target.name);
+  const handleRoomTypeChecked = (id) => {
+    const index = roomTypeIds.indexOf(id);
     let newSelectedRoomTypeIds = [];
 
     if (index === -1) {
-      newSelectedRoomTypeIds = newSelectedRoomTypeIds.concat(roomTypeIds, e.target.name);
+      newSelectedRoomTypeIds = newSelectedRoomTypeIds.concat(roomTypeIds, id);
     } else {
       newSelectedRoomTypeIds = newSelectedRoomTypeIds.concat(
         roomTypeIds.splice(0, index),
