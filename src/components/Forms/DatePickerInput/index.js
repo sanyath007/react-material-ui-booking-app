@@ -7,20 +7,24 @@ const DatePickerInput = ({
   label,
   value,
   format,
-  onChange
+  onChange,
+  error,
+  helperText
 }) => {
   const convertToDefEventParams = (target, date) => ({ target: { name: target, value: date } });
 
   return (
     <DatePicker
       autoOk
+      fullWidth
       disableToolbar
       variant="inline"
       label={label}
       format={format || 'DD/MM/yyyy'}
       value={value}
       onChange={(date) => onChange(convertToDefEventParams(name, date))}
-      fullWidth
+      error={error}
+      helperText={helperText}
     />
   );
 };
@@ -31,6 +35,8 @@ DatePickerInput.propTypes = {
   value: PropTypes.object,
   format: PropTypes.string,
   onChange: PropTypes.func,
+  error: PropTypes.bool,
+  helperText: PropTypes.any,
 };
 
 export default DatePickerInput;
