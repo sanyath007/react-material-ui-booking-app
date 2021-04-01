@@ -7,7 +7,6 @@ import {
   Typography,
   TextField,
 } from '@material-ui/core';
-import { DatePicker } from '@material-ui/pickers';
 import FormControls from 'src/components/Forms';
 import { Formik, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -144,13 +143,10 @@ function NewBooking() {
                         />
                       </Grid>
                       <Grid item sm={6} xs={12}>
-                        <DatePicker
-                          autoOk
-                          disableToolbar
-                          variant="inline"
+                        <FormControls.DatePickerInput
+                          name="book_date"
                           label="วันที่จอง"
                           format="DD/MM/yyyy"
-                          fullWidth
                           value={formik.values.book_date}
                           onChange={formik.handleChange}
                           error={formik.errors.book_date && formik.touched.book_date}

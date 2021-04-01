@@ -14,14 +14,4 @@ export default makeStyles((theme) => ({
     padding: theme.spacing(3),
     paddingRight: theme.spacing(5),
   },
-  form: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    backgroundColor: 'white'
-  },
-  buttonSubmit: {
-    marginLeft: theme.spacing(1),
-    marginBottom: 10
-  }
 }));

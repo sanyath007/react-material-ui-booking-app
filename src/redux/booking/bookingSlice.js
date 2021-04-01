@@ -13,6 +13,9 @@ export const bookingSlice = createSlice({
     fetchAllSuccess: (state, action) => {
       state.bookings = action.payload;
     },
+    fetchBookingฺByIdSuccess: (state, action) => {
+      state.booking = action.payload;
+    },
     fetchBookingฺByAnSuccess: (state, action) => {
       state.booking = action.payload;
     },
@@ -37,6 +40,7 @@ export default bookingSlice.reducer;
 // Actions
 const {
   fetchAllSuccess,
+  fetchBookingฺByIdSuccess,
   fetchBookingฺByAnSuccess,
   addSuccess,
   checkinSuccess,
@@ -48,6 +52,16 @@ export const fetchBookingAll = () => async (dispatch) => {
     const res = await api.get('/bookings');
 
     return dispatch(fetchAllSuccess(res.data.items));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchBookingฺById = (id) => async (dispatch) => {
+  try {
+    const res = await api.get(`/bookings/${id}`);
+
+    return dispatch(fetchBookingฺByIdSuccess(res.data));
   } catch (error) {
     console.log(error);
   }
