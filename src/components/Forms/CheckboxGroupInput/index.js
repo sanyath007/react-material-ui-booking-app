@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Checkbox,
@@ -23,7 +23,39 @@ function CheckboxGroupInput({
   handleChange,
 }) {
   const classes = useStyles();
-  console.log(items);
+  const [group, setGroup] = useState([]);
+
+  // TODO: to complete function to set group of checkbox and return array
+  const setCheckboxGroupChecked = (id) => {
+    const index = group.indexOf(id);
+    let newGroup = [];
+
+    if (index === -1) {
+      newGroup = newGroup.concat(group, id);
+    } else {
+      newGroup = newGroup.concat(
+        group.splice(0, index),
+        group.splice(index + 1)
+      );
+    }
+
+    setGroup(newGroup);
+    handleChange(newGroup);
+  };
+
+  const onChecked = (e) => {
+    const checkedItem = items.find((item) => item.id === e.target.name);
+
+    checkedItem.checked = e.target.checked;
+
+    setCheckboxGroupChecked(e.target.name);
+  };
+
+  useEffect(() => {
+    const initGroup = items.map((item) => item.checked && item.id);
+
+    setGroup(initGroup);
+  }, [items]);
 
   return (
     <FormControl component="fieldset" className={classes.formControl}>
@@ -35,7 +67,7 @@ function CheckboxGroupInput({
               (
                 <Checkbox
                   name={item.id}
-                  onChange={handleChange}
+                  onChange={onChecked}
                   checked={item.checked}
                 />
               )

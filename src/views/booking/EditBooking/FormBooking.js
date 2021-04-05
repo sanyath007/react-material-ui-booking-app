@@ -51,23 +51,7 @@ const FormBooking = ({
     });
 
     setRtypes(newRoomTypes);
-  }, [roomTypes]);
-  console.log(roomTypes);
-
-  const onRoomTypeChecked = (e) => {
-    console.log(e.target.checked);
-
-    const newRoomTypes = rtypes.map((rt) => {
-      return {
-        id: rt.id,
-        name: rt.name,
-        checked: rt.id === e.target.name ? e.target.checked : rt.checked,
-      };
-    });
-
-    setRtypes(newRoomTypes);
-    handleRoomTypeChecked(e.target.name);
-  };
+  }, [booking]);
 
   // const [openModal, setOpenModal] = useState(false);
 
@@ -84,7 +68,6 @@ const FormBooking = ({
   // const handleOnSelectAn = (an, setFieldValue) => {
   //   setFieldValue('an', an);
   // };
-  console.log(booking);
 
   return (
     <Formik
@@ -168,7 +151,7 @@ const FormBooking = ({
                 <Grid item sm={12} xs={12}>
                   <FormControls.CheckboxGroupInput
                     label="ต้องการจองห้องประเภท (เลือกได้มากกว่า 1)"
-                    handleChange={onRoomTypeChecked}
+                    handleChange={handleRoomTypeChecked}
                     items={rtypes} // TODO: change all elements of items with id and name
                     itemsDirection="row"
                   />

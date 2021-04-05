@@ -52,20 +52,10 @@ function EditBooking() {
     }
   };
 
-  const handleRoomTypeChecked = (id) => {
-    const index = roomTypeIds.indexOf(id);
-    let newSelectedRoomTypeIds = [];
+  const handleRoomTypeChecked = (selectedRoomTypeIds) => {
+    console.log(selectedRoomTypeIds);
 
-    if (index === -1) {
-      newSelectedRoomTypeIds = newSelectedRoomTypeIds.concat(roomTypeIds, id);
-    } else {
-      newSelectedRoomTypeIds = newSelectedRoomTypeIds.concat(
-        roomTypeIds.splice(0, index),
-        roomTypeIds.splice(index + 1)
-      );
-    }
-
-    setRoomTypeIds(newSelectedRoomTypeIds);
+    setRoomTypeIds(selectedRoomTypeIds);
   };
 
   useEffect(() => {
