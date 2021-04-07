@@ -25,11 +25,11 @@ function CheckboxGroupInput({
   const classes = useStyles();
   const [group, setGroup] = useState([]);
 
-  // TODO: to complete function to set group of checkbox and return array
+  // Set group of checkbox and return array
   const setCheckboxGroupChecked = (id) => {
     const index = group.indexOf(id);
-    let newGroup = [];
 
+    let newGroup = [];
     if (index === -1) {
       newGroup = newGroup.concat(group, id);
     } else {
@@ -52,7 +52,7 @@ function CheckboxGroupInput({
   };
 
   useEffect(() => {
-    const initGroup = items.map((item) => item.checked && item.id);
+    const initGroup = items.filter((item) => item.checked).map((item) => item.id);
 
     setGroup(initGroup);
   }, [items]);
