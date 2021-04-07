@@ -35,6 +35,7 @@ const FormBooking = ({
 }) => {
   const classes = useStyles();
   const [rtypes, setRtypes] = useState([]);
+  // const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     const bookingRoomTypes = booking?.room_types?.split(',');
@@ -52,8 +53,6 @@ const FormBooking = ({
 
     setRtypes(newRoomTypes);
   }, [booking]);
-
-  // const [openModal, setOpenModal] = useState(false);
 
   // const handleAnOnFocus = (e) => {
   //   e.preventDefault();

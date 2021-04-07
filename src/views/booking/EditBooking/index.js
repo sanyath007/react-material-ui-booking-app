@@ -36,7 +36,7 @@ function EditBooking() {
         book_date: moment(values.book_date).format('YYYY-MM-DD'),
         book_name: values.book_name,
         book_tel: values.book_tel,
-        is_officer: values.isOfficer,
+        is_officer: values.isOfficer ? '1' : '0',
         description: values.description,
         remark: values.remark,
         queue: 0,
@@ -46,15 +46,13 @@ function EditBooking() {
       };
 
       console.log(data);
-      // dispatch(bookingActions.addBooking(data));
+      // dispatch(bookingActions.update(data));
 
       props.resetForm();
     }
   };
 
   const handleRoomTypeChecked = (selectedRoomTypeIds) => {
-    console.log(selectedRoomTypeIds);
-
     setRoomTypeIds(selectedRoomTypeIds);
   };
 
