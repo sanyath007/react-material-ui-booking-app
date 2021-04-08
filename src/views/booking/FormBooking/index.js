@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import FormControls from 'src/components/Forms';
 import { Formik, Form, ErrorMessage } from 'formik';
-// import PatientModal from './PatientModal';
+import PatientModal from './PatientModal';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -35,7 +35,7 @@ const FormBooking = ({
 }) => {
   const classes = useStyles();
   const [rtypes, setRtypes] = useState([]);
-  // const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     const bookingRoomTypes = booking?.room_types?.split(',');
@@ -54,23 +54,19 @@ const FormBooking = ({
     setRtypes(newRoomTypes);
   }, [booking]);
 
-  // const handleAnOnFocus = (e) => {
-  //   e.preventDefault();
+  const handleAnOnFocus = (e) => {
+    e.preventDefault();
 
-  //   setOpenModal(true);
-  // };
+    setOpenModal(true);
+  };
 
-  // const handleOnHideModal = () => {
-  //   setOpenModal(false);
-  // };
-
-  // const handleOnSelectAn = (an, setFieldValue) => {
-  //   setFieldValue('an', an);
-  // };
+  const handleOnHideModal = () => {
+    setOpenModal(false);
+  };
 
   return (
     <Formik
-      enableReinitialize
+      enableReinitialize={booking}
       initialValues={{
         an: booking?.an || '',
         book_date: moment(booking?.book_date) || new Date(),
@@ -93,24 +89,41 @@ const FormBooking = ({
                   <Typography variant="h5">แก้ไขการจองห้องพิเศษ</Typography>
                 </Grid>
 
-                {/* <PatientModal
+                <PatientModal
                   isOpen={openModal}
                   hideModal={handleOnHideModal}
-                  onSelected={(an) => handleOnSelectAn(an, formik.setFieldValue)}
-                /> */}
+                  onSelected={(an) => formik.setFieldValue('an', an)}
+                />
 
                 <Grid item sm={6} xs={12}>
-                  <TextField
-                    variant="standard"
-                    name="an"
-                    label="AN ผู้ป่วย"
-                    fullWidth
-                    value={formik.values.an}
-                    onChange={formik.handleChange}
-                    // onClick={(e) => handleAnOnFocus(e)}
-                    error={formik.errors.an && formik.touched.an}
-                    helperText={<ErrorMessage name="an" />}
-                  />
+                  {booking
+                    ? (
+                      <TextField
+                        variant="standard"
+                        name="an"
+                        label="AN ผู้ป่วย"
+                        fullWidth
+                        value={formik.values.an}
+                        onChange={formik.handleChange}
+                        error={formik.errors.an && formik.touched.an}
+                        helperText={<ErrorMessage name="an" />}
+                        inputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                    ) : (
+                      <TextField
+                        variant="standard"
+                        name="an"
+                        label="AN ผู้ป่วย"
+                        fullWidth
+                        value={formik.values.an}
+                        onChange={formik.handleChange}
+                        onClick={(e) => handleAnOnFocus(e)}
+                        error={formik.errors.an && formik.touched.an}
+                        helperText={<ErrorMessage name="an" />}
+                      />
+                    )}
                 </Grid>
                 <Grid item sm={6} xs={12}>
                   <FormControls.DatePickerInput
@@ -195,14 +208,26 @@ const FormBooking = ({
                 </Grid>
 
                 <Grid item sm={12} xs={12}>
-                  <Button
-                    type="submit"
-                    variant="warning"
-                    block
-                    className={classes.buttonSubmit}
-                  >
-                    แก้ไข
-                  </Button>
+                  {booking
+                    ? (
+                      <Button
+                        type="submit"
+                        variant="warning"
+                        block
+                        className={classes.buttonSubmit}
+                      >
+                        แก้ไข
+                      </Button>
+                    ) : (
+                      <Button
+                        type="submit"
+                        variant="primary"
+                        block
+                        className={classes.buttonSubmit}
+                      >
+                        เพิ่ม
+                      </Button>
+                    )}
                 </Grid>
               </Grid>
             </Grid>

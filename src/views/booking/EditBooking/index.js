@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 import Page from 'src/components/Page';
 import { bookingActions, roomTypeActions } from '../../../redux';
 import useStyles from './styles';
-import FormBooking from './FormBooking';
+import FormBooking from '../FormBooking';
 
 function EditBooking() {
   const classes = useStyles();
