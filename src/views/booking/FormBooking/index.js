@@ -91,6 +91,7 @@ const FormBooking = ({
     <Formik
       enableReinitialize={booking}
       initialValues={{
+        id: booking?.book_id || '',
         an: booking ? `${booking?.an?.an}-${booking?.an?.patient?.pname}${booking?.an?.patient?.fname} ${booking?.an?.patient?.lname}` : '',
         book_date: moment(booking?.book_date) || new Date(),
         book_name: booking?.book_name || '',

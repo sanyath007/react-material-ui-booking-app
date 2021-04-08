@@ -42,9 +42,7 @@ function NewBooking() {
         room_types: roomTypeIds.toString() // use value in array from useState hook
       };
 
-      console.log(data);
-
-      dispatch(bookingActions.addBooking(data));
+      dispatch(bookingActions.store(data));
 
       props.resetForm();
     }

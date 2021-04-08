@@ -22,6 +22,19 @@ export const bookingSlice = createSlice({
     addSuccess: (state, action) => {
       state.bookings = [...state.bookings, action.payload];
     },
+    updateSuccess: (state, action) => {
+      state.bookings = [...state.bookings, action.payload];
+    },
+    destroySuccess: (state, action) => {
+      const newBookings = state.bookings.filter((booking) => booking.book_id !== action.payload);
+
+      state.bookings = [...newBookings];
+    },
+    cancelSuccess: (state, action) => {
+      const newBookings = state.bookings.filter((booking) => booking.book_id !== action.payload);
+
+      state.bookings = [...newBookings];
+    },
     checkinSuccess: (state, action) => {
       const newBookings = state.bookings.filter((booking) => {
         return booking.book_id !== action.payload.book_id;
@@ -43,6 +56,9 @@ const {
   fetchBookingฺByIdSuccess,
   fetchBookingฺByAnSuccess,
   addSuccess,
+  updateSuccess,
+  destroySuccess,
+  cancelSuccess,
   checkinSuccess,
   checkoutSuccess,
 } = bookingSlice.actions;
@@ -77,7 +93,7 @@ export const fetchBookingฺByAn = (an) => async (dispatch) => {
   }
 };
 
-export const addBooking = (data) => async (dispatch) => {
+export const store = (data) => async (dispatch) => {
   try {
     const res = await api.post('/bookings', data);
     console.log(res);
@@ -88,7 +104,38 @@ export const addBooking = (data) => async (dispatch) => {
   }
 };
 
-// TODO: add CRUD action of booking
+export const update = (id, data) => async (dispatch) => {
+  try {
+    const res = await api.put(`/bookings/${id}`, data);
+    console.log(res);
+
+    dispatch(updateSuccess(res.data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const destroy = (id) => async (dispatch) => {
+  try {
+    const res = await api.delete(`/bookings/${id}`);
+    console.log(res);
+
+    dispatch(destroySuccess(res.data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const cancel = (id) => async (dispatch) => {
+  try {
+    const res = await api.put(`/bookings/cancel/${id}`);
+    console.log(res);
+
+    dispatch(cancelSuccess(res.data));
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const checkin = (data) => async (dispatch) => {
   try {

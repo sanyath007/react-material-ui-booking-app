@@ -32,6 +32,7 @@ function EditBooking() {
   const handleSubmit = async (values, props) => {
     if (values) {
       const data = {
+        id: values.id,
         an: values.an.split('-')[0],
         book_date: moment(values.book_date).format('YYYY-MM-DD'),
         book_name: values.book_name,
@@ -46,7 +47,7 @@ function EditBooking() {
       };
 
       console.log(data);
-      // dispatch(bookingActions.update(data));
+      dispatch(bookingActions.update(values.id, data));
 
       props.resetForm();
     }
