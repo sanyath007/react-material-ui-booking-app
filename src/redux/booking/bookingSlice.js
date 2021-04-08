@@ -11,7 +11,8 @@ export const bookingSlice = createSlice({
   },
   reducers: {
     fetchAllSuccess: (state, action) => {
-      state.bookings = action.payload;
+      state.bookings = action.payload.items;
+      state.pager = action.payload.pager;
     },
     fetchBookingฺByIdSuccess: (state, action) => {
       state.booking = action.payload;
@@ -70,7 +71,7 @@ export const fetchBookingAll = () => async (dispatch) => {
   try {
     const res = await api.get('/bookings');
 
-    return dispatch(fetchAllSuccess(res.data.items));
+    return dispatch(fetchAllSuccess(res.data));
   } catch (error) {
     console.log(error);
   }
