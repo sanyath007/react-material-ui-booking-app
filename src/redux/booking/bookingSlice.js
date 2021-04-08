@@ -23,7 +23,10 @@ export const bookingSlice = createSlice({
       state.bookings = [...state.bookings, action.payload];
     },
     updateSuccess: (state, action) => {
-      state.bookings = [...state.bookings, action.payload];
+      const { id, booking: updatedBooking } = action.payload;
+      const oldBookings = state.bookings.filter((booking) => booking.book_id !== id);
+
+      state.bookings = [...oldBookings, updatedBooking];
     },
     destroySuccess: (state, action) => {
       const newBookings = state.bookings.filter((booking) => booking.book_id !== action.payload);
@@ -109,7 +112,7 @@ export const update = (id, data) => async (dispatch) => {
     const res = await api.put(`/bookings/${id}`, data);
     console.log(res);
 
-    dispatch(updateSuccess(res.data));
+    dispatch(updateSuccess({ id, booking: res.data.booking }));
   } catch (error) {
     console.log(error);
   }
