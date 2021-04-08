@@ -11,6 +11,7 @@ import {
 import FormControls from 'src/components/Forms';
 import { Formik, Form, ErrorMessage } from 'formik';
 import PatientModal from './PatientModal';
+import api from '../../../api';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -36,6 +37,7 @@ const FormBooking = ({
   const classes = useStyles();
   const [rtypes, setRtypes] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [isPatientReserve, setIsPatientReserve] = useState(false);
 
   useEffect(() => {
     const bookingRoomTypes = booking?.room_types?.split(',');
@@ -62,6 +64,27 @@ const FormBooking = ({
 
   const handleOnHideModal = () => {
     setOpenModal(false);
+  };
+
+  const handlePatientReserve = async (e, formik) => {
+    setIsPatientReserve(e.target.value);
+
+    if (e.target.value) {
+      if (formik.values.an !== '') {
+        const res = await api.get(`/ips/${formik.values.an.split('-')[0]}`);
+
+        formik.setFieldValue('book_name', `${res.data.patient?.pname}${res.data.patient?.fname} ${res.data.patient?.lname}`);
+        formik.setFieldValue('book_tel', res.data.patient?.hometel);
+      } else {
+        alert('คุณยังไม่ได้เลือกผู้ป่วย กรุณาเลือกผู้ป่วยก่อน !!!');
+        setIsPatientReserve(false);
+      }
+    } else {
+      formik.setFieldValue('book_name', '');
+      formik.setFieldValue('book_tel', '');
+
+      return false;
+    }
   };
 
   return (
@@ -136,6 +159,14 @@ const FormBooking = ({
                     helperText={<ErrorMessage name="book_date" />}
                   />
                 </Grid>
+                <Grid item sm={12} xs={12} style={{ paddingLeft: '15px' }}>
+                  <FormControls.CheckboxInput
+                    name="isPatientReserve"
+                    label="ผู้ป่วยจองเอง"
+                    value={isPatientReserve}
+                    handleChange={(e) => handlePatientReserve(e, formik)}
+                  />
+                </Grid>
                 <Grid item sm={6} xs={12}>
                   <TextField
                     variant="standard"
@@ -196,8 +227,6 @@ const FormBooking = ({
                     helperText={<ErrorMessage name="remark" />}
                   />
                 </Grid>
-
-                {/* // TODO: add check box for if patient is hospital's officer */}
                 <Grid item sm={12} xs={12} style={{ paddingLeft: '15px' }}>
                   <FormControls.CheckboxInput
                     name="isOfficer"
@@ -206,7 +235,6 @@ const FormBooking = ({
                     handleChange={formik.handleChange}
                   />
                 </Grid>
-
                 <Grid item sm={12} xs={12}>
                   {booking
                     ? (
