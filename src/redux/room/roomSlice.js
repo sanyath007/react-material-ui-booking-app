@@ -22,16 +22,40 @@ export const roomSlice = createSlice({
 
       state.usedRooms = action.payload.usedRooms;
     },
-    addSuccess: (state, action) => {
+    storeSuccess: (state, action) => {
       state.rooms = [...state.rooms, action.payload];
-    }
+    },
+    updateSuccess: (state, action) => {
+      const { id, room: updatedRoom } = action.payload;
+
+      const newRooms = state.rooms.map((room) => {
+        if (room.room_id === id) {
+          return updatedRoom;
+        }
+
+        return room;
+      });
+
+      state.rooms = [...newRooms];
+    },
+    destroySuccess: (state, action) => {
+      const newRooms = state.bookings.filter((booking) => booking.book_id !== action.payload);
+
+      state.rooms = [...newRooms];
+    },
   }
 });
 
 export default roomSlice.reducer;
 
 // Actions
-const { fetchAllSuccess, fetchRoomsStatusSuccess, addSuccess } = roomSlice.actions;
+const {
+  fetchAllSuccess,
+  fetchRoomsStatusSuccess,
+  storeSuccess,
+  updateSuccess,
+  destroySuccess,
+} = roomSlice.actions;
 
 export const fetchRoomAll = () => async (dispatch) => {
   try {
@@ -53,19 +77,41 @@ export const fetchRoomsStatus = () => async (dispatch) => {
   }
 };
 
-export const addRoom = (data) => async (dispatch) => {
+export const store = (data, navigate) => async (dispatch) => {
   try {
     const res = await api.post('/rooms', data, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     });
-    console.log(res);
 
-    dispatch(addSuccess(res.data));
+    dispatch(storeSuccess(res.data));
+
+    navigate('/app/rooms');
   } catch (error) {
     console.log(error);
   }
 };
 
-// TODO: add CRUD action of room
+export const update = (id, data, navigate) => async (dispatch) => {
+  try {
+    const res = await api.put(`/rooms/${id}`, data);
+
+    dispatch(updateSuccess({ id, room: res.data.room }));
+
+    navigate('/app/rooms');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const destroy = (id) => async (dispatch) => {
+  try {
+    const res = await api.delete(`/rooms/${id}`);
+    console.log(res);
+
+    dispatch(destroySuccess(res.data));
+  } catch (error) {
+    console.log(error);
+  }
+};
