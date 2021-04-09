@@ -14,7 +14,7 @@ import PatientProfileModal from './PatientProfileModal';
 const BookingListView = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { bookings } = useSelector((state) => state.booking);
+  const { bookings, pager } = useSelector((state) => state.booking);
 
   const [openModal, setOpenModal] = useState(false);
   const [selectedAn, setSelectedAn] = useState('');
@@ -38,6 +38,10 @@ const BookingListView = () => {
     }
   };
 
+  const handlePageChange = (url, page) => {
+    dispatch(bookingActions.fetchAllWithPage(`${url}?page=${page}`));
+  };
+
   useEffect(() => {
     dispatch(bookingActions.fetchBookingAll());
   }, []);
@@ -59,7 +63,12 @@ const BookingListView = () => {
         <Toolbar />
 
         <Box mt={3}>
-          <Results bookings={bookings} onViewDetailClick={handleViewDetailClick} />
+          <Results
+            bookings={bookings}
+            pager={pager}
+            onPageChange={handlePageChange}
+            onViewDetailClick={handleViewDetailClick}
+          />
         </Box>
       </Container>
     </Page>

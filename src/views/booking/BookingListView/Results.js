@@ -13,12 +13,11 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TablePagination,
   TableRow,
   Typography,
-  makeStyles,
-  // Button
+  makeStyles
 } from '@material-ui/core';
+import Pagination from '@material-ui/lab/Pagination';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -37,13 +36,15 @@ const useStyles = makeStyles((theme) => ({
 const Results = ({
   className,
   bookings,
+  pager,
   onViewDetailClick,
+  onPageChange,
   ...rest
 }) => {
   const classes = useStyles();
-  // const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
-  const [limit, setLimit] = useState(10);
+
   const [page, setPage] = useState(0);
+  // const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
 
   // const handleSelectAll = (event) => {
   //   let newSelectedCustomerIds;
@@ -77,12 +78,9 @@ const Results = ({
   //   setSelectedCustomerIds(newSelectedCustomerIds);
   // };
 
-  const handleLimitChange = (event) => {
-    setLimit(event.target.value);
-  };
-
-  const handlePageChange = (event, newPage) => {
+  const handlePageChange = (e, newPage) => {
     setPage(newPage);
+    onPageChange(pager.path, newPage);
   };
 
   return (
@@ -123,7 +121,7 @@ const Results = ({
                 <TableCell width="12%">
                   วอร์ด
                 </TableCell>
-                <TableCell width="15%">
+                <TableCell width="12%">
                   ผู้จอง
                 </TableCell>
                 <TableCell align="center" width="12%">
@@ -133,7 +131,7 @@ const Results = ({
             </TableHead>
             <TableBody>
 
-              {bookings.slice(0, limit).map((booking) => (
+              {bookings.map((booking) => (
                 <TableRow
                   hover
                   key={booking.book_id}
@@ -210,14 +208,11 @@ const Results = ({
         </Box>
       </PerfectScrollbar>
 
-      <TablePagination
-        component="div"
-        count={bookings.length}
-        onChangePage={handlePageChange}
-        onChangeRowsPerPage={handleLimitChange}
+      <Pagination
+        count={pager?.last_page}
         page={page}
-        rowsPerPage={limit}
-        rowsPerPageOptions={[5, 10, 25]}
+        onChange={handlePageChange}
+        style={{ padding: '5px' }}
       />
 
     </Card>
@@ -227,7 +222,9 @@ const Results = ({
 Results.propTypes = {
   className: PropTypes.string,
   bookings: PropTypes.array.isRequired,
+  pager: PropTypes.object,
   onViewDetailClick: PropTypes.func,
+  onPageChange: PropTypes.func,
 };
 
 export default Results;
