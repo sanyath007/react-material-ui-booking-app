@@ -54,7 +54,7 @@ const FormBooking = ({
     });
 
     setRtypes(newRoomTypes);
-  }, [booking]);
+  }, [roomTypes, booking]);
 
   const handleAnOnFocus = (e) => {
     e.preventDefault();
