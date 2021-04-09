@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Container, Paper } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Page from 'src/components/Page';
 import useStyles from './styles';
 import {
@@ -13,6 +14,7 @@ import FormRoom from '../FormRoom/FormRoom';
 
 const NewRoom = () => {
   const classes = useStyles();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { roomTypes } = useSelector((state) => state.roomType);
@@ -38,7 +40,7 @@ const NewRoom = () => {
     formData.append('room_img_url', room.room_img_url);
     formData.append('amenities', room.amenities);
 
-    dispatch(roomActions.addRoom(formData));
+    dispatch(roomActions.store(formData, navigate));
   };
 
   return (
