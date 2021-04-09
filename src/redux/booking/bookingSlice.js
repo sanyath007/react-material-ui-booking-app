@@ -84,6 +84,16 @@ export const fetchBookingAll = () => async (dispatch) => {
   }
 };
 
+export const fetchAllWithPage = (url) => async (dispatch) => {
+  try {
+    const res = await api.get(url);
+
+    return dispatch(fetchAllSuccess(res.data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const fetchBookingฺById = (id) => async (dispatch) => {
   try {
     const res = await api.get(`/bookings/${id}`);
