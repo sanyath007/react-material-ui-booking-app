@@ -20,14 +20,21 @@ export const bookingSlice = createSlice({
     fetchBookingฺByAnSuccess: (state, action) => {
       state.booking = action.payload;
     },
-    addSuccess: (state, action) => {
+    storeSuccess: (state, action) => {
       state.bookings = [...state.bookings, action.payload];
     },
     updateSuccess: (state, action) => {
       const { id, booking: updatedBooking } = action.payload;
-      const oldBookings = state.bookings.filter((booking) => booking.book_id !== id);
 
-      state.bookings = [...oldBookings, updatedBooking];
+      const newBookings = state.bookings.map((booking) => {
+        if (booking.book_id === id) {
+          return updatedBooking;
+        }
+
+        return booking;
+      });
+
+      state.bookings = [...newBookings];
     },
     destroySuccess: (state, action) => {
       const newBookings = state.bookings.filter((booking) => booking.book_id !== action.payload);
@@ -59,7 +66,7 @@ const {
   fetchAllSuccess,
   fetchBookingฺByIdSuccess,
   fetchBookingฺByAnSuccess,
-  addSuccess,
+  storeSuccess,
   updateSuccess,
   destroySuccess,
   cancelSuccess,
@@ -102,18 +109,19 @@ export const store = (data) => async (dispatch) => {
     const res = await api.post('/bookings', data);
     console.log(res);
 
-    dispatch(addSuccess(res.data));
+    dispatch(storeSuccess(res.data));
   } catch (error) {
     console.log(error);
   }
 };
 
-export const update = (id, data) => async (dispatch) => {
+export const update = (id, data, navigate) => async (dispatch) => {
   try {
     const res = await api.put(`/bookings/${id}`, data);
-    console.log(res);
 
     dispatch(updateSuccess({ id, booking: res.data.booking }));
+
+    navigate('/app/bookings');
   } catch (error) {
     console.log(error);
   }
