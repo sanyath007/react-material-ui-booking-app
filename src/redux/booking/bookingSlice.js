@@ -104,12 +104,14 @@ export const fetchBookingฺByAn = (an) => async (dispatch) => {
   }
 };
 
-export const store = (data) => async (dispatch) => {
+export const store = (data, navigate) => async (dispatch) => {
   try {
     const res = await api.post('/bookings', data);
     console.log(res);
 
     dispatch(storeSuccess(res.data));
+
+    navigate('/app/bookings');
   } catch (error) {
     console.log(error);
   }

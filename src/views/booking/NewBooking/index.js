@@ -6,6 +6,7 @@ import {
 import * as Yup from 'yup';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Page from 'src/components/Page';
 import { bookingActions, roomTypeActions } from '../../../redux';
 import useStyles from './styles';
@@ -13,6 +14,7 @@ import FormBooking from '../FormBooking';
 
 function NewBooking() {
   const classes = useStyles();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { roomTypes } = useSelector((state) => state.roomType);
   const [roomTypeIds, setRoomTypeIds] = useState([]);
@@ -42,7 +44,7 @@ function NewBooking() {
         room_types: roomTypeIds.toString() // use value in array from useState hook
       };
 
-      dispatch(bookingActions.store(data));
+      dispatch(bookingActions.store(data, navigate));
 
       props.resetForm();
     }
