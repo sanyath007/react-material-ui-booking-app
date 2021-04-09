@@ -9,6 +9,7 @@ import {
   Pagination
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import moment from 'moment';
 import { ipActions } from '../../../redux';
 
 function PatientModal({ isOpen, hideModal, onSelected }) {
@@ -21,6 +22,13 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
 
   const handlePageItemClick = (url) => {
     dispatch(ipActions.fetchIpAllWithPage(url));
+  };
+
+  const calcAge = (birthday) => {
+    const now = moment();
+    const birth = moment(birthday, 'YYYY');
+
+    return now.diff(birth, 'years');
   };
 
   return (
@@ -37,8 +45,9 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
             <tr>
               <th style={{ width: '3%', textAlign: 'center' }}>#</th>
               <th style={{ width: '10%', textAlign: 'center' }}>AN</th>
-              <th style={{ width: '10%', textAlign: 'center' }}>HN</th>
+              <th style={{ width: '8%', textAlign: 'center' }}>HN</th>
               <th>ชื่อ-สกุล</th>
+              <th style={{ width: '8%', textAlign: 'center' }}>อายุ (ปี)</th>
               <th style={{ width: '12%', textAlign: 'center' }}>วันที่ Admit</th>
               <th style={{ width: '20%' }}>วอร์ด</th>
               <th style={{ width: '8%', textAlign: 'center' }}>Actions</th>
@@ -51,7 +60,12 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
                 <td style={{ textAlign: 'center' }}>{ip.an}</td>
                 <td style={{ textAlign: 'center' }}>{ip.hn}</td>
                 <td>{`${ip.patient?.pname}${ip.patient?.fname} ${ip.patient?.lname}`}</td>
-                <td style={{ textAlign: 'center' }}>{ip.regdate}</td>
+                <td style={{ textAlign: 'center' }}>
+                  {calcAge(ip.patient?.birthday)}
+                </td>
+                <td style={{ textAlign: 'center' }}>
+                  {moment(ip.regdate).format('DD/MM/YYYY')}
+                </td>
                 <td>{ip.ward?.name}</td>
                 <td style={{ textAlign: 'center' }}>
                   <Button onClick={() => {
