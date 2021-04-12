@@ -34,7 +34,7 @@ const LoginView = () => {
 
   const handleLogin = (values, props) => {
     if (values) {
-      dispatch(userActions.login(values.email, values.password, navigate));
+      dispatch(userActions.login(values.username, values.password, navigate));
 
       props.resetForm();
     }

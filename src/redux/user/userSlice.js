@@ -22,13 +22,39 @@ export const userSlice = createSlice({
       state.user = null;
       localStorage.removeItem('user');
     },
+    fetchAllSuccess: (state, action) => {
+      state.user = action.payload;
+    },
+    fetchByIdSuccess: (state, action) => {
+      state.user = action.payload;
+    },
   },
 });
 
 export default userSlice.reducer;
 
 // Actions
-const { loginSuccess, logoutSucces } = userSlice.actions;
+const { fetchAllSuccess, fetchByIdSuccess, loginSuccess, logoutSucces } = userSlice.actions;
+
+export const fetchAll = (username) => async (dispatch) => {
+  try {
+    const res = await api.get('/users');
+
+    dispatch(fetchAllSuccess(res.data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchById = (username) => async (dispatch) => {
+  try {
+    const res = await api.get(`/users/${username}`);
+
+    dispatch(fetchByIdSuccess(res.data));
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const login = (username, password, navigate) => async (dispatch) => {
   try {
