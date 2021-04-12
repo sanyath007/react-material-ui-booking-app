@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Container,
   Grid,
@@ -7,6 +8,7 @@ import {
 import Page from 'src/components/Page';
 import Profile from './Profile';
 import ProfileDetails from './ProfileDetails';
+import { userActions } from '../../../redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,6 +21,15 @@ const useStyles = makeStyles((theme) => ({
 
 const Account = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (user) {
+      dispatch(userActions.fetchById(user?.username));
+    }
+  }, []);
+  console.log(user);
 
   return (
     <Page

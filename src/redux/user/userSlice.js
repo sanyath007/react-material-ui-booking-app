@@ -43,7 +43,7 @@ const {
 
 export const fetchAll = () => async (dispatch) => {
   try {
-    const res = await api.get('/users');
+    const res = await api.get('/api/users');
 
     dispatch(fetchAllSuccess(res.data));
   } catch (error) {
@@ -53,7 +53,7 @@ export const fetchAll = () => async (dispatch) => {
 
 export const fetchById = (username) => async (dispatch) => {
   try {
-    const res = await api.get(`/users/${username}`);
+    const res = await api.get(`/api/users/${username}`);
 
     dispatch(fetchByIdSuccess(res.data));
   } catch (error) {
