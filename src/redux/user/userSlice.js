@@ -34,9 +34,14 @@ export const userSlice = createSlice({
 export default userSlice.reducer;
 
 // Actions
-const { fetchAllSuccess, fetchByIdSuccess, loginSuccess, logoutSucces } = userSlice.actions;
+const {
+  fetchAllSuccess,
+  fetchByIdSuccess,
+  loginSuccess,
+  logoutSucces
+} = userSlice.actions;
 
-export const fetchAll = (username) => async (dispatch) => {
+export const fetchAll = () => async (dispatch) => {
   try {
     const res = await api.get('/users');
 
