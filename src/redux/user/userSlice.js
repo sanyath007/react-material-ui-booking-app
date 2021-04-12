@@ -2,7 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import jwt from 'jwt-decode';
 import api from '../../api';
 
-const initialUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+const initialUser = localStorage.getItem('access_token')
+  ? jwt(JSON.parse(localStorage.getItem('access_token'))?.token)?.sub
+  : null;
 
 export const userSlice = createSlice({
   name: 'user',
