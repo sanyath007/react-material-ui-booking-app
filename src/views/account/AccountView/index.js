@@ -29,7 +29,6 @@ const Account = () => {
       dispatch(userActions.fetchById(user?.username));
     }
   }, []);
-  console.log(user);
 
   return (
     <Page

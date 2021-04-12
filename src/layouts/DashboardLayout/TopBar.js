@@ -27,6 +27,7 @@ const useStyles = makeStyles(() => ({
 const TopBar = ({
   className,
   onMobileNavOpen,
+  isLoggedIn,
   ...rest
 }) => {
   const classes = useStyles();
@@ -53,9 +54,11 @@ const TopBar = ({
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton color="inherit">
-            <InputIcon />
-          </IconButton>
+          {isLoggedIn && (
+            <IconButton color="inherit">
+              <InputIcon />
+            </IconButton>
+          )}
         </Hidden>
         <Hidden lgUp>
           <IconButton
@@ -72,7 +75,8 @@ const TopBar = ({
 
 TopBar.propTypes = {
   className: PropTypes.string,
-  onMobileNavOpen: PropTypes.func
+  onMobileNavOpen: PropTypes.func,
+  isLoggedIn: PropTypes.bool,
 };
 
 export default TopBar;

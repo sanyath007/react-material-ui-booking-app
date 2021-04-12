@@ -20,7 +20,7 @@ const user = {
   name: 'Kobe Jr'
 };
 
-const NavBar = ({ onMobileClose, openMobile }) => {
+const NavBar = ({ onMobileClose, openMobile, loggedInUser }) => {
   const classes = useStyles();
   const location = useLocation();
 
@@ -54,13 +54,13 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           color="textPrimary"
           variant="h5"
         >
-          {user.name}
+          {loggedInUser?.name}
         </Typography>
         <Typography
           color="textSecondary"
           variant="body2"
         >
-          {user.jobTitle}
+          {loggedInUser?.position}
         </Typography>
       </Box>
       <Divider />
@@ -109,7 +109,8 @@ const NavBar = ({ onMobileClose, openMobile }) => {
 
 NavBar.propTypes = {
   onMobileClose: PropTypes.func,
-  openMobile: PropTypes.bool
+  openMobile: PropTypes.bool,
+  loggedInUser: PropTypes.object
 };
 
 NavBar.defaultProps = {
