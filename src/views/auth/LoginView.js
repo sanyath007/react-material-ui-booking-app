@@ -1,20 +1,22 @@
 import React from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import {
   Box,
   Button,
   Container,
-  Grid,
+  // Grid,
   Link,
   TextField,
   Typography,
   makeStyles
 } from '@material-ui/core';
-import FacebookIcon from 'src/icons/Facebook';
-import GoogleIcon from 'src/icons/Google';
+// import FacebookIcon from 'src/icons/Facebook';
+// import GoogleIcon from 'src/icons/Google';
 import Page from 'src/components/Page';
+import { userActions } from '../../redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +30,15 @@ const useStyles = makeStyles((theme) => ({
 const LoginView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleLogin = (values, props) => {
+    if (values) {
+      dispatch(userActions.login(values.email, values.password, navigate));
+
+      props.resetForm();
+    }
+  };
 
   return (
     <Page
@@ -43,16 +54,14 @@ const LoginView = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'demo@devias.io',
-              password: 'Password123'
+              username: 'sanyath',
+              password: '0810736804'
             }}
             validationSchema={Yup.object().shape({
-              email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+              username: Yup.string().max(255).required('Username is required'),
               password: Yup.string().max(255).required('Password is required')
             })}
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
-            }}
+            onSubmit={handleLogin}
           >
             {({
               errors,
@@ -79,7 +88,7 @@ const LoginView = () => {
                     Sign in on the internal platform
                   </Typography>
                 </Box>
-                <Grid
+                {/* <Grid
                   container
                   spacing={3}
                 >
@@ -126,18 +135,18 @@ const LoginView = () => {
                   >
                     or login with email address
                   </Typography>
-                </Box>
+                </Box> */}
                 <TextField
-                  error={Boolean(touched.email && errors.email)}
+                  error={Boolean(touched.username && errors.username)}
                   fullWidth
-                  helperText={touched.email && errors.email}
-                  label="Email Address"
+                  helperText={touched.username && errors.username}
+                  label="Username"
                   margin="normal"
-                  name="email"
+                  name="username"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  type="email"
-                  value={values.email}
+                  type="text"
+                  value={values.username}
                   variant="outlined"
                 />
                 <TextField

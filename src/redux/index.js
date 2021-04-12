@@ -5,6 +5,7 @@ import * as buildingActions from './building/buildingSlice';
 import * as bookingActions from './booking/bookingSlice';
 import { fetchPatientAll } from './patient/patientSlice';
 import * as ipActions from './ip/ipSlice';
+import * as userActions from './user/userSlice';
 
 export {
   roomActions,
@@ -14,4 +15,5 @@ export {
   bookingActions,
   fetchPatientAll,
   ipActions,
+  userActions,
 };
