@@ -13,7 +13,7 @@ export const userSlice = createSlice({
   },
   reducers: {
     loginSuccess: (state, action) => {
-      const decoded = jwt(action.payload.token);
+      const decoded = jwt(action.payload);
 
       state.user = decoded.sub;
       localStorage.setItem('access_token', JSON.stringify(action.payload));
