@@ -16,7 +16,7 @@ import {
 // import FacebookIcon from 'src/icons/Facebook';
 // import GoogleIcon from 'src/icons/Google';
 import Page from 'src/components/Page';
-import { userActions } from '../../redux';
+import { authActions } from '../../redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +34,7 @@ const LoginView = () => {
 
   const handleLogin = (values, props) => {
     if (values) {
-      dispatch(userActions.login(values.username, values.password, navigate));
+      dispatch(authActions.login(values.username, values.password, navigate));
 
       props.resetForm();
     }

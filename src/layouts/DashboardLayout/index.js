@@ -7,18 +7,18 @@ import useStyles from './styles';
 
 const DashboardLayout = () => {
   const classes = useStyles();
-  const { user } = useSelector((state) => state.user);
+  const { auth } = useSelector((state) => state.auth);
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
-  console.log(user);
+  console.log(auth);
 
   return (
     <div className={classes.root}>
-      <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} isLoggedIn={user !== null} />
+      <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} isLoggedIn={auth !== null} />
 
       <NavBar
         onMobileClose={() => setMobileNavOpen(false)}
         openMobile={isMobileNavOpen}
-        loggedInUser={user}
+        loggedInUser={auth}
       />
       <div className={classes.wrapper}>
         <div className={classes.contentContainer}>
