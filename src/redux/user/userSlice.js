@@ -3,7 +3,7 @@ import jwt from 'jwt-decode';
 import api from '../../api';
 
 const initialUser = localStorage.getItem('access_token')
-  ? jwt(JSON.parse(localStorage.getItem('access_token'))?.token)?.sub
+  ? jwt(JSON.parse(localStorage.getItem('access_token')))?.sub
   : null;
 
 export const userSlice = createSlice({
