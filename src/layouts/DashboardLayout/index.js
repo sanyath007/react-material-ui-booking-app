@@ -20,6 +20,7 @@ const DashboardLayout = () => {
         openMobile={isMobileNavOpen}
         loggedInUser={auth}
       />
+
       <div className={classes.wrapper}>
         <div className={classes.contentContainer}>
           <div className={classes.content}>
