@@ -40,7 +40,7 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
     >
       <Modal.Header closeButton>กรุณาเลือกผู้ป่วย</Modal.Header>
       <Modal.Body>
-        <table className="table table-bordered">
+        <table className="table table-bordered table-sm">
           <thead>
             <tr>
               <th style={{ width: '3%', textAlign: 'center' }}>#</th>
@@ -68,10 +68,12 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
                 </td>
                 <td>{ip.ward?.name}</td>
                 <td style={{ textAlign: 'center' }}>
-                  <Button onClick={() => {
-                    onSelected(`${ip.an}-${ip.patient?.pname}${ip.patient?.fname} ${ip.patient?.lname}`);
-                    hideModal();
-                  }}
+                  <Button
+                    onClick={() => {
+                      onSelected(`${ip.an}-${ip.patient?.pname}${ip.patient?.fname} ${ip.patient?.lname}`);
+                      hideModal();
+                    }}
+                    size="sm"
                   >
                     เลือก
                   </Button>
