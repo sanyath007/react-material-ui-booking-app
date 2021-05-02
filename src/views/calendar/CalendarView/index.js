@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Container } from '@material-ui/core';
 import Page from 'src/components/Page';
-import Fullcalendar from '../Fullcalendar';
+import Fullcalendar from '../../../components/Fullcalendar';
 import useStyles from './styles';
 
 const events = [
