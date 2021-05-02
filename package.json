@@ -3,10 +3,12 @@
   "author": "DeviasIO",
   "licence": "MIT",
   "version": "1.0.0",
+  "homepage": "http://localhost/public_html/viproom",
   "private": false,
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:stage": "env-cmd -f ./.env.test.local npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -64,6 +66,7 @@
     "yup": "^0.29.3"
   },
   "devDependencies": {
+    "env-cmd": "^10.1.0",
     "eslint": "^7.11.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-prettier": "^6.11.0",
