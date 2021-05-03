@@ -28,18 +28,12 @@ const RoomList = () => {
   console.log(filteredRooms);
 
   return (
-    <Page
-      className={classes.root}
-      title="ห้องพิเศษ"
-    >
+    <Page className={classes.root} title="ห้องพิเศษ">
       <Container maxWidth={false}>
         <Toolbar showFilteredRoom={showFilteredRoom} />
 
         <Box mt={3}>
-          <Grid
-            container
-            spacing={3}
-          >
+          <Grid container spacing={3}>
             {filteredRooms && filteredRooms.map((room) => (
               <Grid
                 item
@@ -48,19 +42,12 @@ const RoomList = () => {
                 md={6}
                 xs={12}
               >
-                <RoomCard
-                  className={classes.roomCard}
-                  room={room}
-                />
+                <RoomCard className={classes.roomCard} room={room} />
               </Grid>
             ))}
           </Grid>
         </Box>
-        <Box
-          mt={3}
-          display="flex"
-          justifyContent="center"
-        >
+        <Box mt={3} display="flex" justifyContent="center">
           <Pagination
             color="primary"
             count={3}
