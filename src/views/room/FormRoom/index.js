@@ -178,14 +178,14 @@ function FormRoom({
                   helperText={<ErrorMessage name="floor" />}
                 />
               </Grid>
-              <Grid item sm={12}>
+              <Grid item sm={6}>
                 <AmenityCheckboxes
                   name="amenities"
                   value={formik.values.amenities}
                   handleChange={formik.handleChange}
                 />
               </Grid>
-              <Grid item sm={12}>
+              <Grid item sm={6}>
                 <FormControls.FileUploadInput
                   name="room_img_url"
                   label="รูป"
