@@ -6,6 +6,7 @@ export const roomSlice = createSlice({
   initialState: {
     room: {},
     rooms: [],
+    filteredRooms: [],
     floor1: [],
     floor2: [],
     floor3: [],
@@ -14,6 +15,7 @@ export const roomSlice = createSlice({
   reducers: {
     fetchAllSuccess: (state, action) => {
       state.rooms = action.payload;
+      state.filteredRooms = state.rooms;
     },
     fetchRoomsStatusSuccess: (state, action) => {
       state.floor1 = action.payload.rooms.filter((room) => parseInt(room.floor, 10) === 1);
@@ -21,6 +23,15 @@ export const roomSlice = createSlice({
       state.floor3 = action.payload.rooms.filter((room) => parseInt(room.floor, 10) === 3);
 
       state.usedRooms = action.payload.usedRooms;
+    },
+    filterRoomByFloorSuccess: (state, action) => {
+      if (action.payload) {
+        state.filteredRooms = state.rooms.filter((room) => {
+          return parseInt(room.floor, 10) === action.payload;
+        });
+      } else {
+        state.filteredRooms = state.rooms;
+      }
     },
     storeSuccess: (state, action) => {
       state.rooms = [...state.rooms, action.payload];
@@ -52,6 +63,7 @@ export default roomSlice.reducer;
 const {
   fetchAllSuccess,
   fetchRoomsStatusSuccess,
+  filterRoomByFloorSuccess,
   storeSuccess,
   updateSuccess,
   destroySuccess,
@@ -61,7 +73,7 @@ export const fetchRoomAll = () => async (dispatch) => {
   try {
     const res = await api.get('/rooms');
 
-    return dispatch(fetchAllSuccess(res.data.items));
+    dispatch(fetchAllSuccess(res.data.items));
   } catch (error) {
     console.log(error);
   }
@@ -71,10 +83,14 @@ export const fetchRoomsStatus = () => async (dispatch) => {
   try {
     const res = await api.get('/rooms-status');
 
-    return dispatch(fetchRoomsStatusSuccess(res.data));
+    dispatch(fetchRoomsStatusSuccess(res.data));
   } catch (error) {
     console.log(error);
   }
+};
+
+export const filterRoomsByFloor = (floor = '') => async (dispatch) => {
+  dispatch(filterRoomByFloorSuccess(floor));
 };
 
 export const store = (data, navigate) => async (dispatch) => {

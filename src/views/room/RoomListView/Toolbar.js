@@ -87,6 +87,7 @@ const Toolbar = ({ className, showFilteredRoom, ...rest }) => {
                       handleFilterRoom(e.target.value);
                     }}
                   >
+                    <MenuItem value="">เลือก</MenuItem>
                     {floors.map((floor) => (
                       <MenuItem key={floor.id} value={floor.id}>
                         {floor.name}

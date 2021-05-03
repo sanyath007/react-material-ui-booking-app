@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Container,
@@ -15,18 +15,17 @@ import { roomActions } from '../../../redux';
 const RoomList = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { rooms } = useSelector((state) => state.room);
-  const [filteredRoom, setFilteredRoom] = useState([]);
+  const { filteredRooms } = useSelector((state) => state.room);
 
-  const showFilteredRoom = (floor) => {
-    const tmpRooms = rooms.filter((room) => parseInt(room.floor, 10) === floor);
-
-    setFilteredRoom(tmpRooms);
+  const showFilteredRoom = (floor = '') => {
+    dispatch(roomActions.filterRoomsByFloor(floor));
   };
 
   useEffect(() => {
     dispatch(roomActions.fetchRoomAll());
   }, []);
+
+  console.log(filteredRooms);
 
   return (
     <Page
@@ -41,7 +40,7 @@ const RoomList = () => {
             container
             spacing={3}
           >
-            {filteredRoom && filteredRoom.map((room) => (
+            {filteredRooms && filteredRooms.map((room) => (
               <Grid
                 item
                 key={room.room_id}
