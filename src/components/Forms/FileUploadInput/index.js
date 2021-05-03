@@ -5,7 +5,12 @@ import { Form } from 'react-bootstrap';
 import useStyles from './styles';
 import fileReader from '../../../utils/fileReader';
 
-function FileUploadInput({ name, label, handleChange }) {
+function FileUploadInput({
+  name,
+  label,
+  defaultImg,
+  handleChange
+}) {
   const [image, setImage] = useState('');
   const classes = useStyles();
 
@@ -25,10 +30,17 @@ function FileUploadInput({ name, label, handleChange }) {
     <Grid
       container
       className={classes.wrapper}
-      direction="row"
+      direction="column"
       justify="flex-end"
+      style={{ border: '1px solid blue' }}
     >
-      <Grid item xs={12} sm={12} md={6}>
+      <Grid
+        item
+        xs={12}
+        sm={12}
+        md={6}
+        style={{ border: '1px solid red' }}
+      >
         <Form.Group>
           <Form.File
             type="file"
@@ -38,8 +50,18 @@ function FileUploadInput({ name, label, handleChange }) {
           />
         </Form.Group>
       </Grid>
-      <Grid item xs={12} sm={12} md={6} className={classes.imgWrapper}>
-        <img src={image} alt={name} className={classes.previewImg} />
+      <Grid
+        item
+        xs={12}
+        sm={12}
+        md={6}
+        mx="auto"
+        className={classes.imgWrapper}
+        style={{ border: '1px solid black' }}
+      >
+        {defaultImg
+          ? <img src={defaultImg} alt={name} className={classes.previewImg} />
+          : <img src={image} alt={name} className={classes.previewImg} />}
       </Grid>
     </Grid>
   );
@@ -48,6 +70,7 @@ function FileUploadInput({ name, label, handleChange }) {
 FileUploadInput.propTypes = {
   name: PropTypes.string,
   label: PropTypes.string,
+  defaultImg: PropTypes.string,
   handleChange: PropTypes.func
 };
 

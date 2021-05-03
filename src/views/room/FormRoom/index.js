@@ -17,18 +17,6 @@ import * as Yup from 'yup';
 import useStyles from './styles';
 import AmenityCheckboxes from './AmenityCheckboxes';
 
-const initialRoom = {
-  room_no: '',
-  room_name: '',
-  description: '',
-  room_type: '',
-  room_group: '',
-  building: '',
-  floor: '',
-  room_img_url: '',
-  amenities: []
-};
-
 function FormRoom({
   roomTypes,
   roomGroups,
@@ -59,14 +47,27 @@ function FormRoom({
 
   return (
     <Formik
-      initialValues={initialRoom}
+      enableReinitialize={room}
+      initialValues={{
+        room_no: room ? room.room_no : '',
+        room_name: room ? room.room_name : '',
+        description: room ? room.description : '',
+        room_type: room ? room.room_type : '',
+        room_group: room ? room.room_group : '',
+        building: room ? room.building : '',
+        floor: room ? room.floor : '',
+        room_img_url: room ? room.room_img_url : '',
+        amenities: []
+      }}
       validationSchema={roomSchema}
       onSubmit={onSubmit}
     >
       {(formik) => {
         return (
           <Form>
-            <Typography variant="h5">เพิ่มรายการห้องใหม่</Typography>
+            <Typography variant="h5">
+              {room ? 'แก้ไขข้อมูลห้อง' : 'เพิ่มรายการห้องใหม่'}
+            </Typography>
             <Grid container spacing={5}>
               <Grid item sm={6}>
                 <TextField
@@ -188,20 +189,32 @@ function FormRoom({
                 <FormControls.FileUploadInput
                   name="room_img_url"
                   label="รูป"
-                  value={formik.values.room_img_url}
+                  defaultImg={formik.values.room_img_url}
                   handleChange={formik.handleChange}
                 />
               </Grid>
               <Grid item sm={12}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  className={classes.buttonSubmit}
-                  fullWidth
-                >
-                  บันทึก
-                </Button>
+                {room ? (
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="secondary"
+                    className={classes.buttonSubmit}
+                    fullWidth
+                  >
+                    แก้ไข
+                  </Button>
+                ) : (
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    className={classes.buttonSubmit}
+                    fullWidth
+                  >
+                    บันทึก
+                  </Button>
+                )}
               </Grid>
             </Grid>
           </Form>
