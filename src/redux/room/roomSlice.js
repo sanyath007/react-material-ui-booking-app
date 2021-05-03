@@ -17,6 +17,9 @@ export const roomSlice = createSlice({
       state.rooms = action.payload;
       state.filteredRooms = state.rooms;
     },
+    fetchByIdSuccess: (state, action) => {
+      state.room = action.payload;
+    },
     fetchRoomsStatusSuccess: (state, action) => {
       state.floor1 = action.payload.rooms.filter((room) => parseInt(room.floor, 10) === 1);
       state.floor2 = action.payload.rooms.filter((room) => parseInt(room.floor, 10) === 2);
@@ -62,6 +65,7 @@ export default roomSlice.reducer;
 // Actions
 const {
   fetchAllSuccess,
+  fetchByIdSuccess,
   fetchRoomsStatusSuccess,
   filterRoomByFloorSuccess,
   storeSuccess,
@@ -74,6 +78,16 @@ export const fetchRoomAll = () => async (dispatch) => {
     const res = await api.get('/rooms');
 
     dispatch(fetchAllSuccess(res.data.items));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchById = (id) => async (dispatch) => {
+  try {
+    const res = await api.get(`/rooms/${id}`);
+
+    dispatch(fetchByIdSuccess(res.data));
   } catch (error) {
     console.log(error);
   }

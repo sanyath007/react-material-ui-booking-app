@@ -13,6 +13,7 @@ import CalendarView from 'src/views/calendar/CalendarView';
 import RoomsStatusView from 'src/views/room/RoomsStatus';
 import RoomListView from 'src/views/room/RoomListView';
 import NewRoom from 'src/views/room/NewRoomView';
+import EditRoom from 'src/views/room/EditRoomView';
 import AccountView from 'src/views/account/AccountView';
 import SettingsView from 'src/views/settings/SettingsView';
 import LoginView from 'src/views/auth/LoginView';
@@ -32,7 +33,8 @@ const routes = [
       { path: 'calendar', element: <CalendarView /> },
       { path: 'status', element: <RoomsStatusView /> },
       { path: 'rooms', element: <RoomListView /> },
-      { path: 'newroom', element: <NewRoom /> },
+      { path: 'rooms/new', element: <NewRoom /> },
+      { path: 'rooms/edit/:roomId', element: <EditRoom /> },
       { path: 'account', element: <AccountView /> },
       { path: 'settings', element: <SettingsView /> },
       { path: '*', element: <Navigate to="/404" /> }

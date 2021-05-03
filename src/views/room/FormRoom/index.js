@@ -33,7 +33,8 @@ function FormRoom({
   roomTypes,
   roomGroups,
   buildings,
-  handleSubmit
+  handleSubmit,
+  room
 }) {
   const classes = useStyles();
 
@@ -53,6 +54,8 @@ function FormRoom({
       props.resetForm();
     }
   };
+
+  console.log(room);
 
   return (
     <Formik
@@ -214,6 +217,7 @@ FormRoom.propTypes = {
   buildings: PropTypes.array,
   handleSubmit: PropTypes.func,
   resetForm: PropTypes.func,
+  room: PropTypes.object
 };
 
 export default FormRoom;

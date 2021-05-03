@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import {
   Avatar,
@@ -75,6 +76,8 @@ const RoomCard = ({ className, room, ...rest }) => {
               variant="contained"
               className={classes.editBtn}
               endIcon={<EditIcon className={classes.statsIcon} />}
+              component={Link}
+              to={`/app/rooms/edit/${room.room_id}`}
             >
               Edit
             </Button>
