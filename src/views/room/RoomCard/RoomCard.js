@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import {
   Avatar,
   Box,
+  Button,
   Card,
   CardHeader,
   CardMedia,
@@ -13,8 +14,8 @@ import {
   IconButton,
   Typography
 } from '@material-ui/core';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import GetAppIcon from '@material-ui/icons/GetApp';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import useStyles from './styles';
 
@@ -69,40 +70,23 @@ const RoomCard = ({ className, room, ...rest }) => {
           justify="space-between"
           spacing={2}
         >
-          <Grid
-            className={classes.statsItem}
-            item
-          >
-            {/* // TODO: separate and create updated time component */}
-            <AccessTimeIcon
-              className={classes.statsIcon}
-              color="action"
-            />
-            <Typography
-              color="textSecondary"
-              display="inline"
-              variant="body2"
+          <Grid className={classes.statsItem} item>
+            <Button
+              variant="contained"
+              className={classes.editBtn}
+              endIcon={<EditIcon className={classes.statsIcon} />}
             >
-              Updated 2hr ago
-            </Typography>
+              Edit
+            </Button>
           </Grid>
-          <Grid
-            className={classes.statsItem}
-            item
-          >
-            <GetAppIcon
-              className={classes.statsIcon}
-              color="action"
-            />
-            <Typography
-              color="textSecondary"
-              display="inline"
-              variant="body2"
+          <Grid className={classes.statsItem} item>
+            <Button
+              variant="contained"
+              className={classes.deleteBtn}
+              startIcon={<DeleteIcon className={classes.statsIcon} />}
             >
-              {room.totalDownloads}
-              {' '}
-              Downloads
-            </Typography>
+              Delete
+            </Button>
           </Grid>
         </Grid>
       </Box>
