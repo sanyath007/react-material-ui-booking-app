@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
-import { Form } from 'react-bootstrap';
+import { Form as BsForm } from 'react-bootstrap';
 import useStyles from './styles';
 import fileReader from '../../../utils/fileReader';
 
@@ -32,32 +32,36 @@ function FileUploadInput({
       className={classes.wrapper}
       direction="column"
       justify="flex-end"
-      style={{ border: '1px solid blue' }}
     >
       <Grid
         item
         xs={12}
         sm={12}
-        md={6}
-        style={{ border: '1px solid red' }}
+        md={12}
+        style={{ padding: '5px 0px' }}
       >
-        <Form.Group>
-          <Form.File
+        <Grid
+          container
+          direction="row"
+          justify="flex-start"
+          alignItems="center"
+        >
+          <label htmlFor={name} style={{ marginRight: '5px' }}>
+            {`${label} :`}
+          </label>
+          <BsForm.File
             type="file"
             name={name}
             onChange={(e) => handleImageChange(e)}
-            label={label}
           />
-        </Form.Group>
+        </Grid>
       </Grid>
       <Grid
         item
         xs={12}
         sm={12}
-        md={6}
-        mx="auto"
+        md={12}
         className={classes.imgWrapper}
-        style={{ border: '1px solid black' }}
       >
         {defaultImg
           ? <img src={defaultImg} alt={name} className={classes.previewImg} />
