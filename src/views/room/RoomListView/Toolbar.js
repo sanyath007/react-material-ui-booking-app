@@ -62,7 +62,7 @@ const Toolbar = ({ className, showFilteredRoom, ...rest }) => {
           color="primary"
           variant="contained"
           component={Link}
-          to="/app/newroom"
+          to="/app/rooms/new"
         >
           เพิ่มห้อง
         </Button>

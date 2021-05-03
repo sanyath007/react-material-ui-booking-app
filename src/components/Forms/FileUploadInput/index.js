@@ -61,7 +61,7 @@ function FileUploadInput({
       >
         {defaultImg
           ? <img src={defaultImg} alt={name} className={classes.previewImg} />
-          : <img src={image} alt={name} className={classes.previewImg} />}
+          : image && <img src={image} alt={name} className={classes.previewImg} />}
       </Grid>
     </Grid>
   );
