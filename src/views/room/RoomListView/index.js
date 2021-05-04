@@ -25,8 +25,6 @@ const RoomList = () => {
     dispatch(roomActions.fetchRoomAll());
   }, []);
 
-  console.log(filteredRooms);
-
   return (
     <Page className={classes.root} title="ห้องพิเศษ">
       <Container maxWidth={false}>

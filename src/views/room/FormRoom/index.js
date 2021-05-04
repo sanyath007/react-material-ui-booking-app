@@ -43,7 +43,13 @@ function FormRoom({
     }
   };
 
+  const createAmenityIdLists = (amenities) => {
+    if (!amenities) return [];
+
+    return amenities.map((am) => am.amenity_id);
+  };
   console.log(room);
+  console.log(createAmenityIdLists(room.amenities));
 
   return (
     <Formik
@@ -178,14 +184,14 @@ function FormRoom({
                   helperText={<ErrorMessage name="floor" />}
                 />
               </Grid>
-              <Grid item sm={6}>
+              <Grid item sm={12} md={6}>
                 <AmenityCheckboxes
                   name="amenities"
                   value={formik.values.amenities}
                   handleChange={formik.handleChange}
                 />
               </Grid>
-              <Grid item sm={6}>
+              <Grid item sm={12} md={6}>
                 <FormControls.FileUploadInput
                   name="room_img_url"
                   label="รูป"
@@ -193,7 +199,7 @@ function FormRoom({
                   handleChange={formik.handleChange}
                 />
               </Grid>
-              <Grid item sm={12}>
+              <Grid item xs={12} sm={12}>
                 {room ? (
                   <Button
                     type="submit"
