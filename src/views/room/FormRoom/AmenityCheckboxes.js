@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const AmenityCheckboxes = ({ name, handleChange }) => {
+const AmenityCheckboxes = ({ name, value, handleChange }) => {
   const classes = useStyles();
   const [amenities, setAmenities] = useState([]);
   const [amenityIds, setAmenityIds] = useState([]);
@@ -48,15 +48,19 @@ const AmenityCheckboxes = ({ name, handleChange }) => {
     createAmenityLists(e.target.name);
   };
 
+  const fetchAmenities = async () => {
+    const res = await api.get('/amenities');
+
+    setAmenities(res.data);
+  };
+
   useEffect(() => {
-    async function fetchAmenities() {
-      const res = await api.get('/amenities');
-
-      setAmenities(res.data);
-    }
-
     fetchAmenities();
-  }, []);
+
+    if (value) {
+      setAmenityIds(value);
+    }
+  }, [value]);
 
   console.log(amenityIds);
 
@@ -69,6 +73,7 @@ const AmenityCheckboxes = ({ name, handleChange }) => {
             key={am.amenity_id}
             name={am.amenity_id}
             label={am.amenity_desc}
+            value={!value ? false : value.includes(am.amenity_id)}
             handleChange={onCheckboxChange}
           />
         ))}
@@ -79,6 +84,7 @@ const AmenityCheckboxes = ({ name, handleChange }) => {
 
 AmenityCheckboxes.propTypes = {
   name: PropTypes.string,
+  value: PropTypes.array,
   handleChange: PropTypes.func
 };
 

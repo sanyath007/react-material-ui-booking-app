@@ -48,8 +48,6 @@ function FormRoom({
 
     return amenities.map((am) => am.amenity_id);
   };
-  console.log(room);
-  console.log(createAmenityIdLists(room.amenities));
 
   return (
     <Formik
@@ -63,7 +61,7 @@ function FormRoom({
         building: room ? room.building : '',
         floor: room ? room.floor : '',
         room_img_url: room ? room.room_img_url : '',
-        amenities: []
+        amenities: room ? createAmenityIdLists(room.amenities) : [],
       }}
       validationSchema={roomSchema}
       onSubmit={onSubmit}
