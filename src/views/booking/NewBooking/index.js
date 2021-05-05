@@ -3,7 +3,6 @@ import {
   Container,
   Paper,
 } from '@material-ui/core';
-import * as Yup from 'yup';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -18,15 +17,6 @@ function NewBooking() {
   const dispatch = useDispatch();
   const { roomTypes } = useSelector((state) => state.roomType);
   const [roomTypeIds, setRoomTypeIds] = useState([]);
-
-  const bookingSchema = Yup.object().shape({
-    an: Yup.string().required('กรุณาระบุ An ของผู้ป่วยก่อน'),
-    book_date: Yup.string().required('กรุณาระบุวันที่จองก่อน'),
-    book_name: Yup.string().required('กรุณาระบุชื่อ-สกุลผู้จองก่อน'),
-    book_tel: Yup.string().required('กรุณาระบุเบอร์ติดต่อผู้จองก่อน'),
-    // description: Yup.string().required('Description is required'),
-    // remark: Yup.string().required('Remark is required'),
-  });
 
   const handleSubmit = async (values, props) => {
     if (values) {
@@ -67,7 +57,6 @@ function NewBooking() {
         <Paper className={classes.paper}>
 
           <FormBooking
-            bookingSchema={bookingSchema}
             roomTypes={roomTypes}
             handleSubmit={handleSubmit}
             handleRoomTypeChecked={handleRoomTypeChecked}

@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import FormControls from 'src/components/Forms';
 import { Formik, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import PatientModal from './PatientModal';
 import api from '../../../api';
 
@@ -29,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
 
 const FormBooking = ({
   booking,
-  bookingSchema,
   roomTypes,
   handleSubmit,
   handleRoomTypeChecked
@@ -38,6 +38,15 @@ const FormBooking = ({
   const [rtypes, setRtypes] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [isPatientReserve, setIsPatientReserve] = useState(false);
+
+  const bookingSchema = Yup.object().shape({
+    an: Yup.string().required('กรุณาระบุ An ของผู้ป่วยก่อน'),
+    book_date: Yup.string().required('กรุณาระบุวันที่จองก่อน'),
+    book_name: Yup.string().required('กรุณาระบุชื่อ-สกุลผู้จองก่อน'),
+    book_tel: Yup.string().required('กรุณาระบุเบอร์ติดต่อผู้จองก่อน'),
+    // description: Yup.string().required('Description is required'),
+    // remark: Yup.string().required('Remark is required'),
+  });
 
   useEffect(() => {
     const bookingRoomTypes = booking?.room_types?.split(',');
@@ -60,10 +69,6 @@ const FormBooking = ({
     e.preventDefault();
 
     setOpenModal(true);
-  };
-
-  const handleOnHideModal = () => {
-    setOpenModal(false);
   };
 
   const handlePatientReserve = async (e, formik) => {
@@ -115,7 +120,7 @@ const FormBooking = ({
 
                 <PatientModal
                   isOpen={openModal}
-                  hideModal={handleOnHideModal}
+                  hideModal={() => setOpenModal(false)}
                   onSelected={(an) => formik.setFieldValue('an', an)}
                 />
 
@@ -269,7 +274,6 @@ const FormBooking = ({
 
 FormBooking.propTypes = {
   booking: PropTypes.object,
-  bookingSchema: PropTypes.object,
   roomTypes: PropTypes.array,
   handleSubmit: PropTypes.func,
   handleRoomTypeChecked: PropTypes.func,
