@@ -53,15 +53,15 @@ function FormRoom({
     <Formik
       enableReinitialize={room}
       initialValues={{
-        room_no: room ? room.room_no : '',
-        room_name: room ? room.room_name : '',
-        description: room ? room.description : '',
-        room_type: room ? parseInt(room.room_type, 10) : '',
-        room_group: room ? parseInt(room.room_group, 10) : '',
-        building: room ? parseInt(room.building, 10) : '',
-        floor: room ? room.floor : '',
-        room_img_url: room ? room.room_img_url : '',
-        amenities: room ? createAmenityIdLists(room.amenities) : [],
+        room_no: room ? room?.room_no || '' : '',
+        room_name: room ? room?.room_name || '' : '',
+        description: room ? room?.description || '' : '',
+        room_type: room ? parseInt(room?.room_type, 10) || '' : '',
+        room_group: room ? parseInt(room?.room_group, 10) || '' : '',
+        building: room ? parseInt(room?.building, 10) || '' : '',
+        floor: room ? room?.floor || '' : '',
+        room_img_url: room ? room?.room_img_url : '',
+        amenities: room ? createAmenityIdLists(room?.amenities) : [],
       }}
       validationSchema={roomSchema}
       onSubmit={onSubmit}
