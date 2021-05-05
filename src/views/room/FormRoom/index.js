@@ -53,6 +53,7 @@ function FormRoom({
     <Formik
       enableReinitialize={room}
       initialValues={{
+        room_id: room ? room?.room_id || '' : '',
         room_no: room ? room?.room_no || '' : '',
         room_name: room ? room?.room_name || '' : '',
         description: room ? room?.description || '' : '',

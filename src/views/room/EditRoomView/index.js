@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Paper } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import Page from 'src/components/Page';
@@ -15,14 +15,17 @@ import FormRoom from '../FormRoom';
 const EditRoomView = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { roomId } = useParams();
   const { roomTypes } = useSelector((state) => state.roomType);
   const { roomGroups } = useSelector((state) => state.roomGroup);
   const { buildings } = useSelector((state) => state.building);
   const { room } = useSelector((state) => state.room);
 
-  const handleSubmit = () => {
+  const handleSubmit = async (data) => {
+    const { room_id: id, ...rest } = data;
 
+    dispatch(roomActions.update(id, rest, navigate));
   };
 
   useEffect(() => {

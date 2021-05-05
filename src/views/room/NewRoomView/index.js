@@ -44,7 +44,7 @@ const NewRoom = () => {
   };
 
   return (
-    <Page className={classes.root} title="Add New Rooms">
+    <Page className={classes.root} title="เพิ่มข้อมูลห้อง">
       <Container maxWidth={false}>
         <Paper className={classes.paper}>
           <FormRoom
