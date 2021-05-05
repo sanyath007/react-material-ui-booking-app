@@ -33,13 +33,7 @@ function FileUploadInput({
       direction="column"
       justify="flex-end"
     >
-      <Grid
-        item
-        xs={12}
-        sm={12}
-        md={12}
-        style={{ padding: '5px 0px' }}
-      >
+      <Grid item xs={12} style={{ padding: '5px 0px' }}>
         <Grid
           container
           direction="row"
@@ -56,13 +50,7 @@ function FileUploadInput({
           />
         </Grid>
       </Grid>
-      <Grid
-        item
-        xs={12}
-        sm={12}
-        md={12}
-        className={classes.imgWrapper}
-      >
+      <Grid item xs={12} className={classes.imgWrapper}>
         {defaultImg
           ? <img src={defaultImg} alt={name} className={classes.previewImg} />
           : image && <img src={image} alt={name} className={classes.previewImg} />}
