@@ -74,7 +74,7 @@ const Toolbar = ({ className, showFilteredRoom, ...rest }) => {
               container
               spacing={3}
             >
-              <Grid item md={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <FormControl fullWidth>
                   <InputLabel htmlFor="floor">ชั้น</InputLabel>
                   <Select

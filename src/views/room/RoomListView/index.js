@@ -35,10 +35,11 @@ const RoomList = () => {
             {filteredRooms && filteredRooms.map((room) => (
               <Grid
                 item
-                key={room.room_id}
-                lg={4}
-                md={6}
+                lg={3}
+                md={4}
+                sm={6}
                 xs={12}
+                key={room.room_id}
               >
                 <RoomCard className={classes.roomCard} room={room} />
               </Grid>
