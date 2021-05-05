@@ -30,6 +30,30 @@ const useStyles = makeStyles((theme) => ({
   root: {},
   avatar: {
     marginRight: theme.spacing(2)
+  },
+  viewBtn: {
+    color: theme.palette.primary.dark,
+    '&:hover': {
+      color: theme.palette.primary.main
+    }
+  },
+  editBtn: {
+    color: theme.palette.warning.dark,
+    '&:hover': {
+      color: theme.palette.warning.main
+    }
+  },
+  deleteBtn: {
+    color: theme.palette.error.dark,
+    '&:hover': {
+      color: theme.palette.error.main
+    }
+  },
+  checkinBtn: {
+    color: theme.palette.success.dark,
+    '&:hover': {
+      color: theme.palette.success.main
+    }
   }
 }));
 
@@ -187,17 +211,29 @@ const Results = ({
                     {`${booking.user?.person_firstname} ${booking.user?.person_lastname}`}
                   </TableCell>
                   <TableCell align="center">
-                    <a href="#" title="รายละเอียด" onClick={() => onViewDetailClick(booking.an.an)}>
-                      <VisibilityIcon color="primary" />
-                    </a>
-                    <Link to={`/app/bookings/edit/${booking.book_id}`} title="แก้ไข">
-                      <EditIcon color="secondary" />
+                    <Link
+                      to=""
+                      title="รายละเอียด"
+                      onClick={() => onViewDetailClick(booking.an.an)}
+                    >
+                      <VisibilityIcon />
                     </Link>
-                    <a href="#" title="ลบ">
-                      <DeleteIcon color="error" />
-                    </a>
-                    <Link to={`/app/checkin/${booking.book_id}`} title="รับผู้ป่วยเข้าห้อง">
-                      <ExitToAppIcon color="action" />
+                    <Link
+                      to={`/app/bookings/edit/${booking.book_id}`}
+                      title="แก้ไข"
+                      className={classes.editBtn}
+                    >
+                      <EditIcon />
+                    </Link>
+                    <Link to="" title="ลบ" className={classes.deleteBtn}>
+                      <DeleteIcon />
+                    </Link>
+                    <Link
+                      to={`/app/checkin/${booking.book_id}`}
+                      title="รับผู้ป่วยเข้าห้อง"
+                      className={classes.checkinBtn}
+                    >
+                      <ExitToAppIcon />
                     </Link>
                   </TableCell>
                 </TableRow>
