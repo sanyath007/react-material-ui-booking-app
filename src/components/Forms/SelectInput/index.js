@@ -14,14 +14,21 @@ function SelectInput({
   name,
   label,
   value,
-  handleChange,
-  options
+  error,
+  options,
+  handleChange
 }) {
   const classes = useStyles();
 
   return (
     <FormControl className={classes.formControl} fullWidth>
-      <InputLabel htmlFor={label} className={classes.selectLabel}>{label}</InputLabel>
+      <InputLabel
+        htmlFor={label}
+        className={classes.selectLabel}
+        error={error}
+      >
+        {label}
+      </InputLabel>
       <Select
         labelId={label}
         className={classes.selectInput}
@@ -47,8 +54,9 @@ SelectInput.propTypes = {
   name: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.string,
-  handleChange: PropTypes.func,
+  error: PropTypes.bool,
   options: PropTypes.array,
+  handleChange: PropTypes.func,
 };
 
 export default SelectInput;

@@ -149,6 +149,7 @@ const CheckinRoom = () => {
                         label="ห้อง"
                         value={formik.values.roomId}
                         handleChange={formik.handleChange}
+                        error={formik.errors.roomId && formik.touched.roomId}
                         options={rooms}
                       />
                     </Grid>
