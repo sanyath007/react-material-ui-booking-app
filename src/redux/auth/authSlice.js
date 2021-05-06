@@ -5,7 +5,6 @@ import api from '../../api';
 const initialAuth = localStorage.getItem('access_token')
   ? jwt(JSON.parse(localStorage.getItem('access_token')))?.sub
   : null;
-console.log(initialAuth);
 
 const authSlice = createSlice({
   name: 'auth',

@@ -29,12 +29,12 @@ const initialValues = {
 
 const CheckinRoom = () => {
   const classes = useStyles();
-  const [buildings, setBuildings] = useState([]);
-  const [building, setBuilding] = useState('');
-  const [rooms, setRooms] = useState([]);
   const dispatch = useDispatch();
   // const buildings = useSelector((state) => state.building);
   const { bookId } = useParams();
+  const [buildings, setBuildings] = useState([]);
+  const [building, setBuilding] = useState('');
+  const [rooms, setRooms] = useState([]);
 
   const fetchBuildingAll = async () => {
     const res = await api.get('/buildings');
@@ -58,6 +58,14 @@ const CheckinRoom = () => {
     checkinDate: Yup.string().required('Check in date is required'),
     checkinTime: Yup.string().required('Check in time is required'),
     roomId: Yup.string().required('กรุณาเลือกห้องก่อน'),
+    observerName: Yup.string().when('haveObserver', {
+      is: (value) => value === true,
+      then: Yup.string().required('กรุณาระบุชื่อ-สกุลญาติผู้เฝ้า')
+    }),
+    observerTel: Yup.string().when('haveObserver', {
+      is: (value) => value === true,
+      then: Yup.string().required('กรุณาระบุเบอร์โทรศัพท์ญาติผู้เฝ้า')
+    }),
   });
 
   const handleBuildingChange = (e) => {
@@ -160,6 +168,7 @@ const CheckinRoom = () => {
                         fullWidth
                         value={formik.values.observerName}
                         onChange={formik.handleChange}
+                        error={formik.errors.observerName && formik.touched.observerName}
                         helperText={<ErrorMessage name="observerName" />}
                         disabled={!formik.values.haveObserver}
                       />
@@ -172,6 +181,7 @@ const CheckinRoom = () => {
                         fullWidth
                         value={formik.values.observerTel}
                         onChange={formik.handleChange}
+                        error={formik.errors.observerTel && formik.touched.observerTel}
                         helperText={<ErrorMessage name="observerTel" />}
                         disabled={!formik.values.haveObserver}
                       />
