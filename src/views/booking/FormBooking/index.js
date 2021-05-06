@@ -210,8 +210,7 @@ const FormBooking = ({
                     }}
                     items={rtypes} // TODO: change all elements of items with id and name
                     itemsDirection="row"
-                    // error={formik.errors.roomTypeSelecteds}
-                    // touched={formik.touched.roomTypeSelecteds}
+                    error={'roomTypeSelecteds' in formik.errors}
                   />
                 </Grid>
                 <Grid item sm={6} xs={12}>

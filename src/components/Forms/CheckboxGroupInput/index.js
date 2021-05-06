@@ -6,9 +6,10 @@ import {
   FormLabel,
   FormControl,
   FormControlLabel,
-  // FormHelperText,
+  FormHelperText,
   makeStyles
 } from '@material-ui/core';
+import { ErrorMessage } from 'formik';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -18,9 +19,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function CheckboxGroupInput({
+  name,
   label,
   items,
-  handleChange,
+  error,
+  handleChange
 }) {
   const classes = useStyles();
   const [group, setGroup] = useState([]);
@@ -77,15 +80,18 @@ function CheckboxGroupInput({
           />
         ))}
       </FormGroup>
-      {/* <FormHelperText>Be careful</FormHelperText> */}
+
+      <FormHelperText error={error}><ErrorMessage name={name} /></FormHelperText>
     </FormControl>
   );
 }
 
 CheckboxGroupInput.propTypes = {
+  name: PropTypes.string,
   label: PropTypes.string,
   items: PropTypes.array,
-  handleChange: PropTypes.func,
+  error: PropTypes.bool,
+  handleChange: PropTypes.func
 };
 
 export default CheckboxGroupInput;
