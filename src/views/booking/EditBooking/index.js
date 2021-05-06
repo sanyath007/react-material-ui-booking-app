@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Container,
   Paper,
@@ -18,7 +18,6 @@ function EditBooking() {
   const { bookId } = useParams();
   const { roomTypes } = useSelector((state) => state.roomType);
   const { booking } = useSelector((state) => state.booking);
-  const [roomTypeIds, setRoomTypeIds] = useState([]);
 
   const handleSubmit = async (values, props) => {
     if (values) {
@@ -34,17 +33,13 @@ function EditBooking() {
         queue: 0,
         user: '1300200009261', // TODO: set user to logged in user and user's ward
         ward: '01',
-        room_types: roomTypeIds.toString() // use value in array from useState hook
+        room_types: values.roomTypeSelecteds.toString() // use value in array from useState hook
       };
 
       dispatch(bookingActions.update(values.id, data, navigate));
 
       props.resetForm();
     }
-  };
-
-  const handleRoomTypeChecked = (selectedRoomTypeIds) => {
-    setRoomTypeIds(selectedRoomTypeIds);
   };
 
   useEffect(() => {
@@ -65,7 +60,6 @@ function EditBooking() {
             booking={booking}
             roomTypes={roomTypes}
             handleSubmit={handleSubmit}
-            handleRoomTypeChecked={handleRoomTypeChecked}
           />
 
         </Paper>

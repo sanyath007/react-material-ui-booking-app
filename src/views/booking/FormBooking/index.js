@@ -31,8 +31,7 @@ const useStyles = makeStyles((theme) => ({
 const FormBooking = ({
   booking,
   roomTypes,
-  handleSubmit,
-  handleRoomTypeChecked
+  handleSubmit
 }) => {
   const classes = useStyles();
   const [rtypes, setRtypes] = useState([]);
@@ -46,6 +45,9 @@ const FormBooking = ({
     book_tel: Yup.string().required('กรุณาระบุเบอร์ติดต่อผู้จองก่อน'),
     // description: Yup.string().required('Description is required'),
     // remark: Yup.string().required('Remark is required'),
+    roomTypeSelecteds: Yup.array().test('', 'not 0', (value) => {
+      return value.length > 0;
+    }),
   });
 
   useEffect(() => {
@@ -104,6 +106,7 @@ const FormBooking = ({
         isOfficer: booking?.is_officer === '1' || false,
         description: booking?.description || '',
         remark: booking?.remark || '',
+        roomTypeSelecteds: []
       }}
       validationSchema={bookingSchema}
       onSubmit={handleSubmit}
@@ -200,9 +203,15 @@ const FormBooking = ({
                 <Grid item sm={12} xs={12}>
                   <FormControls.CheckboxGroupInput
                     label="ต้องการจองห้องประเภท (เลือกได้มากกว่า 1)"
-                    handleChange={handleRoomTypeChecked}
+                    name="roomTypeSelecteds"
+                    handleChange={(selectedIds) => {
+                      console.log(selectedIds);
+                      formik.setFieldValue('roomTypeSelecteds', selectedIds);
+                    }}
                     items={rtypes} // TODO: change all elements of items with id and name
                     itemsDirection="row"
+                    // error={formik.errors.roomTypeSelecteds}
+                    // touched={formik.touched.roomTypeSelecteds}
                   />
                 </Grid>
                 <Grid item sm={6} xs={12}>
@@ -276,7 +285,6 @@ FormBooking.propTypes = {
   booking: PropTypes.object,
   roomTypes: PropTypes.array,
   handleSubmit: PropTypes.func,
-  handleRoomTypeChecked: PropTypes.func,
 };
 
 export default FormBooking;
