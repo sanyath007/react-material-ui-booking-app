@@ -10,6 +10,9 @@ import {
   List,
   Typography
 } from '@material-ui/core';
+import {
+  LogOut as LogOutIcon,
+} from 'react-feather';
 import NavItem from './NavItem';
 import items from './_nav';
 import useStyles from './styles';
@@ -74,6 +77,15 @@ const NavBar = ({ onMobileClose, openMobile, loggedInUser }) => {
               icon={item.icon}
             />
           ))}
+
+          {openMobile && (
+            <NavItem
+              href="/logout"
+              key="Logout"
+              title="Logout"
+              icon={LogOutIcon}
+            />
+          )}
         </List>
       </Box>
       <Box flexGrow={1} />
