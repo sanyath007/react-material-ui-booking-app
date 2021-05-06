@@ -45,7 +45,7 @@ const FormBooking = ({
     book_tel: Yup.string().required('กรุณาระบุเบอร์ติดต่อผู้จองก่อน'),
     // description: Yup.string().required('Description is required'),
     // remark: Yup.string().required('Remark is required'),
-    roomTypeSelecteds: Yup.array().test('', 'not 0', (value) => {
+    roomTypeSelecteds: Yup.array().test('', 'กรุณาเลือกประเภทห้องที่อย่างน้อย 1 ประเภท', (value) => {
       return value.length > 0;
     }),
   });
@@ -204,10 +204,7 @@ const FormBooking = ({
                   <FormControls.CheckboxGroupInput
                     label="ต้องการจองห้องประเภท (เลือกได้มากกว่า 1)"
                     name="roomTypeSelecteds"
-                    handleChange={(selectedIds) => {
-                      console.log(selectedIds);
-                      formik.setFieldValue('roomTypeSelecteds', selectedIds);
-                    }}
+                    handleChange={(selectedIds) => formik.setFieldValue('roomTypeSelecteds', selectedIds)}
                     items={rtypes} // TODO: change all elements of items with id and name
                     itemsDirection="row"
                     error={'roomTypeSelecteds' in formik.errors}
@@ -219,7 +216,7 @@ const FormBooking = ({
                     name="description"
                     label="รายละเอียด"
                     multiline
-                    rows={3}
+                    rows={4}
                     fullWidth
                     value={formik.values.description}
                     onChange={formik.handleChange}
@@ -233,7 +230,7 @@ const FormBooking = ({
                     name="remark"
                     label="หมายเหตุ"
                     multiline
-                    rows={3}
+                    rows={4}
                     fullWidth
                     value={formik.values.remark}
                     onChange={formik.handleChange}

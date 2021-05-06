@@ -14,7 +14,7 @@ import { ErrorMessage } from 'formik';
 const useStyles = makeStyles((theme) => ({
   root: {},
   formControl: {
-    margin: theme.spacing(3),
+    margin: theme.spacing(1),
   },
 }));
 
@@ -23,6 +23,7 @@ function CheckboxGroupInput({
   label,
   items,
   error,
+  itemsDirection,
   handleChange
 }) {
   const classes = useStyles();
@@ -63,7 +64,7 @@ function CheckboxGroupInput({
   return (
     <FormControl component="fieldset" className={classes.formControl}>
       <FormLabel component="legend">{label}</FormLabel>
-      <FormGroup aria-label="position" row>
+      <FormGroup aria-label="position" row={itemsDirection === 'row'}>
         {items.map((item) => (
           <FormControlLabel
             control={
@@ -91,6 +92,7 @@ CheckboxGroupInput.propTypes = {
   label: PropTypes.string,
   items: PropTypes.array,
   error: PropTypes.bool,
+  itemsDirection: PropTypes.string,
   handleChange: PropTypes.func
 };
 
