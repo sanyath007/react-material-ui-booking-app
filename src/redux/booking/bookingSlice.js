@@ -119,7 +119,7 @@ export const store = (data, navigate) => async (dispatch) => {
     const res = await api.post('/bookings', data);
     console.log(res);
 
-    dispatch(storeSuccess(res.data));
+    dispatch(storeSuccess(res.data.booking));
 
     navigate('/app/bookings');
   } catch (error) {
