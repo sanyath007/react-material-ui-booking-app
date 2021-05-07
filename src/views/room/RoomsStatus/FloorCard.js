@@ -6,9 +6,13 @@ import BedCard from './BedCard';
 
 const useStyles = makeStyles(() => ({
   root: {},
+  floorCard: {
+    marginBottom: '10px'
+  },
   floorWrapper: {
     margin: '10px',
-    padding: '10px'
+    padding: '10px',
+    paddingBottom: '0px'
   },
   floorName: {
     marginLeft: '10px',
@@ -20,7 +24,7 @@ const FloorCard = ({ floor, rooms, usedRooms }) => {
   const classes = useStyles();
 
   return (
-    <Card>
+    <Card className={classes.floorCard}>
       <Row>
         <Col className={classes.floorWrapper}>
           <h3 className={classes.floorName}>{floor}</h3>
