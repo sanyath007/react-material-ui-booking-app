@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
+import { Modal, Button } from 'react-bootstrap';
 import {
   Box,
   Button as MuiButton,
@@ -15,10 +17,9 @@ import {
 } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import EventBusyIcon from '@material-ui/icons/EventBusy';
-import { Modal, Button } from 'react-bootstrap';
-import moment from 'moment';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import { ipActions, bookingActions } from '../../../redux';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -230,13 +231,16 @@ const PatientProfileModal = ({
               >
                 <Link to={`/app/checkin/${booking.book_id}`}>
                   <MuiButton variant="contained" color="primary" endIcon={<ExitToAppIcon />}>
-                    รับผู้ป่วยเข้าห้อง
+                    รับเข้าห้อง
                   </MuiButton>
                 </Link>
-
+                <Button variant="success" onClick={() => console.log('On D/C clicked!!')}>
+                  จำหน่าย
+                  <MeetingRoomIcon />
+                </Button>
                 <Button variant="danger" onClick={() => onCancelClick(booking.book_id)}>
-                  ยกเลิกจองห้องพิเศษ
-                  <EventBusyIcon style={{ marginLeft: '5px' }} />
+                  ยกเลิกจองห้อง
+                  <EventBusyIcon />
                 </Button>
               </Box>
             </Card>

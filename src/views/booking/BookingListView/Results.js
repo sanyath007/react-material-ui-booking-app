@@ -20,9 +20,9 @@ import {
 import Pagination from '@material-ui/lab/Pagination';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+// import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import StarIcon from '@material-ui/icons/Star';
-// import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+// import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import getInitials from 'src/utils/getInitials';
 
@@ -43,10 +43,16 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.warning.main
     }
   },
-  deleteBtn: {
+  delBtn: {
     color: theme.palette.error.dark,
     '&:hover': {
       color: theme.palette.error.main
+    }
+  },
+  dchBtn: {
+    color: '#525252',
+    '&:hover': {
+      color: '#716e77'
     }
   },
   checkinBtn: {
@@ -225,16 +231,19 @@ const Results = ({
                     >
                       <EditIcon />
                     </Link>
-                    <Link to="" title="ลบ" className={classes.deleteBtn}>
+                    <Link to="" title="ยกเลิก" className={classes.delBtn}>
                       <DeleteIcon />
                     </Link>
-                    <Link
+                    {/* <Link to="" title="จำหน่าย" className={classes.dchBtn}>
+                      <MeetingRoomIcon />
+                    </Link> */}
+                    {/* <Link
                       to={`/app/checkin/${booking.book_id}`}
                       title="รับผู้ป่วยเข้าห้อง"
                       className={classes.checkinBtn}
                     >
                       <ExitToAppIcon />
-                    </Link>
+                    </Link> */}
                   </TableCell>
                 </TableRow>
               ))}
