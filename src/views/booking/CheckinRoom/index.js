@@ -147,7 +147,7 @@ const CheckinRoom = () => {
                       <FormControls.SelectInput
                         name="roomId"
                         label="ห้อง"
-                        value={formik.values.roomId}
+                        value={formik.values.roomId.toString()}
                         handleChange={formik.handleChange}
                         error={formik.errors.roomId && formik.touched.roomId}
                         options={rooms}

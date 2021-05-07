@@ -34,10 +34,7 @@ const BookingListView = () => {
   }, []);
 
   return (
-    <Page
-      className={classes.root}
-      title="รายการจองห้องพิเศษ"
-    >
+    <Page className={classes.root} title="รายการจองห้องพิเศษ">
 
       <PatientProfileModal
         isOpen={openModal}
