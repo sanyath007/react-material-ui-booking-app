@@ -161,7 +161,7 @@ const Results = ({
             </TableHead>
             <TableBody>
 
-              {bookings.map((booking) => (
+              {bookings && bookings.map((booking) => (
                 <TableRow
                   hover
                   key={booking.book_id}
