@@ -19,7 +19,7 @@ const BedCard = ({ room, used }) => {
 
   const handleCancelCheckinClick = (bookId, roomId) => {
     if (window.confirm('คุณต้องการยกเลิกการรับผู้ป่วยเข้าห้อง ใช่หรือไม่?')) {
-      dispatch(bookingActions.checkout(bookId, roomId));
+      dispatch(bookingActions.cancelCheckin(bookId, roomId));
     }
   };
 
