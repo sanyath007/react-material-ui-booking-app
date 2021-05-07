@@ -2,13 +2,9 @@ import React, { useEffect } from 'react';
 import { Container } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import Page from 'src/components/Page';
-// import api from '../../../api';
 import useStyles from './styles';
 import FloorCard from './FloorCard';
-import {
-  bookingActions,
-  roomActions
-} from '../../../redux';
+import { roomActions } from '../../../redux';
 
 const RoomsStatus = () => {
   const classes = useStyles();
@@ -24,10 +20,6 @@ const RoomsStatus = () => {
     dispatch(roomActions.fetchRoomsStatus());
   }, []);
 
-  const handleDischargeClick = (bookId, roomId) => {
-    dispatch(bookingActions.checkout(bookId, roomId));
-  };
-
   return (
     <Page
       className={classes.root}
@@ -41,21 +33,18 @@ const RoomsStatus = () => {
           floor="ชั้น 1"
           rooms={floor1}
           usedRooms={usedRooms}
-          handleDischargeClick={handleDischargeClick}
         />
 
         <FloorCard
           floor="ชั้น 2"
           rooms={floor2}
           usedRooms={usedRooms}
-          handleDischargeClick={handleDischargeClick}
         />
 
         <FloorCard
           floor="ชั้น 3"
           rooms={floor3}
           usedRooms={usedRooms}
-          handleDischargeClick={handleDischargeClick}
         />
       </Container>
     </Page>

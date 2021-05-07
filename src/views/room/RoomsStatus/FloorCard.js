@@ -16,12 +16,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const FloorCard = ({
-  floor,
-  rooms,
-  usedRooms,
-  handleDischargeClick
-}) => {
+const FloorCard = ({ floor, rooms, usedRooms }) => {
   const classes = useStyles();
 
   return (
@@ -44,11 +39,7 @@ const FloorCard = ({
                   key={room.room_id}
                   style={{ padding: '10px' }}
                 >
-                  <BedCard
-                    room={room}
-                    used={used.length > 0 ? used[0] : null}
-                    onDischargeClick={handleDischargeClick}
-                  />
+                  <BedCard room={room} used={used.length > 0 ? used[0] : null} />
                 </Grid>
               );
             })}
@@ -63,7 +54,6 @@ FloorCard.propTypes = {
   floor: PropTypes.string,
   rooms: PropTypes.array,
   usedRooms: PropTypes.array,
-  handleDischargeClick: PropTypes.func,
 };
 
 export default FloorCard;
