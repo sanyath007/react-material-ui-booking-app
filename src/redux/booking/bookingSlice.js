@@ -46,6 +46,11 @@ export const bookingSlice = createSlice({
 
       state.bookings = [...newBookings];
     },
+    dischargeSuccess: (state, action) => {
+      const newBookings = state.bookings.filter((booking) => booking.book_id !== action.payload);
+
+      state.bookings = [...newBookings];
+    },
     checkinSuccess: (state, action) => {
       const newBookings = state.bookings.filter((booking) => {
         return booking.book_id !== action.payload.book_id;
@@ -70,6 +75,7 @@ const {
   updateSuccess,
   destroySuccess,
   cancelSuccess,
+  dischargeSuccess,
   checkinSuccess,
   checkoutSuccess,
 } = bookingSlice.actions;
@@ -152,10 +158,21 @@ export const destroy = (id) => async (dispatch) => {
 
 export const cancel = (id) => async (dispatch) => {
   try {
-    const res = await api.put(`/bookings/cancel/${id}`);
+    const res = await api.put(`/bookings/${id}/cancel`);
     console.log(res);
 
-    dispatch(cancelSuccess(res.data));
+    dispatch(cancelSuccess(id));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const discharge = (id) => async (dispatch) => {
+  try {
+    const res = await api.put(`/bookings/${id}/discharge`);
+    console.log(res);
+
+    dispatch(dischargeSuccess(id));
   } catch (error) {
     console.log(error);
   }

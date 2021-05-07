@@ -33,7 +33,6 @@ const useStyles = makeStyles(() => ({
 const PatientProfileModal = ({
   isOpen,
   hideModal,
-  onCancelClick,
   an
 }) => {
   const classes = useStyles();
@@ -234,11 +233,11 @@ const PatientProfileModal = ({
                     รับเข้าห้อง
                   </MuiButton>
                 </Link>
-                <Button variant="success" onClick={() => console.log('On D/C clicked!!')}>
+                <Button variant="success" onClick={() => dispatch(bookingActions.discharge(booking.book_id))}>
                   จำหน่าย
                   <MeetingRoomIcon />
                 </Button>
-                <Button variant="danger" onClick={() => onCancelClick(booking.book_id)}>
+                <Button variant="danger" onClick={() => dispatch(bookingActions.cancel(booking.book_id))}>
                   ยกเลิกจองห้อง
                   <EventBusyIcon />
                 </Button>
@@ -254,7 +253,6 @@ const PatientProfileModal = ({
 PatientProfileModal.propTypes = {
   isOpen: PropTypes.bool,
   hideModal: PropTypes.func,
-  onCancelClick: PropTypes.func,
   an: PropTypes.string.isRequired,
 };
 
