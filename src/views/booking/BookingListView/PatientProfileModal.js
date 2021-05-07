@@ -47,6 +47,22 @@ const PatientProfileModal = ({
     }
   }, [an]);
 
+  const handleCancelClick = (bookId) => {
+    if (window.confirm(`คุณต้องการยกเลิกการจองห้องพิเศษรหัส ${bookId} ใช่หรือไม่ ?`)) {
+      console.log(bookId);
+
+      dispatch(bookingActions.cancel(bookId));
+    }
+  };
+
+  const handleDischargeClick = (bookId, ipAn) => {
+    if (window.confirm(`คุณต้องการจำหน่ายผู้ป่วย AN ${ipAn} ใช่หรือไม่ ?`)) {
+      console.log(bookId);
+
+      dispatch(bookingActions.discharge(bookId));
+    }
+  };
+
   return (
     <Modal
       show={isOpen}
@@ -56,16 +72,8 @@ const PatientProfileModal = ({
     >
       <Modal.Header closeButton>ข้อมูลผู้ป่วย</Modal.Header>
       <Modal.Body>
-        <Grid
-          container
-          spacing={3}
-        >
-          <Grid
-            item
-            lg={4}
-            md={4}
-            xs={12}
-          >
+        <Grid container spacing={3}>
+          <Grid item lg={4} md={4} xs={12}>
             <Card>
               <CardContent>
                 <Box
@@ -81,11 +89,7 @@ const PatientProfileModal = ({
                         : '/static/images/avatars/avatar_9.png'
                     }
                   />
-                  <Typography
-                    color="textPrimary"
-                    gutterBottom
-                    variant="h4"
-                  >
+                  <Typography color="textPrimary" gutterBottom variant="h4">
                     {`${ip.patient?.pname}${ip.patient?.fname} ${ip.patient?.lname}`}
                   </Typography>
                   <span>
@@ -95,127 +99,63 @@ const PatientProfileModal = ({
               </CardContent>
             </Card>
           </Grid>
-          <Grid
-            item
-            lg={8}
-            md={8}
-            xs={12}
-          >
+          <Grid item lg={8} md={8} xs={12}>
             <Card>
               <CardContent>
-                <Grid
-                  container
-                  spacing={3}
-                >
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
+                <Grid container spacing={3}>
+                  <Grid item md={6} xs={12}>
                     <Typography variant="h4">AN</Typography>
                     <Typography>{ip.an}</Typography>
                   </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
+                  <Grid item md={6} xs={12}>
                     <Typography variant="h4">HN</Typography>
                     <Typography>{ip.hn}</Typography>
                   </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
+                  <Grid item md={6} xs={12}>
                     <Typography variant="h4">ว/ด/ป เกิด</Typography>
                     <Typography>{moment(ip.patient?.birthday).format('DD/MM/YYYY')}</Typography>
                   </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
+                  <Grid item md={6} xs={12}>
                     <Typography variant="h4">ที่อยู่</Typography>
                     <Typography>{`${ip.patient?.addrpart} ${ip.patient?.address?.full_name}`}</Typography>
                   </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
+                  <Grid item md={6} xs={12}>
                     <Typography variant="h4">สิทธิการรักษา</Typography>
                     <Typography>{`${ip.pttype?.pttype}-${ip.pttype?.name}`}</Typography>
                   </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
+                  <Grid item md={6} xs={12}>
                     <Typography variant="h4">วอร์ด</Typography>
                     <Typography>{`${ip.ward?.ward}-${ip.ward?.name}`}</Typography>
                   </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
+                  <Grid item md={6} xs={12}>
                     <Typography variant="h4">วันที่ Admit</Typography>
                     <Typography>{moment(ip.regdate).format('DD/MM/YYYY')}</Typography>
                   </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
+                  <Grid item md={6} xs={12}>
                     <Typography variant="h4">เวลา</Typography>
                     <Typography>{ip.regtime}</Typography>
                   </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
+                  <Grid item md={6} xs={12}>
                     <Typography variant="h4">แพทย์ผู้ Admit</Typography>
                     <Typography>{`${ip.admdoctor?.code}-${ip.admdoctor?.name}`}</Typography>
                   </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
+                  <Grid item md={6} xs={12}>
                     <Typography variant="h4">Pre Dx</Typography>
                     <Typography>{ip.prediag}</Typography>
                   </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
+                  <Grid item md={6} xs={12}>
                     <Typography variant="h4">วันที่จองห้องพิเศษ</Typography>
                     <Typography>{moment(booking.book_date).format('DD/MM/YYYY')}</Typography>
                   </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
+                  <Grid item md={6} xs={12}>
                     <Typography variant="h4">เวลา</Typography>
                     <Typography>{moment(booking.created_at).format('H:mm')}</Typography>
                   </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
+                  <Grid item md={6} xs={12}>
                     <Typography variant="h4">ผู้จองห้องพิเศษ</Typography>
                     <Typography>{booking.book_name}</Typography>
                   </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
+                  <Grid item md={6} xs={12}>
                     <Typography variant="h4">เบอร์ติดต่อ</Typography>
                     <Typography>{booking.book_tel}</Typography>
                   </Grid>
@@ -233,11 +173,11 @@ const PatientProfileModal = ({
                     รับเข้าห้อง
                   </MuiButton>
                 </Link>
-                <Button variant="success" onClick={() => dispatch(bookingActions.discharge(booking.book_id))}>
+                <Button variant="success" onClick={() => handleDischargeClick(booking.book_id, ip.an)}>
                   จำหน่าย
                   <MeetingRoomIcon />
                 </Button>
-                <Button variant="danger" onClick={() => dispatch(bookingActions.cancel(booking.book_id))}>
+                <Button variant="danger" onClick={() => handleCancelClick(booking.book_id)}>
                   ยกเลิกจองห้อง
                   <EventBusyIcon />
                 </Button>

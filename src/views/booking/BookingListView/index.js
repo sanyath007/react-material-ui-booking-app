@@ -19,23 +19,10 @@ const BookingListView = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedAn, setSelectedAn] = useState('');
 
-  const handleOnHideModal = () => {
-    console.log('On hide is called !!!');
-    setOpenModal(false);
-  };
-
   const handleViewDetailClick = (an) => {
     setOpenModal(true);
 
     setSelectedAn(an);
-  };
-
-  const handleCancelClick = (bookId) => {
-    if (window.confirm(`คุณต้องการยกเลิกการจองห้องพิเศษรหัส ${bookId} ใช่หรือไม่ ?`)) {
-      console.log(bookId);
-
-      // TODO: to cancel booking data from db
-    }
   };
 
   const handlePageChange = (url, page) => {
@@ -54,8 +41,7 @@ const BookingListView = () => {
 
       <PatientProfileModal
         isOpen={openModal}
-        hideModal={handleOnHideModal}
-        onCancelClick={handleCancelClick}
+        hideModal={() => setOpenModal(false)}
         an={selectedAn}
       />
 
