@@ -29,6 +29,10 @@ const BookingListView = () => {
     dispatch(bookingActions.fetchAllWithPage(`${url}?page=${page}`));
   };
 
+  const handleSearchInput = (keyword) => {
+    console.log(keyword);
+  };
+
   useEffect(() => {
     dispatch(bookingActions.fetchBookingAll());
   }, []);
@@ -43,7 +47,7 @@ const BookingListView = () => {
       />
 
       <Container maxWidth={false}>
-        <Toolbar />
+        <Toolbar onSearchInput={handleSearchInput} />
 
         <Box mt={3}>
           <Results

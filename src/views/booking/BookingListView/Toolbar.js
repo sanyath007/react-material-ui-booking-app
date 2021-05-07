@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
   Box,
-  Button,
+  Button as MuiButton,
   Card,
   CardContent,
-  TextField,
+  Grid,
   InputAdornment,
   SvgIcon,
+  TextField,
   makeStyles
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
@@ -24,55 +25,65 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Toolbar = ({ className, ...rest }) => {
+const Toolbar = ({ className, onSearchInput, ...rest }) => {
   const classes = useStyles();
+  const [keyword, setKeyword] = useState('');
 
   return (
     <div
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Box
-        display="flex"
-        justifyContent="flex-end"
-      >
-        <Button className={classes.importButton}>
+      <Box display="flex" justifyContent="flex-end">
+        <MuiButton className={classes.importButton}>
           Import
-        </Button>
-        <Button className={classes.exportButton}>
+        </MuiButton>
+        <MuiButton className={classes.exportButton}>
           Export
-        </Button>
-        <Button
+        </MuiButton>
+        <MuiButton
           color="primary"
           variant="contained"
           component={Link}
           to="/app/bookings/new"
         >
           เพิ่มการจองห้อง
-        </Button>
+        </MuiButton>
       </Box>
       <Box mt={3}>
         <Card>
           <CardContent>
-            <Box maxWidth={500}>
-              <TextField
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SvgIcon
-                        fontSize="small"
-                        color="action"
-                      >
-                        <SearchIcon />
-                      </SvgIcon>
-                    </InputAdornment>
-                  )
-                }}
-                placeholder="Search customer"
-                variant="outlined"
-              />
-            </Box>
+            <Grid container>
+              <Grid item md={6}>
+                <TextField
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SvgIcon
+                          fontSize="small"
+                          color="action"
+                        >
+                          <SearchIcon />
+                        </SvgIcon>
+                      </InputAdornment>
+                    )
+                  }}
+                  onChange={(e) => setKeyword(e.target.value)}
+                  placeholder="ค้นหาผู้ป่วย"
+                  variant="outlined"
+                />
+
+                <MuiButton
+                  variant="contained"
+                  color="primary"
+                  style={{ padding: '16px 14px', marginLeft: '5px' }}
+                  onClick={() => onSearchInput(keyword)}
+                >
+                  ค้นหา
+                  <SearchIcon />
+                </MuiButton>
+              </Grid>
+            </Grid>
           </CardContent>
         </Card>
       </Box>
@@ -81,7 +92,8 @@ const Toolbar = ({ className, ...rest }) => {
 };
 
 Toolbar.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  onSearchInput: PropTypes.func,
 };
 
 export default Toolbar;
