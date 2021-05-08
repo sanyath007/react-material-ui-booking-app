@@ -152,7 +152,7 @@ const Results = ({
                   วอร์ด
                 </TableCell>
                 <TableCell width="12%">
-                  ผู้จอง
+                  ผู้บันทึก
                 </TableCell>
                 <TableCell align="center" width="12%">
                   Actions
@@ -220,7 +220,7 @@ const Results = ({
                     <Link
                       to=""
                       title="รายละเอียด"
-                      onClick={() => onViewDetailClick(booking.an.an)}
+                      onClick={() => onViewDetailClick(booking.ip?.an)}
                     >
                       <VisibilityIcon />
                     </Link>
