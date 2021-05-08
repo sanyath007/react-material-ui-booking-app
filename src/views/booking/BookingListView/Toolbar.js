@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { Search as SearchIcon } from 'react-feather';
+import ButtonGroupInput from '../../../components/Forms/ButtonGroupInput';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -24,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1)
   }
 }));
+
+const options = ['ค้นหาชื่อ-สกุล', 'ค้นหา HN', 'ค้นหา AN'];
 
 const Toolbar = ({ className, onSearchInput, ...rest }) => {
   const classes = useStyles();
@@ -83,6 +86,8 @@ const Toolbar = ({ className, onSearchInput, ...rest }) => {
                   ค้นหา
                   <SearchIcon />
                 </MuiButton>
+
+                <ButtonGroupInput options={options} onClick={onSearchInput} />
               </Grid>
             </Grid>
           </CardContent>
