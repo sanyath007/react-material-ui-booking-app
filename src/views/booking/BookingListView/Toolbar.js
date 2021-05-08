@@ -72,7 +72,8 @@ const Toolbar = ({ className, onSearchInput, ...rest }) => {
                   placeholder="ค้นหาผู้ป่วย"
                   variant="outlined"
                 />
-
+                {/* // TODO: create button group that is condition of search data
+                              and separate it to components folder */}
                 <MuiButton
                   variant="contained"
                   color="primary"
