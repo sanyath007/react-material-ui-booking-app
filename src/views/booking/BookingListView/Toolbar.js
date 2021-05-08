@@ -28,9 +28,13 @@ const useStyles = makeStyles((theme) => ({
 
 const options = ['ค้นหาชื่อ-สกุล', 'ค้นหา HN', 'ค้นหา AN'];
 
-const Toolbar = ({ className, onSearchInput, ...rest }) => {
+const Toolbar = ({ className, handleSearch, ...rest }) => {
   const classes = useStyles();
   const [keyword, setKeyword] = useState('');
+
+  const onSearch = () => {
+    handleSearch(keyword);
+  };
 
   return (
     <div
@@ -74,20 +78,9 @@ const Toolbar = ({ className, onSearchInput, ...rest }) => {
                   onChange={(e) => setKeyword(e.target.value)}
                   placeholder="ค้นหาผู้ป่วย"
                   variant="outlined"
+                  style={{ marginRight: '5px' }}
                 />
-                {/* // TODO: create button group that is condition of search data
-                              and separate it to components folder */}
-                <MuiButton
-                  variant="contained"
-                  color="primary"
-                  style={{ padding: '16px 14px', marginLeft: '5px' }}
-                  onClick={() => onSearchInput(keyword)}
-                >
-                  ค้นหา
-                  <SearchIcon />
-                </MuiButton>
-
-                <ButtonGroupInput options={options} onClick={onSearchInput} />
+                <ButtonGroupInput options={options} onClick={onSearch} styles={{ padding: '16px 14px' }} />
               </Grid>
             </Grid>
           </CardContent>
@@ -99,7 +92,7 @@ const Toolbar = ({ className, onSearchInput, ...rest }) => {
 
 Toolbar.propTypes = {
   className: PropTypes.string,
-  onSearchInput: PropTypes.func,
+  handleSearch: PropTypes.func,
 };
 
 export default Toolbar;

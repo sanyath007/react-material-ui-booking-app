@@ -29,7 +29,7 @@ const BookingListView = () => {
     dispatch(bookingActions.fetchAllWithPage(`${url}?page=${page}`));
   };
 
-  const handleSearchInput = (keyword) => {
+  const handleSearch = (keyword) => {
     console.log(keyword);
     const qs = keyword ? `?search=fname:${keyword}` : '';
 
@@ -50,7 +50,7 @@ const BookingListView = () => {
       />
 
       <Container maxWidth={false}>
-        <Toolbar onSearchInput={handleSearchInput} />
+        <Toolbar handleSearch={handleSearch} />
 
         <Box mt={3}>
           <Results

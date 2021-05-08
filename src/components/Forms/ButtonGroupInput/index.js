@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
-const ButtonGroupInput = ({ options, onClick }) => {
+const ButtonGroupInput = ({ options, onClick, ...rest }) => {
   const [open, setOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(1);
   const anchorRef = useRef(null);
@@ -42,7 +42,7 @@ const ButtonGroupInput = ({ options, onClick }) => {
   return (
     <>
       <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
-        <Button onClick={handleClick}>{options[selectedIndex]}</Button>
+        <Button onClick={handleClick} style={rest.styles}>{options[selectedIndex]}</Button>
         <Button
           color="primary"
           size="small"
@@ -69,7 +69,7 @@ const ButtonGroupInput = ({ options, onClick }) => {
                   {options.map((option, index) => (
                     <MenuItem
                       key={option}
-                      disabled={index === 2}
+                      // disabled={index === 2}
                       selected={index === selectedIndex}
                       onClick={(event) => handleMenuItemClick(event, index)}
                     >
