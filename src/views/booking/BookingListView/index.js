@@ -31,7 +31,9 @@ const BookingListView = () => {
 
   const handleSearchInput = (keyword) => {
     console.log(keyword);
-    dispatch(bookingActions.fetchBookingAll(`?search=fname:${keyword}`));
+    const qs = keyword ? `?search=fname:${keyword}` : '';
+
+    dispatch(bookingActions.fetchBookingAll(qs));
   };
 
   useEffect(() => {

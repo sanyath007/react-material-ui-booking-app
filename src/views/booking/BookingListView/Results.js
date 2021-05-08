@@ -173,7 +173,7 @@ const Results = ({
                       color="textPrimary"
                       variant="body1"
                     >
-                      {`${booking.an?.an}`}
+                      {`${booking.ip?.an}`}
                     </Typography>
                     {/* <Checkbox
                       checked={selectedCustomerIds.indexOf(booking.book_id) !== -1}
@@ -196,22 +196,22 @@ const Results = ({
                         color="textPrimary"
                         variant="body1"
                       >
-                        {`${booking.an?.patient?.pname}${booking.an?.patient?.fname} ${booking.an?.patient?.lname}`}
+                        {`${booking.ip?.patient?.pname}${booking.ip?.patient?.fname} ${booking.ip?.patient?.lname}`}
                       </Typography>
                       {booking.is_officer === '1' && <StarIcon style={{ fill: 'red' }} fontSize="small" />}
                     </Box>
                   </TableCell>
                   <TableCell align="center">
-                    {moment(booking.an?.regdate).format('DD/MM/YYYY')}
+                    {moment(booking.ip?.regdate).format('DD/MM/YYYY')}
                   </TableCell>
                   <TableCell align="center">
                     {moment(booking.book_date).format('DD/MM/YYYY')}
                   </TableCell>
                   <TableCell align="center">
-                    {`${booking.an?.patient?.hometel}`}
+                    {`${booking.ip?.patient?.hometel}`}
                   </TableCell>
                   <TableCell>
-                    {booking.an?.ward?.name}
+                    {booking.ip?.ward?.name}
                   </TableCell>
                   <TableCell>
                     {`${booking.user?.person_firstname} ${booking.user?.person_lastname}`}
