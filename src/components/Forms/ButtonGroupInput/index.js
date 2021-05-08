@@ -14,12 +14,12 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 const ButtonGroupInput = ({ options, onClick, ...rest }) => {
   const [open, setOpen] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(1);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const anchorRef = useRef(null);
 
   const handleClick = () => {
     console.info(`You clicked ${options[selectedIndex]}`);
-    onClick();
+    onClick(selectedIndex);
   };
 
   const handleMenuItemClick = (event, index) => {
@@ -55,7 +55,14 @@ const ButtonGroupInput = ({ options, onClick, ...rest }) => {
           <ArrowDropDownIcon />
         </Button>
       </ButtonGroup>
-      <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+      <Popper
+        open={open}
+        anchorEl={anchorRef.current}
+        role={undefined}
+        transition
+        disablePortal
+        style={{ zIndex: '1500' }}
+      >
         {({ TransitionProps, placement }) => (
           <Grow
             {...TransitionProps}

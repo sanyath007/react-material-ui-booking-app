@@ -29,9 +29,8 @@ const BookingListView = () => {
     dispatch(bookingActions.fetchAllWithPage(`${url}?page=${page}`));
   };
 
-  const handleSearch = (keyword) => {
-    console.log(keyword);
-    const qs = keyword ? `?search=fname:${keyword}` : '';
+  const handleSearch = (searchText) => {
+    const qs = searchText ? `?search=${searchText}` : '';
 
     dispatch(bookingActions.fetchBookingAll(qs));
   };

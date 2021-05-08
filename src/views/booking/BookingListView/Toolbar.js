@@ -32,8 +32,18 @@ const Toolbar = ({ className, handleSearch, ...rest }) => {
   const classes = useStyles();
   const [keyword, setKeyword] = useState('');
 
-  const onSearch = () => {
-    handleSearch(keyword);
+  const onSearch = (type = '') => {
+    let searchText = '';
+
+    if (keyword !== '' && type === 0) {
+      searchText = `fname:${keyword}`;
+    } else if (keyword !== '' && type === 1) {
+      searchText = `hn:${keyword}`;
+    } else if (keyword !== '' && type === 2) {
+      searchText = `an:${keyword}`;
+    }
+
+    handleSearch(searchText);
   };
 
   return (
