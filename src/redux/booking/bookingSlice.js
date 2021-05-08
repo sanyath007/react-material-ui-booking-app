@@ -84,10 +84,10 @@ const {
   cancelCheckinSuccess,
 } = bookingSlice.actions;
 
-export const fetchBookingAll = () => async (dispatch) => {
+export const fetchBookingAll = (qs = '') => async (dispatch) => {
   try {
-    const res = await api.get('/bookings');
-
+    const res = await api.get(`/bookings${qs}`);
+    console.log(res);
     return dispatch(fetchAllSuccess(res.data));
   } catch (error) {
     console.log(error);
