@@ -42,7 +42,7 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
       <Modal.Header closeButton>กรุณาเลือกผู้ป่วย</Modal.Header>
       <Modal.Body>
 
-        <Toolbar handleSearch={() => console.log('On search ...')} />
+        <Toolbar handleSearch={(searchText) => console.log(searchText)} />
 
         <table className="table table-bordered table-sm mt-2">
           <thead>
