@@ -10,7 +10,8 @@ import {
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import moment from 'moment';
-import { ipActions } from '../../../redux';
+import { ipActions } from '../../../../redux';
+import Toolbar from './Toolbar';
 
 function PatientModal({ isOpen, hideModal, onSelected }) {
   const dispatch = useDispatch();
@@ -40,7 +41,10 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
     >
       <Modal.Header closeButton>กรุณาเลือกผู้ป่วย</Modal.Header>
       <Modal.Body>
-        <table className="table table-bordered table-sm">
+
+        <Toolbar handleSearch={() => console.log('On search ...')} />
+
+        <table className="table table-bordered table-sm mt-2">
           <thead>
             <tr>
               <th style={{ width: '3%', textAlign: 'center' }}>#</th>
@@ -90,7 +94,7 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
             ราย
           </Col>
           <Col>
-            <Pagination className="float-right">
+            <Pagination className="float-right mb-0">
               <Pagination.First
                 onClick={() => handlePageItemClick(pager?.first_page_url)}
                 disabled={pager?.current_page === 1}
