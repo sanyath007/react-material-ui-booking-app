@@ -25,9 +25,9 @@ export default ipSlice.reducer;
 // Actions
 const { fetchAllSuccess, fetchIpByAnSuccess } = ipSlice.actions;
 
-export const fetchIpAll = () => async (dispatch) => {
+export const fetchIpAll = (qs = '') => async (dispatch) => {
   try {
-    const res = await api.get('/ips');
+    const res = await api.get(`/ips${qs}`);
 
     return dispatch(fetchAllSuccess(res.data));
   } catch (error) {

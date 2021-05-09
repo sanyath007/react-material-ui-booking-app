@@ -42,7 +42,7 @@ const Toolbar = ({ className, handleSearch, ...rest }) => {
         <Card>
           <CardContent className="pb-3">
             <Grid container>
-              <Grid item md={6}>
+              <Grid item sm={12} md={8} lg={6}>
 
                 <SearchInput options={options} onSearch={onSearch} />
 
