@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import moment from 'moment';
 import {
-  Avatar,
   Box,
   Button as MuiButton,
   Container,
@@ -20,6 +19,8 @@ import EventBusyIcon from '@material-ui/icons/EventBusy';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import Page from 'src/components/Page';
 import { bookingActions } from '../../../redux';
+import PatientProfile from './PatientProfile';
+import Toolbar from './Toolbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,6 +62,8 @@ const BookingDetail = () => {
   return (
     <Page className={classes.root} title="Account">
       <Container maxWidth="lg">
+        <Toolbar />
+
         <Grid container spacing={3}>
           <Grid
             item
@@ -68,30 +71,7 @@ const BookingDetail = () => {
             md={6}
             xs={12}
           >
-            <Card>
-              <CardContent>
-                <Box
-                  alignItems="center"
-                  display="flex"
-                  flexDirection="column"
-                >
-                  <Avatar
-                    className={classes.avatar}
-                    src={
-                      booking?.ip?.patient?.sex === '1'
-                        ? '/static/images/avatars/avatar_8.png'
-                        : '/static/images/avatars/avatar_9.png'
-                    }
-                  />
-                  <Typography color="textPrimary" gutterBottom variant="h4">
-                    {`${booking?.ip?.patient?.pname}${booking?.ip?.patient?.fname} ${booking?.ip?.patient?.lname}`}
-                  </Typography>
-                  <span>
-                    {`โทร. ${booking?.ip?.patient?.hometel}`}
-                  </span>
-                </Box>
-              </CardContent>
-            </Card>
+            <PatientProfile patient={booking?.ip?.patient} />
           </Grid>
           <Grid
             item
@@ -109,14 +89,6 @@ const BookingDetail = () => {
                   <Grid item md={6} xs={12}>
                     <Typography variant="h4">HN</Typography>
                     <Typography>{booking?.ip?.hn}</Typography>
-                  </Grid>
-                  <Grid item md={6} xs={12}>
-                    <Typography variant="h4">ว/ด/ป เกิด</Typography>
-                    <Typography>{moment(booking?.ip?.patient?.birthday).format('DD/MM/YYYY')}</Typography>
-                  </Grid>
-                  <Grid item md={6} xs={12}>
-                    <Typography variant="h4">ที่อยู่</Typography>
-                    <Typography>{`${booking?.ip?.patient?.addrpart} ${booking?.ip?.patient?.address?.full_name}`}</Typography>
                   </Grid>
                   <Grid item md={6} xs={12}>
                     <Typography variant="h4">สิทธิการรักษา</Typography>
