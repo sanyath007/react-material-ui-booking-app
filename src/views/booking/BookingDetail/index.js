@@ -1,22 +1,16 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import moment from 'moment';
 import {
-  Box,
-  Button as MuiButton,
   Container,
   Card,
   CardContent,
-  Divider,
+  // Divider,
   Grid,
   Typography,
   makeStyles
 } from '@material-ui/core';
-import { Button } from 'react-bootstrap';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import EventBusyIcon from '@material-ui/icons/EventBusy';
-import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import Page from 'src/components/Page';
 import { bookingActions } from '../../../redux';
 import PatientProfile from './PatientProfile';
@@ -43,26 +37,10 @@ const BookingDetail = () => {
     }
   }, []);
 
-  const handleCancelClick = (_id) => {
-    if (window.confirm(`คุณต้องการยกเลิกการจองห้องพิเศษรหัส ${_id} ใช่หรือไม่ ?`)) {
-      console.log(_id);
-
-      dispatch(bookingActions.cancel(_id));
-    }
-  };
-
-  const handleDischargeClick = (_id, ipAn) => {
-    if (window.confirm(`คุณต้องการจำหน่ายผู้ป่วย AN ${ipAn} ใช่หรือไม่ ?`)) {
-      console.log(_id);
-
-      dispatch(bookingActions.discharge(_id));
-    }
-  };
-
   return (
     <Page className={classes.root} title="Account">
       <Container maxWidth="lg">
-        <Toolbar />
+        <Toolbar booking={booking} />
 
         <Grid container spacing={3}>
           <Grid
@@ -132,27 +110,6 @@ const BookingDetail = () => {
                   </Grid>
                 </Grid>
               </CardContent>
-              <Divider />
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                p={2}
-                spacing={5}
-              >
-                <Link to={`/app/checkin/${booking.book_id}`}>
-                  <MuiButton variant="contained" color="primary" endIcon={<ExitToAppIcon />}>
-                    รับเข้าห้อง
-                  </MuiButton>
-                </Link>
-                <Button variant="success" onClick={() => handleDischargeClick(booking.book_id, booking?.ip?.an)}>
-                  จำหน่าย
-                  <MeetingRoomIcon />
-                </Button>
-                <Button variant="danger" onClick={() => handleCancelClick(booking.book_id)}>
-                  ยกเลิกจองห้อง
-                  <EventBusyIcon />
-                </Button>
-              </Box>
             </Card>
           </Grid>
         </Grid>

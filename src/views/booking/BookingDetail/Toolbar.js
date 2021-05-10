@@ -7,19 +7,54 @@ import {
   makeStyles
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import EventBusyIcon from '@material-ui/icons/EventBusy';
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
+import { useDispatch } from 'react-redux';
+import { bookingActions } from '../../../redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
-  importButton: {
+  checkinButton: {
     marginRight: theme.spacing(1)
   },
-  exportButton: {
-    marginRight: theme.spacing(1)
+  dischargeButton: {
+    marginRight: theme.spacing(1),
+    color: theme.palette.error.contrastText,
+    background: theme.palette.success.dark,
+    '&:hover': {
+      background: theme.palette.success.main
+    }
+  },
+  cancelButton: {
+    marginRight: theme.spacing(1),
+    color: theme.palette.error.contrastText,
+    background: theme.palette.error.dark,
+    '&:hover': {
+      background: theme.palette.error.main
+    }
   }
 }));
 
-const Toolbar = ({ className, ...rest }) => {
+const Toolbar = ({ className, booking, ...rest }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const handleCancelClick = (_id) => {
+    if (window.confirm(`คุณต้องการยกเลิกการจองห้องพิเศษรหัส ${_id} ใช่หรือไม่ ?`)) {
+      console.log(_id);
+
+      dispatch(bookingActions.cancel(_id));
+    }
+  };
+
+  const handleDischargeClick = (_id, ipAn) => {
+    if (window.confirm(`คุณต้องการจำหน่ายผู้ป่วย AN ${ipAn} ใช่หรือไม่ ?`)) {
+      console.log(_id);
+
+      dispatch(bookingActions.discharge(_id));
+    }
+  };
 
   return (
     <div
@@ -28,19 +63,26 @@ const Toolbar = ({ className, ...rest }) => {
       style={{ marginBottom: '20px' }}
     >
       <Box display="flex" justifyContent="flex-end">
-        <MuiButton className={classes.importButton}>
-          Import
-        </MuiButton>
-        <MuiButton className={classes.exportButton}>
-          Export
+        <Link to={`/app/checkin/${booking.book_id}`} className={classes.checkinButton}>
+          <MuiButton variant="contained" color="primary" endIcon={<ExitToAppIcon />}>
+            รับเข้าห้อง
+          </MuiButton>
+        </Link>
+        <MuiButton
+          className={classes.dischargeButton}
+          variant="contained"
+          onClick={() => handleDischargeClick(booking.book_id, booking?.ip?.an)}
+          endIcon={<MeetingRoomIcon />}
+        >
+          จำหน่าย
         </MuiButton>
         <MuiButton
-          color="primary"
+          className={classes.cancelButton}
           variant="contained"
-          component={Link}
-          to="/app/bookings/new"
+          onClick={() => handleCancelClick(booking.book_id)}
+          endIcon={<EventBusyIcon />}
         >
-          เพิ่มการจองห้อง
+          ยกเลิกจองห้อง
         </MuiButton>
       </Box>
     </div>
@@ -48,7 +90,8 @@ const Toolbar = ({ className, ...rest }) => {
 };
 
 Toolbar.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  booking: PropTypes.object
 };
 
 export default Toolbar;

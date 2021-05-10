@@ -71,48 +71,48 @@ const PatientProfile = ({ patient }) => {
               ข้อมูลผู้ป่วย
             </Typography>
             <Grid container justify="space-between">
-              <Grid item md={6}>
+              <Grid item md={4}>
                 <Typography className={classes.textMuted}>อายุ</Typography>
               </Grid>
-              <Grid item md={6}>
+              <Grid item md={8}>
                 <Typography>{patient?.sex}</Typography>
               </Grid>
-              <Grid item md={6}>
+              <Grid item md={4}>
                 <Typography className={classes.textMuted}>เพศ</Typography>
               </Grid>
-              <Grid item md={6}>
+              <Grid item md={8}>
                 <Typography>{patient?.sex === 1 ? 'ชาย' : 'หญิง'}</Typography>
               </Grid>
-              <Grid item md={6}>
+              <Grid item md={4}>
                 <Typography className={classes.textMuted}>วันเกิด</Typography>
               </Grid>
-              <Grid item md={6}>
+              <Grid item md={8}>
                 <Typography>{moment(patient?.birthday).format('DD/MM/YYYY')}</Typography>
               </Grid>
-              <Grid item md={6}>
+              <Grid item md={4}>
                 <Typography className={classes.textMuted}>ที่อยู่</Typography>
               </Grid>
-              <Grid item md={6}>
+              <Grid item md={8}>
                 <Typography>
                   {`${patient?.addrpart} ${patient?.address?.full_name}`}
                 </Typography>
               </Grid>
-              <Grid item md={6}>
+              <Grid item md={4}>
                 <Typography className={classes.textMuted}>โทร</Typography>
               </Grid>
-              <Grid item md={6}>
+              <Grid item md={8}>
                 <Typography>{patient?.hometel}</Typography>
               </Grid>
-              <Grid item md={6}>
+              <Grid item md={4}>
                 <Typography className={classes.textMuted}>ผู้ติดต่อ</Typography>
               </Grid>
-              <Grid item md={6}>
+              <Grid item md={8}>
                 <Typography>{patient?.informname}</Typography>
               </Grid>
-              <Grid item md={6}>
+              <Grid item md={4}>
                 <Typography className={classes.textMuted}>โทรผู้ติดต่อ</Typography>
               </Grid>
-              <Grid item md={6}>
+              <Grid item md={8}>
                 <Typography>{patient?.informtel}</Typography>
               </Grid>
             </Grid>
