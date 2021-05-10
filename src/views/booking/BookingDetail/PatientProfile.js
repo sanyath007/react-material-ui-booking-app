@@ -19,6 +19,11 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(3),
     paddingTop: theme.spacing(3)
   },
+  avatar: {
+    height: 100,
+    width: 100,
+    marginBottom: '10px'
+  },
   withBorder: {
     border: '1px solid red'
   },
@@ -50,9 +55,7 @@ const PatientProfile = ({ patient }) => {
             <Typography color="textPrimary" gutterBottom variant="h4">
               {`${patient?.pname}${patient?.fname} ${patient?.lname}`}
             </Typography>
-            <Grid container className={classes.withBorder}>
-              <Grid item><span>{`HN. ${patient?.hn}`}</span></Grid>
-            </Grid>
+            <Typography className={classes.textMuted}>{`HN. ${patient?.hn}`}</Typography>
           </Box>
         </CardContent>
       </Card>
