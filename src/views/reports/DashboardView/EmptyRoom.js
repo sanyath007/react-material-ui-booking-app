@@ -25,7 +25,12 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const TasksProgress = ({ className, ...rest }) => {
+const EmptyRoom = ({
+  className,
+  empty,
+  total,
+  ...rest
+}) => {
   const classes = useStyles();
 
   return (
@@ -45,13 +50,13 @@ const TasksProgress = ({ className, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-              TASKS PROGRESS
+              ห้องว่าง
             </Typography>
             <Typography
               color="textPrimary"
               variant="h3"
             >
-              75.5%
+              {`${(empty * 100) / total}%`}
             </Typography>
           </Grid>
           <Grid item>
@@ -62,7 +67,7 @@ const TasksProgress = ({ className, ...rest }) => {
         </Grid>
         <Box mt={3}>
           <LinearProgress
-            value={75.5}
+            value={(empty * 100) / total}
             variant="determinate"
           />
         </Box>
@@ -71,8 +76,10 @@ const TasksProgress = ({ className, ...rest }) => {
   );
 };
 
-TasksProgress.propTypes = {
-  className: PropTypes.string
+EmptyRoom.propTypes = {
+  className: PropTypes.string,
+  empty: PropTypes.number,
+  total: PropTypes.number,
 };
 
-export default TasksProgress;
+export default EmptyRoom;

@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   Grid,
   makeStyles
 } from '@material-ui/core';
 import Page from 'src/components/Page';
-import Budget from './Budget';
-import LatestOrders from './LatestOrders';
-import LatestProducts from './LatestProducts';
-import Sales from './Sales';
-import TasksProgress from './TasksProgress';
-import TotalCustomers from './TotalCustomers';
+import TotalBookings from './TotalBookings';
+import TotalPatients from './TotalPatients';
+import EmptyRoom from './EmptyRoom';
 import TotalProfit from './TotalProfit';
+import Sales from './Sales';
 import TrafficByDevice from './TrafficByDevice';
+// import LatestOrders from './LatestOrders';
+// import LatestProducts from './LatestProducts';
+import api from '../../../api';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +26,19 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
   const classes = useStyles();
+  const [overall, setOverall] = useState({ bookings: {}, rooms: {} });
+
+  const fetchOverall = async () => {
+    const bookings = await api.get('/dashboard/bookings');
+
+    const rooms = await api.get('/dashboard/rooms');
+
+    setOverall({ bookings: bookings.data, rooms: rooms.data });
+  };
+
+  useEffect(() => {
+    fetchOverall();
+  }, []);
 
   return (
     <Page
@@ -43,7 +57,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <Budget />
+            <TotalBookings value={parseInt(overall.bookings.book_queue, 10) || 0} />
           </Grid>
           <Grid
             item
@@ -52,7 +66,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <TotalCustomers />
+            <TotalPatients value={parseInt(overall.bookings.book_stay, 10) || 0} />
           </Grid>
           <Grid
             item
@@ -61,7 +75,10 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <TasksProgress />
+            <EmptyRoom
+              empty={parseInt(overall.rooms.room_empty, 10) || 0}
+              total={parseInt(overall.rooms.all_room, 10) || 0}
+            />
           </Grid>
           <Grid
             item
@@ -90,7 +107,7 @@ const Dashboard = () => {
           >
             <TrafficByDevice />
           </Grid>
-          <Grid
+          {/* <Grid
             item
             lg={4}
             md={6}
@@ -107,7 +124,7 @@ const Dashboard = () => {
             xs={12}
           >
             <LatestOrders />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </Page>

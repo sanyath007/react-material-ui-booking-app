@@ -11,28 +11,28 @@ import {
   colors,
   makeStyles
 } from '@material-ui/core';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import PeopleIcon from '@material-ui/icons/PeopleOutlined';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import MoneyIcon from '@material-ui/icons/Money';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100%'
   },
   avatar: {
-    backgroundColor: colors.green[600],
+    backgroundColor: colors.red[600],
     height: 56,
     width: 56
   },
   differenceIcon: {
-    color: colors.green[900]
+    color: colors.red[900]
   },
   differenceValue: {
-    color: colors.green[900],
+    color: colors.red[900],
     marginRight: theme.spacing(1)
   }
 }));
 
-const TotalCustomers = ({ className, ...rest }) => {
+const Budget = ({ className, value, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -52,18 +52,18 @@ const TotalCustomers = ({ className, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-              TOTAL CUSTOMERS
+              ผู้ป่วยรอคิว
             </Typography>
             <Typography
               color="textPrimary"
               variant="h3"
             >
-              1,600
+              {value}
             </Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>
-              <PeopleIcon />
+              <MoneyIcon />
             </Avatar>
           </Grid>
         </Grid>
@@ -72,18 +72,18 @@ const TotalCustomers = ({ className, ...rest }) => {
           display="flex"
           alignItems="center"
         >
-          <ArrowUpwardIcon className={classes.differenceIcon} />
+          <ArrowDownwardIcon className={classes.differenceIcon} />
           <Typography
             className={classes.differenceValue}
             variant="body2"
           >
-            16%
+            %
           </Typography>
           <Typography
             color="textSecondary"
             variant="caption"
           >
-            Since last month
+            จากเดือนที่ผ่านมา
           </Typography>
         </Box>
       </CardContent>
@@ -91,8 +91,9 @@ const TotalCustomers = ({ className, ...rest }) => {
   );
 };
 
-TotalCustomers.propTypes = {
-  className: PropTypes.string
+Budget.propTypes = {
+  className: PropTypes.string,
+  value: PropTypes.number
 };
 
-export default TotalCustomers;
+export default Budget;
