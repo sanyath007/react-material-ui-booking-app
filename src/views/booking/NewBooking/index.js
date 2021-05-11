@@ -21,6 +21,7 @@ function NewBooking() {
     if (values) {
       const data = {
         an: values.an.split('-')[0],
+        hn: values.hn,
         book_date: moment(values.book_date).format('YYYY-MM-DD'),
         book_name: values.book_name,
         book_tel: values.book_tel,
