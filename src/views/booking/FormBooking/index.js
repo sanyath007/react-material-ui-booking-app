@@ -99,7 +99,8 @@ const FormBooking = ({
       enableReinitialize={booking}
       initialValues={{
         id: booking?.book_id || '',
-        an: booking ? `${booking?.an?.an}-${booking?.an?.patient?.pname}${booking?.an?.patient?.fname} ${booking?.an?.patient?.lname}` : '',
+        an: booking ? `${booking?.ip?.an}-${booking?.ip?.patient?.pname}${booking?.ip?.patient?.fname} ${booking?.ip?.patient?.lname}` : '',
+        hn: booking ? `${booking?.ip?.hn}` : '',
         book_date: moment(booking?.book_date) || new Date(),
         book_name: booking?.book_name || '',
         book_tel: booking?.book_tel || '',
@@ -114,6 +115,8 @@ const FormBooking = ({
       {(formik) => {
         return (
           <Form>
+            <input type="hidden" name="hn" value={formik.values.hn} onChange={formik.handleChange} />
+
             <Grid container direction="row" justify="center" alignItems="flex-start">
               <Grid container justify="center" spacing={1}>
 
@@ -124,7 +127,10 @@ const FormBooking = ({
                 <PatientModal
                   isOpen={openModal}
                   hideModal={() => setOpenModal(false)}
-                  onSelected={(an) => formik.setFieldValue('an', an)}
+                  onSelected={(an, hn) => {
+                    formik.setFieldValue('an', an);
+                    formik.setFieldValue('hn', hn);
+                  }}
                 />
 
                 <Grid item sm={6} xs={12}>

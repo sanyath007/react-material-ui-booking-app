@@ -80,7 +80,7 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
                 <td style={{ textAlign: 'center' }}>
                   <Button
                     onClick={() => {
-                      onSelected(`${ip.an}-${ip.patient?.pname}${ip.patient?.fname} ${ip.patient?.lname}`);
+                      onSelected(`${ip.an}-${ip.patient?.pname}${ip.patient?.fname} ${ip.patient?.lname}`, ip.hn);
                       hideModal();
                     }}
                     size="sm"
