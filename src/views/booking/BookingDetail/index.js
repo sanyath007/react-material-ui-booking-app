@@ -50,7 +50,8 @@ const BookingDetail = () => {
           <Grid item lg={8} md={6} xs={12}>
 
             <IpInfo booking={booking} />
-            <BookingHistoryList bookings={[]} className="mt-3" />
+
+            <BookingHistoryList booking={booking} className="mt-3" />
 
           </Grid>
         </Grid>

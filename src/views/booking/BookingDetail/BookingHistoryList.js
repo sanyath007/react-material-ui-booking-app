@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -16,6 +17,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
+import { bookingActions } from '../../../redux';
 
 const useStyles = makeStyles(() => ({
 
@@ -23,17 +25,23 @@ const useStyles = makeStyles(() => ({
 
 const BookingHistoryList = ({
   className,
-  bookings,
-  pager,
+  booking,
   ...rest
 }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const { bookings, pager } = useSelector((state) => state.booking);
   const [page, setPage] = useState(0);
 
   const handlePageChange = (e, newPage) => {
     setPage(newPage);
     // onPageChange(pager.path, newPage);
   };
+
+  useEffect(() => {
+    dispatch(bookingActions.fetchHistories(booking.book_id, booking.an));
+  }, [booking]);
+  console.log(bookings);
 
   return (
     <Card
@@ -53,13 +61,15 @@ const BookingHistoryList = ({
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow hover>
-                <TableCell align="center">1</TableCell>
-                <TableCell align="center">{moment().format('DD/MM/YYYY')}</TableCell>
-                <TableCell align="center">{moment().format('DD/MM/YYYY')}</TableCell>
-                <TableCell align="center">{moment().format('DD/MM/YYYY')}</TableCell>
-                <TableCell align="center">xxx</TableCell>
-              </TableRow>
+              {bookings && bookings.map((bk) => (
+                <TableRow hover key={bk.book_id}>
+                  <TableCell align="center">{bk.book_id}</TableCell>
+                  <TableCell align="center">{moment().format('DD/MM/YYYY')}</TableCell>
+                  <TableCell align="center">{moment().format('DD/MM/YYYY')}</TableCell>
+                  <TableCell align="center">{moment().format('DD/MM/YYYY')}</TableCell>
+                  <TableCell align="center">xxx</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </Box>
@@ -78,8 +88,7 @@ const BookingHistoryList = ({
 
 BookingHistoryList.propTypes = {
   className: PropTypes.string,
-  bookings: PropTypes.array,
-  pager: PropTypes.object
+  booking: PropTypes.object,
 };
 
 export default BookingHistoryList;

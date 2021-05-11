@@ -20,6 +20,10 @@ export const bookingSlice = createSlice({
     fetchBookingฺByAnSuccess: (state, action) => {
       state.booking = action.payload;
     },
+    fetchHistoriesSuccess: (state, action) => {
+      state.bookings = action.payload.items;
+      state.pager = action.payload.pager;
+    },
     storeSuccess: (state, action) => {
       state.bookings = [...state.bookings, action.payload];
     },
@@ -74,6 +78,7 @@ const {
   fetchAllSuccess,
   fetchBookingฺByIdSuccess,
   fetchBookingฺByAnSuccess,
+  fetchHistoriesSuccess,
   storeSuccess,
   updateSuccess,
   destroySuccess,
@@ -119,6 +124,16 @@ export const fetchBookingฺByAn = (an) => async (dispatch) => {
     const res = await api.get(`/bookings/an/${an}`);
 
     return dispatch(fetchBookingฺByAnSuccess(res.data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchHistories = (id, an) => async (dispatch) => {
+  try {
+    const res = await api.get(`/bookings/${id}/${an}/histories`);
+    console.log(res);
+    return dispatch(fetchHistoriesSuccess(res.data));
   } catch (error) {
     console.log(error);
   }
