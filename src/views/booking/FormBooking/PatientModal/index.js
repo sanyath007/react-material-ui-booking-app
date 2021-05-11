@@ -12,6 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import moment from 'moment';
 import { ipActions } from '../../../../redux';
 import Toolbar from './Toolbar';
+import calcAge from '../../../../utils';
 
 function PatientModal({ isOpen, hideModal, onSelected }) {
   const dispatch = useDispatch();
@@ -23,13 +24,6 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
 
   const handlePageItemClick = (url) => {
     dispatch(ipActions.fetchIpAllWithPage(url));
-  };
-
-  const calcAge = (birthday) => {
-    const now = moment();
-    const birth = moment(birthday, 'YYYY');
-
-    return now.diff(birth, 'years');
   };
 
   return (

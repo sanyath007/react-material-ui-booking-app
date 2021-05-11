@@ -11,6 +11,7 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
+import calcAge from '../../../utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,6 +38,8 @@ const useStyles = makeStyles((theme) => ({
 
 const PatientProfile = ({ patient }) => {
   const classes = useStyles();
+
+  console.log(patient);
 
   return (
     <>
@@ -78,13 +81,13 @@ const PatientProfile = ({ patient }) => {
                 <Typography variant="subtitle2" className={classes.textMuted}>อายุ</Typography>
               </Grid>
               <Grid item md={7}>
-                <Typography>{patient?.sex}</Typography>
+                <Typography>{calcAge(patient?.birthday) || 0}</Typography>
               </Grid>
               <Grid item md={5}>
                 <Typography variant="subtitle2" className={classes.textMuted}>เพศ</Typography>
               </Grid>
               <Grid item md={7}>
-                <Typography>{patient?.sex === 1 ? 'ชาย' : 'หญิง'}</Typography>
+                <Typography>{patient?.sex === '1' ? 'ชาย' : 'หญิง'}</Typography>
               </Grid>
               <Grid item md={5}>
                 <Typography variant="subtitle2" className={classes.textMuted}>วันเกิด</Typography>
