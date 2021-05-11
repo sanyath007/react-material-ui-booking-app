@@ -9,7 +9,7 @@ import TotalBookings from './TotalBookings';
 import TotalPatients from './TotalPatients';
 import EmptyRoom from './EmptyRoom';
 import TotalProfit from './TotalProfit';
-import Sales from './Sales';
+import UsedRate from './UsedRate';
 import BookingByRoomType from './BookingByRoomType';
 // import LatestOrders from './LatestOrders';
 // import LatestProducts from './LatestProducts';
@@ -96,7 +96,7 @@ const Dashboard = () => {
             xl={9}
             xs={12}
           >
-            <Sales />
+            <UsedRate />
           </Grid>
           <Grid
             item

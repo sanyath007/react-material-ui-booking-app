@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-const Sales = ({ className, ...rest }) => {
+const UsedRate = ({ className, ...rest }) => {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -29,15 +29,15 @@ const Sales = ({ className, ...rest }) => {
       {
         backgroundColor: colors.indigo[500],
         data: [18, 5, 19, 27, 29, 19, 20],
-        label: 'This year'
+        label: '2563'
       },
       {
         backgroundColor: colors.grey[200],
-        data: [11, 20, 12, 29, 30, 25, 13],
-        label: 'Last year'
+        data: [11, 20, 12, 29, 30, 25, 13, 18, 5, 19, 27, 29],
+        label: '2564'
       }
     ],
-    labels: ['1 Aug', '2 Aug', '3 Aug', '4 Aug', '5 Aug', '6 Aug']
+    labels: ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
   };
 
   const options = {
@@ -110,7 +110,7 @@ const Sales = ({ className, ...rest }) => {
             Last 7 days
           </Button>
         )}
-        title="Latest Sales"
+        title="อัตราการใช้ห้องต่อเดือน"
       />
       <Divider />
       <CardContent>
@@ -143,8 +143,8 @@ const Sales = ({ className, ...rest }) => {
   );
 };
 
-Sales.propTypes = {
+UsedRate.propTypes = {
   className: PropTypes.string
 };
 
-export default Sales;
+export default UsedRate;
