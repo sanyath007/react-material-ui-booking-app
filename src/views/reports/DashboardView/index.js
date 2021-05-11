@@ -10,7 +10,7 @@ import TotalPatients from './TotalPatients';
 import EmptyRoom from './EmptyRoom';
 import TotalProfit from './TotalProfit';
 import Sales from './Sales';
-import TrafficByDevice from './TrafficByDevice';
+import BookingByRoomType from './BookingByRoomType';
 // import LatestOrders from './LatestOrders';
 // import LatestProducts from './LatestProducts';
 import api from '../../../api';
@@ -105,7 +105,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <TrafficByDevice />
+            <BookingByRoomType />
           </Grid>
           {/* <Grid
             item
