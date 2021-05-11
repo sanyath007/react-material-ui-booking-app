@@ -40,7 +40,7 @@ const RoomCard = ({ className, room, ...rest }) => {
           </IconButton>
         )}
         title={room.room_name}
-        subheader="September 14, 2016"
+        // subheader="September 14, 2016"
       />
       <CardMedia
         className={classes.media}
@@ -60,7 +60,14 @@ const RoomCard = ({ className, room, ...rest }) => {
           display="inline"
           variant="body2"
         >
-          {room.building?.building_name}
+          {`ชั้น ${room.floor} ${room.building?.building_name}`}
+        </Typography>
+        <Typography
+          align="left"
+          color="textSecondary"
+          variant="body1"
+        >
+          {room.room_type?.room_type_name}
         </Typography>
       </CardContent>
       <Box flexGrow={1} />
