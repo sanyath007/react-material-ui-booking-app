@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import {
   Box,
   Container,
-  Grid
+  Grid,
+  Typography
 } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import Page from '../../../components/Page';
@@ -14,6 +15,7 @@ import QueueCard from './QueueCard';
 const QueueListView = () => {
   const classes = useStyles();
   const [queues, setQueues] = useState([]);
+  // const [qOfficers, setQOfficers] = useState([]);
 
   const fetchQueue = async () => {
     const res = await api.get('queues');
@@ -31,6 +33,31 @@ const QueueListView = () => {
         <Toolbar />
 
         <Box mt={3}>
+          <Typography variant="h2">บุคคลทั่วไป</Typography>
+
+          <Grid container spacing={2}>
+
+            {queues && queues.map((q, i) => (
+              <Grid item xs={12} sm={6} md={4} lg={4} key={q.book_id}>
+
+                <QueueCard booking={q} queue={i + 1} />
+
+              </Grid>
+            ))}
+
+          </Grid>
+        </Box>
+        <Box mt={3} display="flex" justifyContent="center">
+          <Pagination
+            color="primary"
+            count={3}
+            size="small"
+          />
+        </Box>
+
+        <Box mt={3}>
+          <Typography variant="h2">เจ้าหน้าที่ รพ.</Typography>
+
           <Grid container spacing={2}>
 
             {queues && queues.map((q, i) => (
