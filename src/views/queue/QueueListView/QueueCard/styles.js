@@ -8,7 +8,6 @@ export default makeStyles((theme) => ({
     paddingTop: theme.spacing(3)
   },
   queueCard: {
-    padding: '20px',
     textAlign: 'center',
     display: 'flex',
     flexDirection: 'column',
@@ -25,5 +24,8 @@ export default makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center'
-  }
+  },
+  checkinButton: {
+    marginRight: theme.spacing(1)
+  },
 }));

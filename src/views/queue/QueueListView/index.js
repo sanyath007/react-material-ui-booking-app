@@ -15,12 +15,23 @@ import QueueCard from './QueueCard';
 const QueueListView = () => {
   const classes = useStyles();
   const [queues, setQueues] = useState([]);
-  // const [qOfficers, setQOfficers] = useState([]);
+  const [onQueue, setOnQueue] = useState(1);
 
   const fetchQueue = async () => {
     const res = await api.get('queues');
 
     setQueues(res.data.items);
+  };
+
+  const handleSkipOnQueue = (dir) => {
+    let newOnQueue = onQueue;
+    if (dir === 1) {
+      newOnQueue = onQueue === 5 ? 1 : onQueue + 1;
+    } else {
+      newOnQueue = onQueue === 1 ? 5 : onQueue - 1;
+    }
+
+    setOnQueue(newOnQueue);
   };
 
   useEffect(() => {
@@ -40,7 +51,12 @@ const QueueListView = () => {
             {queues && queues.map((q, i) => (
               <Grid item xs={12} sm={6} md={4} lg={4} key={q.book_id}>
 
-                <QueueCard booking={q} queue={i + 1} />
+                <QueueCard
+                  booking={q}
+                  queue={i + 1}
+                  onQueue={onQueue}
+                  handleSkipOnQueue={handleSkipOnQueue}
+                />
 
               </Grid>
             ))}

@@ -6,8 +6,6 @@ import {
   Button as MuiButton,
   makeStyles
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import EventBusyIcon from '@material-ui/icons/EventBusy';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import { useDispatch } from 'react-redux';
@@ -15,9 +13,6 @@ import { bookingActions } from '../../../redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
-  checkinButton: {
-    marginRight: theme.spacing(1)
-  },
   dischargeButton: {
     marginRight: theme.spacing(1),
     color: theme.palette.error.contrastText,
@@ -63,11 +58,6 @@ const Toolbar = ({ className, booking, ...rest }) => {
       style={{ marginBottom: '20px' }}
     >
       <Box display="flex" justifyContent="flex-end">
-        <Link to={`/app/checkin/${booking.book_id}`} className={classes.checkinButton}>
-          <MuiButton variant="contained" color="primary" endIcon={<ExitToAppIcon />}>
-            รับเข้าห้อง
-          </MuiButton>
-        </Link>
         <MuiButton
           className={classes.dischargeButton}
           variant="contained"
