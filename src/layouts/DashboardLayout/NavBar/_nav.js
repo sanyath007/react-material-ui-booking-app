@@ -17,7 +17,7 @@ const items = [
   {
     href: '/app/bookings',
     icon: HomeIcon,
-    title: 'จองห้องพิเศษ'
+    title: 'ทะเบียนจองห้อง'
   },
   // {
   //   href: '/app/calendar',
@@ -27,12 +27,12 @@ const items = [
   {
     href: '/app/queues',
     icon: CalendarIcon,
-    title: 'คิวจองห้องพิเศษ'
+    title: 'คิวห้องพิเศษ'
   },
   {
     href: '/app/status',
     icon: SlidersIcon,
-    title: 'สถานะการใช้ห้อง'
+    title: 'สถานะห้อง'
   },
   {
     href: '/app/rooms',
