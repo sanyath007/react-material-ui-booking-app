@@ -35,7 +35,7 @@ const Results = ({
 }) => {
   const classes = useStyles();
   const [page, setPage] = useState(0);
-  const [screenW, setScreenW] = useState(0);
+  const [screenW, setScreenW] = useState(window.innerWidth);
 
   const updateWindowDimensions = () => {
     setScreenW(window.innerWidth);
