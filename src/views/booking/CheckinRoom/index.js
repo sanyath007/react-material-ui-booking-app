@@ -105,6 +105,9 @@ const CheckinRoom = () => {
       <Container maxWidth={false}>
         <Paper className={classes.paper}>
           <Typography variant="h2">รับผู้ป่วยเข้าห้อง</Typography>
+
+          {/* // TODO: display patient info */}
+
           <Formik
             initialValues={initialValues}
             validationSchema={checkinSchema}

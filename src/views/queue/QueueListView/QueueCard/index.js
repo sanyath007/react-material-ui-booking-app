@@ -30,11 +30,22 @@ const QueueCard = ({
       suffix = 'st';
     } else if (no.toString().endsWith(2)) {
       suffix = 'nd';
+    } else if (no.toString().endsWith(3)) {
+      suffix = 'rd';
     } else {
       suffix = 'th';
     }
 
-    return suffix;
+    return (
+      <div className={classes.queueNo}>
+        <h2>
+          {no}
+          <sup style={{ fontSize: '18px' }}>
+            {suffix}
+          </sup>
+        </h2>
+      </div>
+    );
   };
 
   const renderBtnActions = (q) => {
@@ -75,14 +86,8 @@ const QueueCard = ({
   return (
     <Card>
       <CardContent className={classes.queueCard}>
-        <div className={classes.queueNo}>
-          <h2>
-            {queue}
-            <sup style={{ fontSize: '18px' }}>
-              {renderSuffix(queue)}
-            </sup>
-          </h2>
-        </div>
+        {renderSuffix(queue)}
+
         <Typography variant="h4">
           {`${booking.ip.patient.pname}${booking.ip.patient.fname} ${booking.ip.patient.lname}`}
         </Typography>
@@ -95,6 +100,7 @@ const QueueCard = ({
       </CardContent>
       <Box flexGrow={1} />
       <Divider />
+
       {renderBtnActions(queue)}
     </Card>
   );
