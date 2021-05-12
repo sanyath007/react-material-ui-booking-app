@@ -4,7 +4,7 @@ import {
   ShoppingBag as ShoppingBagIcon,
   User as UserIcon,
   Home as HomeIcon,
-  // Calendar as CalendarIcon,
+  Calendar as CalendarIcon,
   Sliders as SlidersIcon
 } from 'react-feather';
 
@@ -24,6 +24,11 @@ const items = [
   //   icon: CalendarIcon,
   //   title: 'ตารางการจองห้อง'
   // },
+  {
+    href: '/app/queues',
+    icon: CalendarIcon,
+    title: 'คิวจองห้องพิเศษ'
+  },
   {
     href: '/app/status',
     icon: SlidersIcon,

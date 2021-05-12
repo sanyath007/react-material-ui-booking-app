@@ -15,6 +15,7 @@ import RoomsStatusView from 'src/views/room/RoomsStatus';
 import RoomListView from 'src/views/room/RoomListView';
 import NewRoom from 'src/views/room/NewRoomView';
 import EditRoom from 'src/views/room/EditRoomView';
+import QueueListView from 'src/views/queue/QueueListView';
 import AccountView from 'src/views/account/AccountView';
 import SettingsView from 'src/views/settings/SettingsView';
 import LoginView from 'src/views/auth/LoginView';
@@ -37,6 +38,7 @@ const routes = [
       { path: 'rooms', element: <RoomListView /> },
       { path: 'rooms/new', element: <NewRoom /> },
       { path: 'rooms/edit/:roomId', element: <EditRoom /> },
+      { path: 'queues', element: <QueueListView /> },
       { path: 'account', element: <AccountView /> },
       { path: 'settings', element: <SettingsView /> },
       { path: '*', element: <Navigate to="/404" /> }
