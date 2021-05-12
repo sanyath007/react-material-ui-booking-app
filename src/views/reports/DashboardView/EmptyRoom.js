@@ -56,7 +56,7 @@ const EmptyRoom = ({
               color="textPrimary"
               variant="h3"
             >
-              {`${(empty * 100) / total}%`}
+              {`${empty} ห้อง`}
             </Typography>
           </Grid>
           <Grid item>
