@@ -40,15 +40,17 @@ const QueueCard = ({
   const renderBtnActions = (q) => {
     return q === onQueue && (
       <Box p={2} style={{ textAlign: 'center' }}>
-        <MuiButton
-          variant="contained"
-          color="secondary"
-          startIcon={<ArrowBackIosIcon />}
-          onClick={() => handleSkipOnQueue(-1)}
-          style={{ marginRight: '8px' }}
-        >
-          กลับ
-        </MuiButton>
+        {q !== 1 && (
+          <MuiButton
+            variant="contained"
+            color="secondary"
+            startIcon={<ArrowBackIosIcon />}
+            onClick={() => handleSkipOnQueue(-1)}
+            style={{ marginRight: '8px' }}
+          >
+            กลับ
+          </MuiButton>
+        )}
 
         <Link to={`/app/checkin/${booking.book_id}`} className={classes.checkinButton}>
           <MuiButton variant="contained" color="primary" endIcon={<ExitToAppIcon />}>
@@ -56,14 +58,16 @@ const QueueCard = ({
           </MuiButton>
         </Link>
 
-        <MuiButton
-          variant="contained"
-          color="secondary"
-          endIcon={<ArrowForwardIosIcon />}
-          onClick={() => handleSkipOnQueue(1)}
-        >
-          ข้าม
-        </MuiButton>
+        {q !== 5 && (
+          <MuiButton
+            variant="contained"
+            color="secondary"
+            endIcon={<ArrowForwardIosIcon />}
+            onClick={() => handleSkipOnQueue(1)}
+          >
+            ข้าม
+          </MuiButton>
+        )}
       </Box>
     );
   };
