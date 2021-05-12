@@ -93,14 +93,21 @@ const BookingByRoomType = ({ className, ...rest }) => {
   const fetchBookingByRoomtype = async () => {
     const month = '2021-05';
     const res = await api.get(`/dashboard/${month}/bookings-by-roomtype`);
+    console.log(res);
 
-    setData((prev) => ({
-      ...prev,
-      datasets: [{
-        data: Object.values(res.data).slice(1, 4),
-        ...prev.datasets[0]
-      }]
-    }));
+    const newDatasetItem = {
+      data: [...Object.values(res.data).slice(1, 4)],
+      backgroundColor: [
+        colors.indigo[500],
+        colors.red[600],
+        colors.orange[600]
+      ],
+      borderWidth: 8,
+      borderColor: colors.common.white,
+      hoverBorderColor: colors.common.white
+    };
+
+    setData((prev) => ({ ...prev, datasets: [newDatasetItem] }));
 
     const total = parseInt(res.data.total, 10);
 

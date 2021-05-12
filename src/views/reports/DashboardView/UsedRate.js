@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { Bar } from 'react-chartjs-2';
+import moment from 'moment';
 import {
   Box,
   Button,
@@ -15,30 +16,32 @@ import {
 } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import api from '../../../api';
 
 const useStyles = makeStyles(() => ({
   root: {}
 }));
 
+const initData = {
+  datasets: [
+    { // Bar1
+      backgroundColor: colors.indigo[500],
+      data: [18, 5, 19, 27, 29, 19, 20],
+      label: '2563'
+    },
+    // { // Bar2
+    //   backgroundColor: colors.grey[200],
+    //   data: [11, 20, 12, 29, 30, 25, 13, 18, 5, 19, 27, 29],
+    //   label: '2564'
+    // }
+  ],
+  labels: ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
+};
+
 const UsedRate = ({ className, ...rest }) => {
   const classes = useStyles();
   const theme = useTheme();
-
-  const data = {
-    datasets: [
-      {
-        backgroundColor: colors.indigo[500],
-        data: [18, 5, 19, 27, 29, 19, 20],
-        label: '2563'
-      },
-      {
-        backgroundColor: colors.grey[200],
-        data: [11, 20, 12, 29, 30, 25, 13, 18, 5, 19, 27, 29],
-        label: '2564'
-      }
-    ],
-    labels: ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-  };
+  const [data, setData] = useState(initData);
 
   const options = {
     animation: false,
@@ -95,6 +98,32 @@ const UsedRate = ({ className, ...rest }) => {
     }
   };
 
+  const fetchBedOcc = async () => {
+    const year = '2021';
+    const res = await api.get(`/dashboard/${year}/bed-occ`);
+
+    // TODO: separate create chart data logic
+    const bedocc = res.data.admdate.map((d) => {
+      const datOfMonth = moment(d.ym).endOf('month').format('DD');
+
+      d.bedocc = ((d.admdate * 100) / (30 * datOfMonth)).toFixed(1);
+
+      return parseFloat(d.bedocc, 10);
+    });
+
+    const newBar = {
+      backgroundColor: colors.indigo[500],
+      data: [...bedocc],
+      label: '2563'
+    };
+
+    setData((prev) => ({ ...prev, datasets: [newBar] }));
+  };
+
+  useEffect(() => {
+    fetchBedOcc();
+  }, []);
+
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -110,7 +139,7 @@ const UsedRate = ({ className, ...rest }) => {
             Last 7 days
           </Button>
         )}
-        title="อัตราการใช้ห้องต่อเดือน"
+        title="อัตราครองเตียงต่อเดือน"
       />
       <Divider />
       <CardContent>
