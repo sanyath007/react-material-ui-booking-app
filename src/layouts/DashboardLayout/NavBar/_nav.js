@@ -12,42 +12,50 @@ const items = [
   {
     href: '/app/dashboard',
     icon: BarChartIcon,
-    title: 'Dashboard'
+    title: 'Dashboard',
+    permission: [1, 2, 3]
   },
   {
     href: '/app/bookings',
     icon: HomeIcon,
-    title: 'ทะเบียนจองห้อง'
+    title: 'ทะเบียนจองห้อง',
+    permission: [1, 2, 3]
   },
   // {
   //   href: '/app/calendar',
   //   icon: CalendarIcon,
-  //   title: 'ตารางการจองห้อง'
+  //   title: 'ตารางการจองห้อง',
+  //   permission: [1, 2, 3]
   // },
   {
     href: '/app/queues',
     icon: CalendarIcon,
-    title: 'คิวห้องพิเศษ'
+    title: 'คิวห้องพิเศษ',
+    permission: [1, 2, 3]
   },
   {
     href: '/app/status',
     icon: SlidersIcon,
-    title: 'สถานะห้อง'
+    title: 'สถานะห้อง',
+    permission: [1, 2, 3]
   },
   {
     href: '/app/rooms',
     icon: ShoppingBagIcon,
-    title: 'ห้องพิเศษ'
+    title: 'ห้องพิเศษ',
+    permission: [1, 2]
   },
   {
     href: '/app/account',
     icon: UserIcon,
-    title: 'Account'
+    title: 'Account',
+    permission: [1]
   },
   {
     href: '/app/settings',
     icon: SettingsIcon,
-    title: 'Settings'
+    title: 'Settings',
+    permission: [1]
   }
 ];
 

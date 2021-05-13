@@ -10,9 +10,7 @@ import {
   List,
   Typography
 } from '@material-ui/core';
-import {
-  LogOut as LogOutIcon,
-} from 'react-feather';
+import { LogOut as LogOutIcon } from 'react-feather';
 import NavItem from './NavItem';
 import items from './_nav';
 import useStyles from './styles';
@@ -69,14 +67,17 @@ const NavBar = ({ onMobileClose, openMobile, loggedInUser }) => {
       <Divider />
       <Box p={2}>
         <List>
-          {items.map((item) => (
-            <NavItem
-              href={item.href}
-              key={item.title}
-              title={item.title}
-              icon={item.icon}
-            />
-          ))}
+          {items.filter((item) => item.permission.includes(parseInt(loggedInUser.role, 10)))
+            .map((item) => {
+              return (
+                <NavItem
+                  href={item.href}
+                  key={item.title}
+                  title={item.title}
+                  icon={item.icon}
+                />
+              );
+            })}
 
           {openMobile && (
             <NavItem

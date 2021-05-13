@@ -9,7 +9,6 @@ const DashboardLayout = () => {
   const classes = useStyles();
   const { auth } = useSelector((state) => state.auth);
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
-  console.log(auth);
 
   return (
     <div className={classes.root}>
