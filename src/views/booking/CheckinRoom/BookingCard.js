@@ -7,6 +7,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import moment from 'moment';
+import calAge from '../../../utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,31 +20,27 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   bookingCard: {
-    display: 'flex',
-    flexDirection: 'row',
-    margin: '0 10px',
+    margin: '20px auto',
+    borderRadius: '15px',
+    boxShadow: '0 0 0 1px rgb(63 63 68 / 5%), 0 1px 2px 0 rgb(63 63 68 / 15%)',
   },
   patientCard: {
-    background: '#2E94B9',
-    borderRadius: '10px',
+    background: theme.palette.error.main,
+    borderRadius: '15px',
     width: '30vw',
-    height: '150px',
-    position: 'absolute',
-    margin: '20px 0',
+    minHeight: '150px',
+    position: 'relative',
+    margin: '0',
     padding: '10px',
     color: '#ffffff'
   },
   bookingContent: {
     background: '#ffffff',
-    width: '100vw',
-    height: '150px',
-    borderRadius: '10px',
-    boxShadow: '0 0 0 1px rgb(63 63 68 / 5%), 0 1px 2px 0 rgb(63 63 68 / 15%)',
-    margin: '20px 0',
-    padding: '10px'
+    minHeight: '150px',
+    margin: '10px 0',
+    padding: '10px',
   },
   content: {
-    marginLeft: '42%',
     padding: '10px',
   },
   avatar: {
@@ -53,6 +50,9 @@ const useStyles = makeStyles((theme) => ({
   },
   textProperty: {
     color: theme.palette.text.secondary
+  },
+  textPropertyValue: {
+    color: '#525252'
   }
 }));
 
@@ -60,8 +60,8 @@ const BookingCard = ({ booking }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.bookingCard}>
-      <div className={classes.patientCard}>
+    <Grid container className={classes.bookingCard} direction="row">
+      <Grid item className={classes.patientCard} xs={12} sm={4} md={4}>
         <Grid
           container
           spacing={3}
@@ -70,59 +70,73 @@ const BookingCard = ({ booking }) => {
           <Grid item>
             <Avatar
               className={classes.avatar}
-              src="/static/images/avatars/avatar_8.png"
+              src={
+                booking?.ip?.patient?.sex === '1'
+                  ? '/static/images/avatars/avatar_8.png'
+                  : '/static/images/avatars/avatar_2.png'
+              }
             />
           </Grid>
           <Grid item>
             <Grid container direction="column" spacing={1}>
               <Grid item>
-                <Typography variant="h3">Patient Name</Typography>
+                <Typography variant="h3">
+                  {`${booking?.ip?.patient?.pname}${booking?.ip?.patient?.fname} ${booking?.ip?.patient?.lname}`}
+                </Typography>
               </Grid>
               <Grid item>
-                <Typography variant="subtitle1">{`Age ${'99'}`}</Typography>
+                <Typography variant="body1">{`Age ${calAge(booking?.ip?.patient?.birthday)}`}</Typography>
               </Grid>
               <Grid item>
-                <Typography variant="subtitle1">{`Tel. ${'09-9999999'}`}</Typography>
+                <Typography variant="body1">{`Tel. ${booking?.ip?.patient?.hometel}`}</Typography>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </div>
-      <div className={classes.bookingContent}>
+      </Grid>
+      <Grid item className={classes.bookingContent} xs={12} sm={8} md={8}>
         <div className={classes.content}>
           <Grid container direction="row" spacing={2}>
-            <Grid item md={3}>
+            <Grid item sm={6} md={3}>
               <Typography variant="subtitle2" className={classes.textProperty}>AN</Typography>
-              <Typography variant="h4">{booking.an}</Typography>
+              <Typography variant="h4" className={classes.textPropertyValue}>
+                {booking?.an}
+              </Typography>
             </Grid>
-            <Grid item md={3}>
+            <Grid item sm={6} md={3}>
               <Typography variant="subtitle2" className={classes.textProperty}>HN</Typography>
-              <Typography variant="h4">{booking.hn}</Typography>
+              <Typography variant="h4" className={classes.textPropertyValue}>
+                {booking?.hn}
+              </Typography>
             </Grid>
-            <Grid item md={6}>
+            <Grid item sm={12} md={6}>
               <Typography variant="subtitle2" className={classes.textProperty}>สิทธิ์การรักษา</Typography>
-              <Typography variant="h4">999-xxxxxxxx</Typography>
+              <Typography variant="h4" className={classes.textPropertyValue}>
+                {`${booking?.ip?.pttype?.pttype}-${booking?.ip?.pttype?.name}`}
+              </Typography>
             </Grid>
-            <Grid item md={3}>
+            <Grid item sm={6} md={3}>
               <Typography variant="subtitle2" className={classes.textProperty}>วันที่ Admit</Typography>
-              <Typography variant="h4">
-                {moment().format('DD/MM/YYYY')}
+              <Typography variant="h4" className={classes.textPropertyValue}>
+                {moment(booking?.ip?.regdate).format('DD/MM/YYYY')}
               </Typography>
             </Grid>
-            <Grid item md={3}>
+            <Grid item sm={6} md={3}>
               <Typography variant="subtitle2" className={classes.textProperty}>เวลา</Typography>
-              <Typography variant="h4">
-                {moment().format('hh:mm')}
+              <Typography variant="h4" className={classes.textPropertyValue}>
+                {booking?.ip?.regtime}
               </Typography>
             </Grid>
-            <Grid item md={6}>
+            <Grid item sm={12} md={6}>
               <Typography variant="subtitle2" className={classes.textProperty}>วอร์ด</Typography>
-              <Typography variant="h4">99-xxxxxxxx</Typography>
+              <Typography variant="h4" className={classes.textPropertyValue}>
+                {`${booking?.ip?.ward?.ward}-${booking?.ip?.ward?.name}`}
+              </Typography>
             </Grid>
           </Grid>
         </div>
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 

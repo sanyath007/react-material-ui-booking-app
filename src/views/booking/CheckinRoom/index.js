@@ -17,6 +17,7 @@ import { useDispatch } from 'react-redux';
 import { checkin } from '../../../redux/booking/bookingSlice';
 import useStyles from './styles';
 import api from '../../../api';
+import BookingCard from './BookingCard';
 
 const initialValues = {
   checkinDate: moment(),
@@ -35,11 +36,15 @@ const CheckinRoom = () => {
   const [buildings, setBuildings] = useState([]);
   const [building, setBuilding] = useState('');
   const [rooms, setRooms] = useState([]);
+  const [booking, setBooking] = useState({});
 
   const fetchBuildingAll = async () => {
     const res = await api.get('/buildings');
     const arrBuildings = res.data.map((b) => ({ id: b.building_id, name: b.building_name }));
 
+    const resBooking = await api.get(`/bookings/${bookId}`);
+
+    setBooking(resBooking.data);
     setBuildings(arrBuildings);
   };
 
@@ -107,6 +112,7 @@ const CheckinRoom = () => {
           <Typography variant="h2">รับผู้ป่วยเข้าห้อง</Typography>
 
           {/* // TODO: display patient info */}
+          <BookingCard booking={booking} />
 
           <Formik
             initialValues={initialValues}
