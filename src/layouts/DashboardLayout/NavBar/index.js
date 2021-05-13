@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import { LogOut as LogOutIcon } from 'react-feather';
 import NavItem from './NavItem';
+import LogoutNavItem from './LogoutNavItem';
 import items from './_nav';
 import useStyles from './styles';
 
@@ -80,8 +81,7 @@ const NavBar = ({ onMobileClose, openMobile, loggedInUser }) => {
             })}
 
           {openMobile && (
-            <NavItem
-              href="/logout"
+            <LogoutNavItem
               key="Logout"
               title="Logout"
               icon={LogOutIcon}
