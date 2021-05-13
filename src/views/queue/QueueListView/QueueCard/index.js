@@ -20,6 +20,7 @@ const QueueCard = ({
   booking,
   queue,
   onQueue,
+  slotCount,
   handleSkipOnQueue
 }) => {
   const classes = useStyles();
@@ -63,13 +64,25 @@ const QueueCard = ({
           </MuiButton>
         )}
 
-        <Link to={`/app/checkin/${booking.book_id}`} className={classes.checkinButton}>
+        <Link
+          to={`/app/checkin/${booking.book_id}`}
+          className={classes.checkinButton}
+          onClick={(e) => {
+            if (booking?.ip?.dchdate) {
+              window.alert('ผู้ป่วยถูกจำหน่ายแล้วไม่สามารถรับเข้าห้องได้ !!!');
+              e.preventDefault();
+              return;
+            }
+
+            return true;
+          }}
+        >
           <MuiButton variant="contained" color="primary" endIcon={<ExitToAppIcon />}>
             รับเข้าห้อง
           </MuiButton>
         </Link>
 
-        {q !== 5 && (
+        {q !== slotCount && (
           <MuiButton
             variant="contained"
             color="secondary"
@@ -110,6 +123,7 @@ QueueCard.propTypes = {
   booking: PropTypes.object,
   queue: PropTypes.number,
   onQueue: PropTypes.number,
+  slotCount: PropTypes.number,
   handleSkipOnQueue: PropTypes.func
 };
 

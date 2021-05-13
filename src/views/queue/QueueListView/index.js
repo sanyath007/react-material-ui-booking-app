@@ -3,9 +3,9 @@ import {
   Box,
   Container,
   Grid,
-  Typography
+  // Typography
 } from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
+// import { Pagination } from '@material-ui/lab';
 import Page from '../../../components/Page';
 import Toolbar from './Toolbar';
 import useStyles from './styles';
@@ -26,9 +26,9 @@ const QueueListView = () => {
   const handleSkipOnQueue = (dir) => {
     let newOnQueue = onQueue;
     if (dir === 1) {
-      newOnQueue = onQueue === 5 ? 1 : onQueue + 1;
+      newOnQueue = onQueue === queues.length ? 1 : onQueue + 1;
     } else {
-      newOnQueue = onQueue === 1 ? 5 : onQueue - 1;
+      newOnQueue = onQueue === 1 ? queues.length : onQueue - 1;
     }
 
     setOnQueue(newOnQueue);
@@ -44,7 +44,8 @@ const QueueListView = () => {
         <Toolbar />
 
         <Box mt={3}>
-          <Typography variant="h2">บุคคลทั่วไป</Typography>
+          {/* // TODO: display topic by type selected */}
+          {/* <Typography variant="h2">บุคคลทั่วไป</Typography> */}
 
           <Grid container spacing={2}>
 
@@ -55,6 +56,7 @@ const QueueListView = () => {
                   booking={q}
                   queue={i + 1}
                   onQueue={onQueue}
+                  slotCount={queues.length}
                   handleSkipOnQueue={handleSkipOnQueue}
                 />
 
@@ -63,36 +65,13 @@ const QueueListView = () => {
 
           </Grid>
         </Box>
-        <Box mt={3} display="flex" justifyContent="center">
+        {/* <Box mt={3} display="flex" justifyContent="center">
           <Pagination
             color="primary"
             count={3}
             size="small"
           />
-        </Box>
-
-        <Box mt={3}>
-          <Typography variant="h2">เจ้าหน้าที่ รพ.</Typography>
-
-          <Grid container spacing={2}>
-
-            {queues && queues.map((q, i) => (
-              <Grid item xs={12} sm={6} md={4} lg={4} key={q.book_id}>
-
-                <QueueCard booking={q} queue={i + 1} />
-
-              </Grid>
-            ))}
-
-          </Grid>
-        </Box>
-        <Box mt={3} display="flex" justifyContent="center">
-          <Pagination
-            color="primary"
-            count={3}
-            size="small"
-          />
-        </Box>
+        </Box> */}
       </Container>
     </Page>
   );

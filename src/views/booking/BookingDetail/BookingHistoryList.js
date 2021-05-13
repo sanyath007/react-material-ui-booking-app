@@ -41,7 +41,6 @@ const BookingHistoryList = ({
   useEffect(() => {
     dispatch(bookingActions.fetchHistories(booking.book_id, booking.an));
   }, [booking]);
-  console.log(bookings);
 
   return (
     <Card
