@@ -39,8 +39,6 @@ const useStyles = makeStyles((theme) => ({
 const PatientProfile = ({ patient }) => {
   const classes = useStyles();
 
-  console.log(patient);
-
   return (
     <>
       <Card>
@@ -126,7 +124,7 @@ const PatientProfile = ({ patient }) => {
         </CardContent>
       </Card>
 
-      <Card className="mt-2">
+      {/* <Card className="mt-2">
         <CardContent>
           <Box
             alignItems="center"
@@ -134,11 +132,11 @@ const PatientProfile = ({ patient }) => {
             flexDirection="column"
           >
             <Typography gutterBottom variant="h4">
-              NOTE
+              NOTES
             </Typography>
           </Box>
         </CardContent>
-      </Card>
+      </Card> */}
     </>
   );
 };
