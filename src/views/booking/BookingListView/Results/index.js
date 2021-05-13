@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Avatar,
@@ -20,8 +21,6 @@ import StarIcon from '@material-ui/icons/Star';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-// import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-// import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import getInitials from 'src/utils/getInitials';
 import useStyles from './styles';
 
@@ -36,6 +35,7 @@ const Results = ({
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [screenW, setScreenW] = useState(window.innerWidth);
+  const { auth } = useSelector((state) => state.auth);
 
   const updateWindowDimensions = () => {
     setScreenW(window.innerWidth);
@@ -124,24 +124,16 @@ const Results = ({
                     >
                       <EditIcon />
                     </Link>
-                    <Link
-                      to=""
-                      title="ลบ"
-                      className={classes.delBtn}
-                      onClick={() => console.log('On delete action...')}
-                    >
-                      <DeleteIcon />
-                    </Link>
-                    {/* <Link to="" title="จำหน่าย" className={classes.dchBtn}>
-                      <MeetingRoomIcon />
-                    </Link> */}
-                    {/* <Link
-                      to={`/app/checkin/${booking.book_id}`}
-                      title="รับผู้ป่วยเข้าห้อง"
-                      className={classes.checkinBtn}
-                    >
-                      <ExitToAppIcon />
-                    </Link> */}
+                    {[1, 2].includes(parseInt(auth.role, 10)) && (
+                      <Link
+                        to=""
+                        title="ลบ"
+                        className={classes.delBtn}
+                        onClick={() => console.log('On delete action...')}
+                      >
+                        <DeleteIcon />
+                      </Link>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
