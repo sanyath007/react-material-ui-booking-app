@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import {
   Box,
   Button as MuiButton,
@@ -24,6 +25,7 @@ const QueueCard = ({
 }) => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const { auth } = useSelector((state) => state.auth);
 
   const renderSuffix = (no) => {
     let suffix = '';
@@ -50,7 +52,8 @@ const QueueCard = ({
   };
 
   const renderBtnActions = (q) => {
-    return q === onQueue && (
+    console.log(auth);
+    return [1, 2].includes(parseInt(auth.role, 10)) && q === onQueue && (
       <Box p={2} style={{ textAlign: 'center' }}>
         {q !== 1 && (
           <MuiButton

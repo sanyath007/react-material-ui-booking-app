@@ -3,23 +3,15 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
   Box,
-  Button as MuiButton,
   Card,
   CardContent,
   Grid,
   makeStyles
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 import SearchInput from '../../../components/SearchInput';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {},
-  importButton: {
-    marginRight: theme.spacing(1)
-  },
-  exportButton: {
-    marginRight: theme.spacing(1)
-  }
 }));
 
 const options = ['ค้นหาชื่อ-สกุล', 'ค้นหา HN', 'ค้นหา AN'];
@@ -46,23 +38,7 @@ const Toolbar = ({ className, handleSearch, ...rest }) => {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Box display="flex" justifyContent="flex-end">
-        <MuiButton className={classes.importButton}>
-          Import
-        </MuiButton>
-        <MuiButton className={classes.exportButton}>
-          Export
-        </MuiButton>
-        <MuiButton
-          color="primary"
-          variant="contained"
-          component={Link}
-          to="/app/bookings/new"
-        >
-          เพิ่มการจองห้อง
-        </MuiButton>
-      </Box>
-      <Box mt={3}>
+      <Box>
         <Card>
           <CardContent>
             <Grid container>
