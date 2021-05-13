@@ -8,12 +8,11 @@ import {
   Divider,
   Typography
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import moment from 'moment';
-
 import useStyles from './styles';
 
 const QueueCard = ({
@@ -24,6 +23,7 @@ const QueueCard = ({
   handleSkipOnQueue
 }) => {
   const classes = useStyles();
+  const navigate = useNavigate();
 
   const renderSuffix = (no) => {
     let suffix = '';
@@ -69,9 +69,10 @@ const QueueCard = ({
           className={classes.checkinButton}
           onClick={(e) => {
             if (booking?.ip?.dchdate) {
-              window.alert('ผู้ป่วยถูกจำหน่ายแล้วไม่สามารถรับเข้าห้องได้ !!!');
               e.preventDefault();
-              return;
+
+              window.alert('ผู้ป่วยถูกจำหน่ายแล้วไม่สามารถรับเข้าห้องได้ กรุณาจำหน่ายผู้ป่วยออกจากระบบ!!!');
+              navigate(`/app/bookings/${booking.book_id}/detail`);
             }
 
             return true;
