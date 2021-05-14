@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardContent } from '@material-ui/core';
-import { Alert, Button } from 'react-bootstrap';
 import moment from 'moment';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, Card, CardContent } from '@material-ui/core';
+import { Alert } from 'react-bootstrap';
 import EventBusyIcon from '@material-ui/icons/EventBusy';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import { bookingActions } from '../../../redux';
 
 const BedCard = ({ room, used }) => {
   const dispatch = useDispatch();
+  const { auth } = useSelector((state) => state.auth);
 
   const handleDischargeClick = (bookId, roomId) => {
     if (window.confirm('คุณต้องการจำหน่ายผู้ป่วย ใช่หรือไม่?')) {
@@ -54,31 +55,31 @@ const BedCard = ({ room, used }) => {
           </Alert>
         )}
 
-        {used && (
+        {[1, 2].includes(parseInt(auth.role, 10)) && used && (
           <>
             <Button
-              size="sm"
-              variant="primary"
-              style={{ margin: '0' }}
+              size="small"
+              variant="contained"
+              color="primary"
               onClick={() => {
                 handleDischargeClick(used.booking_room.book_id, used.booking_room.room_id);
               }}
+              endIcon={<MeetingRoomIcon fontSize="small" />}
             >
               D/C
-              <MeetingRoomIcon fontSize="small" />
             </Button>
 
             <Button
-              size="sm"
-              variant="danger"
-              style={{ margin: '0' }}
+              size="small"
+              variant="contained"
+              color="secondary"
               onClick={() => {
                 handleCancelCheckinClick(used.booking_room.book_id, used.booking_room.room_id);
               }}
               className="float-right"
+              endIcon={<EventBusyIcon fontSize="small" />}
             >
               ยกเลิก
-              <EventBusyIcon fontSize="small" />
             </Button>
           </>
         )}

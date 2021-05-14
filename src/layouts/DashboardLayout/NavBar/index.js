@@ -68,7 +68,7 @@ const NavBar = ({ onMobileClose, openMobile, loggedInUser }) => {
       <Divider />
       <Box p={2}>
         <List>
-          {items.filter((item) => item.permission.includes(parseInt(loggedInUser.role, 10)))
+          {items.filter((item) => item.permission.includes(parseInt(loggedInUser?.role, 10)))
             .map((item) => {
               return (
                 <NavItem

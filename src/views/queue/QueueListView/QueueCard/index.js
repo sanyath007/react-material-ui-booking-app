@@ -52,7 +52,6 @@ const QueueCard = ({
   };
 
   const renderBtnActions = (q) => {
-    console.log(auth);
     return [1, 2].includes(parseInt(auth.role, 10)) && q === onQueue && (
       <Box p={2} style={{ textAlign: 'center' }}>
         {q !== 1 && (
