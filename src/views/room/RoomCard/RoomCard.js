@@ -12,17 +12,25 @@ import {
   CardContent,
   Divider,
   Grid,
-  IconButton,
   Typography
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import useStyles from './styles';
+import OverflowMenu from './OverflowMenu';
+
+const roomStatuses = [
+  { id: 2, name: 'ปิดปรับปรุง' },
+  { id: 3, name: 'งดใช้ชั่วคราว' },
+  { id: 9, name: 'ยกเลิกการใช้' }
+];
 
 const RoomCard = ({ className, room, ...rest }) => {
   const classes = useStyles();
 
+  const handleOverflowMenuSelected = (selectedIndex) => {
+    console.log(room.room_id, selectedIndex);
+  };
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -35,9 +43,7 @@ const RoomCard = ({ className, room, ...rest }) => {
           </Avatar>
         )}
         action={(
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
+          <OverflowMenu items={roomStatuses} onSelected={handleOverflowMenuSelected} />
         )}
         title={room.room_name}
         // subheader="September 14, 2016"

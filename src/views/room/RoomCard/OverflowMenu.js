@@ -1,44 +1,53 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
-  ClickAwayListener,
-  Grow,
-  Paper,
-  Popper,
+  Fade,
+  IconButton,
+  Menu,
   MenuItem,
-  MenuList
 } from '@material-ui/core';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-const OverflowMenu = ({ anchorRef }) => {
-  const [open, setOpen] = useState(false);
+const OverflowMenu = ({ items, onSelected }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
 
-  const handleClose = (e) => {
-    if (anchorRef.current && anchorRef.current.contains(e.target)) {
-      return;
-    }
-
-    setOpen(false);
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   return (
-    <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-      {({ TransitionProps, placement }) => (
-        <Grow
-          { ...TransitionProps }
-          style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-        >
-          <Paper>
-            <ClickAwayListener onClickAway={handleClose}>
-              <MenuList autoFocusItem={open}>
-                <MenuItem onClick={handleClose}>ระงับการใช้งานชั่วคราว</MenuItem>
-                <MenuItem onClick={handleClose}>ยกเลิกการใช้งาน</MenuItem>
-                <MenuItem onClick={handleClose}>สถานะซ่อมบำรุง</MenuItem>
-              </MenuList>
-            </ClickAwayListener>
-          </Paper>
-        </Grow>
-      )}
-    </Popper>
+    <>
+      <IconButton aria-label="settings" onClick={(e) => setAnchorEl(e.currentTarget)}>
+        <MoreVertIcon />
+      </IconButton>
+      <Menu
+        id="fade-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Fade}
+      >
+        {items && items.map((item) => (
+          <MenuItem
+            key={item.id}
+            onClick={() => {
+              handleClose();
+              onSelected(item.id);
+            }}
+          >
+            {item.name}
+          </MenuItem>
+        ))}
+      </Menu>
+    </>
   );
+};
+
+OverflowMenu.propTypes = {
+  items: PropTypes.array,
+  onSelected: PropTypes.func
 };
 
 export default OverflowMenu;
