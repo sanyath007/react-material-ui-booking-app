@@ -17,7 +17,7 @@ import {
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from './styles';
-import OverflowMenu from './OverflowMenu';
+import OverflowMenu from '../../../components/OverflowMenu';
 
 const roomStatuses = [
   { id: 2, name: 'ปิดปรับปรุง' },

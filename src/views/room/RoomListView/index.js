@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Pagination } from '@material-ui/lab';
 import Page from 'src/components/Page';
 import Toolbar from './Toolbar';
-import RoomCard from '../RoomCard/RoomCard';
+import RoomCard from '../RoomCard';
 import useStyles from './styles';
 import { roomActions } from '../../../redux';
 
