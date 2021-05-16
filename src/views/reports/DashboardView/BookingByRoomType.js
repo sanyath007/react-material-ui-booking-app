@@ -93,7 +93,6 @@ const BookingByRoomType = ({ className, ...rest }) => {
   const fetchBookingByRoomtype = async () => {
     const month = '2021-05';
     const res = await api.get(`/dashboard/${month}/bookings-by-roomtype`);
-    console.log(res);
 
     const newDatasetItem = {
       data: [...Object.values(res.data).slice(1, 4)],
