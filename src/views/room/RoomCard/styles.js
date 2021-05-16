@@ -2,7 +2,6 @@ import { makeStyles } from '@material-ui/core';
 
 export default makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.dark,
     display: 'flex',
     flexDirection: 'column'
   },
