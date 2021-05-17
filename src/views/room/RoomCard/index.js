@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import {
   Avatar,
@@ -14,12 +15,16 @@ import {
   Grid,
   Typography
 } from '@material-ui/core';
+import { Badge } from 'react-bootstrap';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from './styles';
 import OverflowMenu from '../../../components/OverflowMenu';
+import { roomActions } from '../../../redux';
 
 const roomStatuses = [
+  { id: 0, name: 'ว่าง' },
+  { id: 1, name: 'ใช้งานอยู่' },
   { id: 2, name: 'ปิดปรับปรุง' },
   { id: 3, name: 'งดใช้ชั่วคราว' },
   { id: 9, name: 'ยกเลิกการใช้' }
@@ -27,10 +32,27 @@ const roomStatuses = [
 
 const RoomCard = ({ className, room, ...rest }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const renderBadgeRoomStatus = (status) => {
+    let badgeColor = '';
+    if (status === '0') {
+      badgeColor = 'success';
+    } else if (status === '1') {
+      badgeColor = 'danger';
+    } else {
+      badgeColor = 'secondary';
+    }
+
+    return badgeColor;
+  };
 
   const handleOverflowMenuSelected = (selectedIndex) => {
     console.log(room.room_id, selectedIndex);
+    dispatch(roomActions.updateStatus(room.room_id, selectedIndex, navigate));
   };
+
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -42,9 +64,13 @@ const RoomCard = ({ className, room, ...rest }) => {
             R
           </Avatar>
         )}
-        action={(
-          <OverflowMenu items={roomStatuses} onSelected={handleOverflowMenuSelected} />
-        )}
+        action={[0, 2, 3, 9].includes(parseInt(room.room_status, 10))
+          ? (
+            <OverflowMenu
+              items={roomStatuses.filter((rs) => rs.id !== parseInt(room.room_status, 10))}
+              onSelected={handleOverflowMenuSelected}
+            />
+          ) : null}
         title={room.room_name}
         // subheader="September 14, 2016"
       />
@@ -75,6 +101,13 @@ const RoomCard = ({ className, room, ...rest }) => {
         >
           {room.room_type?.room_type_name}
         </Typography>
+        <Badge
+          pill
+          variant={renderBadgeRoomStatus(room.room_status)}
+          className="p-1"
+        >
+          {roomStatuses.find((rs) => rs.id === parseInt(room.room_status, 10))?.name}
+        </Badge>
       </CardContent>
       <Box flexGrow={1} />
       <Divider />

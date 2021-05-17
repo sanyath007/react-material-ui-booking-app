@@ -14,6 +14,7 @@ export const roomSlice = createSlice({
   },
   reducers: {
     fetchAllSuccess: (state, action) => {
+      console.log('on fetchAllSuccess is called...');
       state.rooms = action.payload;
       state.filteredRooms = state.rooms;
     },
@@ -52,6 +53,19 @@ export const roomSlice = createSlice({
 
       state.rooms = [...newRooms];
     },
+    updateStatusSuccess: (state, action) => {
+      const { id, room: updatedRoom } = action.payload;
+
+      const newRooms = state.rooms.map((room) => {
+        if (room.room_id === id) {
+          return updatedRoom;
+        }
+
+        return room;
+      });
+
+      state.rooms = [...newRooms];
+    },
     destroySuccess: (state, action) => {
       const newRooms = state.bookings.filter((booking) => booking.book_id !== action.payload);
 
@@ -70,6 +84,7 @@ const {
   filterRoomByFloorSuccess,
   storeSuccess,
   updateSuccess,
+  updateStatusSuccess,
   destroySuccess,
 } = roomSlice.actions;
 
@@ -128,6 +143,18 @@ export const update = (id, data, navigate) => async (dispatch) => {
     const res = await api.put(`/rooms/${id}`, data);
 
     dispatch(updateSuccess({ id, room: res.data.room }));
+
+    navigate('/app/rooms');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateStatus = (id, status, navigate) => async (dispatch) => {
+  try {
+    const res = await api.put(`/rooms/${id}/${status}`);
+    console.log(res);
+    dispatch(updateStatusSuccess({ id, room: res.data.room }));
 
     navigate('/app/rooms');
   } catch (error) {
