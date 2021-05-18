@@ -14,7 +14,6 @@ export const roomSlice = createSlice({
   },
   reducers: {
     fetchAllSuccess: (state, action) => {
-      console.log('on fetchAllSuccess is called...');
       state.rooms = action.payload;
       state.filteredRooms = state.rooms;
     },
@@ -39,6 +38,19 @@ export const roomSlice = createSlice({
     },
     storeSuccess: (state, action) => {
       state.rooms = [...state.rooms, action.payload];
+    },
+    updateFilteredRooms: (state, action) => {
+      const { id, room: updatedRoom } = action.payload;
+
+      const newRooms = state.filteredRooms.map((room) => {
+        if (room.room_id === id) {
+          return updatedRoom;
+        }
+
+        return room;
+      });
+
+      state.filteredRooms = [...newRooms];
     },
     updateSuccess: (state, action) => {
       const { id, room: updatedRoom } = action.payload;
@@ -83,6 +95,7 @@ const {
   fetchRoomsStatusSuccess,
   filterRoomByFloorSuccess,
   storeSuccess,
+  updateFilteredRooms,
   updateSuccess,
   updateStatusSuccess,
   destroySuccess,
@@ -143,6 +156,7 @@ export const update = (id, data, navigate) => async (dispatch) => {
     const res = await api.put(`/rooms/${id}`, data);
 
     dispatch(updateSuccess({ id, room: res.data.room }));
+    dispatch(updateFilteredRooms({ id, room: res.data.room }));
 
     navigate('/app/rooms');
   } catch (error) {
@@ -153,8 +167,9 @@ export const update = (id, data, navigate) => async (dispatch) => {
 export const updateStatus = (id, status, navigate) => async (dispatch) => {
   try {
     const res = await api.put(`/rooms/${id}/${status}`);
-    console.log(res);
+
     dispatch(updateStatusSuccess({ id, room: res.data.room }));
+    dispatch(updateFilteredRooms({ id, room: res.data.room }));
 
     navigate('/app/rooms');
   } catch (error) {
