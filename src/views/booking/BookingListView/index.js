@@ -4,6 +4,7 @@ import {
   Container,
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
+import withAuth from 'src/components/withAuth';
 import Page from 'src/components/Page';
 import Results from './Results';
 import Toolbar from './Toolbar';
@@ -64,4 +65,4 @@ const BookingListView = () => {
   );
 };
 
-export default BookingListView;
+export default withAuth(BookingListView);

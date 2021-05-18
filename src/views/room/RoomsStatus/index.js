@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Container } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
+import withAuth from 'src/components/withAuth';
 import Page from 'src/components/Page';
 import useStyles from './styles';
 import FloorCard from './FloorCard';
@@ -51,4 +52,4 @@ const RoomsStatus = () => {
   );
 };
 
-export default RoomsStatus;
+export default withAuth(RoomsStatus);

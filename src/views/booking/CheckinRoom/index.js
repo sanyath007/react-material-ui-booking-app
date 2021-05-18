@@ -12,6 +12,7 @@ import { Formik, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
 import FormControls from 'src/components/Forms';
+import withAuth from 'src/components/withAuth';
 import Page from 'src/components/Page';
 import { useDispatch } from 'react-redux';
 import { checkin } from '../../../redux/booking/bookingSlice';
@@ -218,4 +219,4 @@ const CheckinRoom = () => {
   );
 };
 
-export default CheckinRoom;
+export default withAuth(CheckinRoom);

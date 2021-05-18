@@ -5,6 +5,7 @@ import {
   Grid,
   makeStyles
 } from '@material-ui/core';
+import withAuth from 'src/components/withAuth';
 import Page from 'src/components/Page';
 import Profile from './Profile';
 import ProfileDetails from './ProfileDetails';
@@ -36,10 +37,7 @@ const Account = () => {
       title="Account"
     >
       <Container maxWidth="lg">
-        <Grid
-          container
-          spacing={3}
-        >
+        <Grid container spacing={3}>
           <Grid
             item
             lg={4}
@@ -62,4 +60,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default withAuth(Account);

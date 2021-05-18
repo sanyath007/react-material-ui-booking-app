@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Container, Paper } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import withAuth from 'src/components/withAuth';
 import Page from 'src/components/Page';
 import useStyles from './styles';
 import {
@@ -59,4 +60,4 @@ const NewRoom = () => {
   );
 };
 
-export default NewRoom;
+export default withAuth(NewRoom);

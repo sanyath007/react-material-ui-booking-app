@@ -8,6 +8,7 @@ import {
   // Typography,
   makeStyles
 } from '@material-ui/core';
+import withAuth from 'src/components/withAuth';
 import Page from 'src/components/Page';
 import Toolbar from './Toolbar';
 import PatientProfile from './PatientProfile';
@@ -60,4 +61,4 @@ const BookingDetail = () => {
   );
 };
 
-export default BookingDetail;
+export default withAuth(BookingDetail);

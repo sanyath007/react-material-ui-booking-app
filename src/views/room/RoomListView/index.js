@@ -7,6 +7,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { Pagination } from '@material-ui/lab';
 import Page from 'src/components/Page';
+import withAuth from 'src/components/withAuth';
 import Toolbar from './Toolbar';
 import RoomCard from '../RoomCard';
 import useStyles from './styles';
@@ -58,4 +59,4 @@ const RoomList = () => {
   );
 };
 
-export default RoomList;
+export default withAuth(RoomList);

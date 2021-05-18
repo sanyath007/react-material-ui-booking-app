@@ -6,6 +6,7 @@ import {
   // Typography
 } from '@material-ui/core';
 // import { Pagination } from '@material-ui/lab';
+import withAuth from 'src/components/withAuth';
 import Page from '../../../components/Page';
 import Toolbar from './Toolbar';
 import useStyles from './styles';
@@ -77,4 +78,4 @@ const QueueListView = () => {
   );
 };
 
-export default QueueListView;
+export default withAuth(QueueListView);

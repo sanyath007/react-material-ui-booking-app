@@ -6,6 +6,7 @@ import {
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import withAuth from 'src/components/withAuth';
 import Page from 'src/components/Page';
 import { bookingActions, roomTypeActions } from '../../../redux';
 import useStyles from './styles';
@@ -63,4 +64,4 @@ function NewBooking() {
   );
 }
 
-export default NewBooking;
+export default withAuth(NewBooking);

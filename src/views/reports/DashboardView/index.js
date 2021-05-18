@@ -4,6 +4,7 @@ import {
   Grid,
   makeStyles
 } from '@material-ui/core';
+import withAuth from 'src/components/withAuth';
 import Page from 'src/components/Page';
 import TotalBookings from './TotalBookings';
 import TotalPatients from './TotalPatients';
@@ -131,4 +132,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default withAuth(Dashboard);

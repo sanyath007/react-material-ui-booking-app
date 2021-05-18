@@ -4,7 +4,8 @@ import isAuthExpired from '../utils/auth';
 
 const withAuth = (WrappedComponent) => {
   return (props) => {
-    if (!isAuthExpired) {
+    console.log('on withAuth process...');
+    if (!isAuthExpired()) {
       return <WrappedComponent {...props} />;
     }
 

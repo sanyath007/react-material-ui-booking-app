@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Paper } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
+import withAuth from 'src/components/withAuth';
 import Page from 'src/components/Page';
 import useStyles from './styles';
 import {
@@ -53,4 +54,4 @@ const EditRoomView = () => {
   );
 };
 
-export default EditRoomView;
+export default withAuth(EditRoomView);
