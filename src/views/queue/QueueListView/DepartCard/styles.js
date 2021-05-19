@@ -11,11 +11,6 @@ export default makeStyles((theme) => ({
     margin: '0 0 10px',
     padding: '10px'
   },
-  departWrapper: {
-    margin: '10px',
-    padding: '10px',
-    paddingBottom: '0px'
-  },
   departName: {
     marginLeft: '10px',
     textDecoration: 'underline'

@@ -35,11 +35,12 @@ const DepartCard = ({ depart }) => {
   return (
     <Card className={classes.departCard}>
       <Row>
-        <Col className={classes.departWrapper}>
+        <Col>
           <h3 className={classes.departName}>{depart.name}</h3>
+
           <Grid container spacing={2}>
             {queues && queues.map((q, i) => (
-              <Grid item xs={12} sm={6} md={4} lg={4} key={q.book_id}>
+              <Grid item xs={12} sm={4} md={3} lg={3} xl={2} key={q.book_id}>
                 <QueueCard
                   booking={q}
                   queue={i + 1}
