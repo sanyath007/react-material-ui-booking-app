@@ -111,7 +111,14 @@ const QueueCard = ({
           {`HN ${booking.ip.hn} | AN ${booking.ip.an}`}
         </Typography>
         <Typography variant="subtitle1">
-          {`วันที่จอง ${moment(booking.book_date).format('DD/MM/YYYY')}`}
+          <span>วันที่จอง</span>
+          <span className={classes.textVal}>
+            {moment(booking.book_date).format('DD/MM/YYYY')}
+          </span>
+        </Typography>
+        <Typography variant="subtitle1">
+          <span>วอร์ด</span>
+          <span className={classes.textVal}>{booking?.ip?.ward?.name}</span>
         </Typography>
       </CardContent>
       <Box flexGrow={1} />

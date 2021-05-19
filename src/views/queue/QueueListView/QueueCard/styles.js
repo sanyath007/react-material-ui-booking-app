@@ -28,4 +28,8 @@ export default makeStyles((theme) => ({
   checkinButton: {
     marginRight: theme.spacing(1)
   },
+  textVal: {
+    marginLeft: '2px',
+    fontWeight: 'bold'
+  },
 }));
