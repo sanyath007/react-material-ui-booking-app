@@ -31,7 +31,7 @@ function NewBooking() {
         remark: values.remark,
         queue: 0,
         user: '1300200009261', // TODO: set user to logged in user and user's ward
-        ward: '01',
+        ward: values.ward,
         room_types: values.roomTypeSelecteds.toString() // use value in array from useState hook
       };
 
