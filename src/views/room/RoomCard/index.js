@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import clsx from 'clsx';
 import {
   Avatar,
@@ -34,6 +34,7 @@ const RoomCard = ({ className, room, ...rest }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { auth } = useSelector((state) => state.auth);
 
   const renderBadgeRoomStatus = (status) => {
     let badgeColor = '';
@@ -53,6 +54,12 @@ const RoomCard = ({ className, room, ...rest }) => {
     dispatch(roomActions.updateStatus(room.room_id, selectedIndex, navigate));
   };
 
+  const handleDelete = (id) => {
+    if (window.confirm(`คุณต้องการลบห้องพิเศษรหัส ${id} ใช่หรือไม่?`)) {
+      console.log(id);
+    }
+  };
+
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -67,7 +74,9 @@ const RoomCard = ({ className, room, ...rest }) => {
         action={[0, 2, 3, 9].includes(parseInt(room.room_status, 10))
           ? (
             <OverflowMenu
-              items={roomStatuses.filter((rs) => rs.id !== parseInt(room.room_status, 10))}
+              items={roomStatuses.filter((rs) => {
+                return ![1, parseInt(room.room_status, 10)].includes(rs.id);
+              })}
               onSelected={handleOverflowMenuSelected}
             />
           ) : null}
@@ -128,15 +137,18 @@ const RoomCard = ({ className, room, ...rest }) => {
               Edit
             </Button>
           </Grid>
-          <Grid className={classes.statsItem} item>
-            <Button
-              variant="contained"
-              className={classes.deleteBtn}
-              startIcon={<DeleteIcon className={classes.statsIcon} />}
-            >
-              Delete
-            </Button>
-          </Grid>
+          {auth.role === '1' && (
+            <Grid className={classes.statsItem} item>
+              <Button
+                variant="contained"
+                className={classes.deleteBtn}
+                startIcon={<DeleteIcon className={classes.statsIcon} />}
+                onClick={() => handleDelete(room.room_id)}
+              >
+                Delete
+              </Button>
+            </Grid>
+          )}
         </Grid>
       </Box>
     </Card>
