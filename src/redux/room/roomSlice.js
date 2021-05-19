@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import Swal from 'sweetalert2';
 import api from '../../api';
 
 export const roomSlice = createSlice({
@@ -143,6 +144,13 @@ export const store = (data, navigate) => async (dispatch) => {
       }
     });
 
+    Swal.fire({
+      icon: 'success',
+      title: 'บันทึกข้อมูลเรียบร้อย !!',
+      showConfirmButton: false,
+      timer: 1500
+    });
+
     dispatch(storeSuccess(res.data));
 
     navigate('/app/rooms');
@@ -154,6 +162,13 @@ export const store = (data, navigate) => async (dispatch) => {
 export const update = (id, data, navigate) => async (dispatch) => {
   try {
     const res = await api.put(`/rooms/${id}`, data);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'แก้ไขข้อมูลเรียบร้อย !!',
+      showConfirmButton: false,
+      timer: 1500
+    });
 
     dispatch(updateSuccess({ id, room: res.data.room }));
     dispatch(updateFilteredRooms({ id, room: res.data.room }));
@@ -168,6 +183,13 @@ export const updateStatus = (id, status, navigate) => async (dispatch) => {
   try {
     const res = await api.put(`/rooms/${id}/${status}`);
 
+    Swal.fire({
+      icon: 'success',
+      title: 'แก้ไขข้อมูลเรียบร้อย !!',
+      showConfirmButton: false,
+      timer: 1500
+    });
+
     dispatch(updateStatusSuccess({ id, room: res.data.room }));
     dispatch(updateFilteredRooms({ id, room: res.data.room }));
 
@@ -181,6 +203,13 @@ export const destroy = (id) => async (dispatch) => {
   try {
     const res = await api.delete(`/rooms/${id}`);
     console.log(res);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'ลบข้อมูลเรียบร้อย !!',
+      showConfirmButton: false,
+      timer: 1500
+    });
 
     dispatch(destroySuccess(res.data));
   } catch (error) {

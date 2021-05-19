@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import Swal from 'sweetalert2';
 import api from '../../api';
 import { fetchRoomsStatus } from '../room/roomSlice';
 
@@ -144,6 +145,13 @@ export const store = (data, navigate) => async (dispatch) => {
     const res = await api.post('/bookings', data);
     console.log(res);
 
+    Swal.fire({
+      icon: 'success',
+      title: 'บันทึกข้อมูลเรียบร้อย !!',
+      showConfirmButton: false,
+      timer: 1500
+    });
+
     dispatch(storeSuccess(res.data.booking));
 
     navigate('/app/bookings');
@@ -155,6 +163,13 @@ export const store = (data, navigate) => async (dispatch) => {
 export const update = (id, data, navigate) => async (dispatch) => {
   try {
     const res = await api.put(`/bookings/${id}`, data);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'แก้ไขข้อมูลเรียบร้อย !!',
+      showConfirmButton: false,
+      timer: 1500
+    });
 
     dispatch(updateSuccess({ id, booking: res.data.booking }));
 
@@ -169,29 +184,54 @@ export const destroy = (id) => async (dispatch) => {
     const res = await api.delete(`/bookings/${id}`);
     console.log(res);
 
+    Swal.fire({
+      icon: 'success',
+      title: 'ลบข้อมูลเรียบร้อย !!',
+      showConfirmButton: false,
+      timer: 1500
+    });
+
     dispatch(destroySuccess(res.data));
   } catch (error) {
     console.log(error);
   }
 };
 
-export const cancel = (id) => async (dispatch) => {
+export const cancel = (id, navigate) => async (dispatch) => {
   try {
     const res = await api.put(`/bookings/${id}/cancel`);
     console.log(res);
 
+    Swal.fire({
+      icon: 'success',
+      title: 'ยกเลิกการจองห้องเรียบร้อย !!',
+      showConfirmButton: false,
+      timer: 1500
+    });
+
     dispatch(cancelSuccess(id));
+
+    navigate('/app/bookings');
   } catch (error) {
     console.log(error);
   }
 };
 
-export const discharge = (id) => async (dispatch) => {
+export const discharge = (id, navigate) => async (dispatch) => {
   try {
     const res = await api.put(`/bookings/${id}/discharge`);
     console.log(res);
 
+    Swal.fire({
+      icon: 'success',
+      title: 'จำหน่ายผู้ป่วยเรียบร้อย !!',
+      showConfirmButton: false,
+      timer: 1500
+    });
+
     dispatch(dischargeSuccess(id));
+
+    navigate('/app/bookings');
   } catch (error) {
     console.log(error);
   }
@@ -201,6 +241,13 @@ export const checkin = (data) => async (dispatch) => {
   try {
     const res = await api.post('/bookings/checkin', data);
     console.log(res);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'บันทึกรับผู้ป่วยเข้าห้องเรียบร้อย !!',
+      showConfirmButton: false,
+      timer: 1500
+    });
 
     dispatch(checkinSuccess(res.data));
   } catch (error) {
@@ -213,6 +260,13 @@ export const checkout = (bookId, roomId) => async (dispatch) => {
     const res = await api.put(`/bookings/${bookId}/${roomId}/checkout`);
     console.log(res);
 
+    Swal.fire({
+      icon: 'success',
+      title: 'บันทึกรับผู้ป่วยออกจากห้องเรียบร้อย !!',
+      showConfirmButton: false,
+      timer: 1500
+    });
+
     dispatch(checkoutSuccess());
     dispatch(fetchRoomsStatus());
   } catch (error) {
@@ -224,6 +278,13 @@ export const cancelCheckin = (bookId, roomId) => async (dispatch) => {
   try {
     const res = await api.put(`/bookings/${bookId}/${roomId}/cancel-checkin`);
     console.log(res);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'ยกเลิกการรับผู้ป่วยเข้าห้องเรียบร้อย !!',
+      showConfirmButton: false,
+      timer: 1500
+    });
 
     dispatch(cancelCheckinSuccess());
     dispatch(fetchRoomsStatus());

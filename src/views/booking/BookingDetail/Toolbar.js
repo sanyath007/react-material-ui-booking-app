@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import {
   Box,
@@ -8,7 +10,6 @@ import {
 } from '@material-ui/core';
 import EventBusyIcon from '@material-ui/icons/EventBusy';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
-import { useDispatch } from 'react-redux';
 import { bookingActions } from '../../../redux';
 
 const useStyles = makeStyles((theme) => ({
@@ -34,12 +35,13 @@ const useStyles = makeStyles((theme) => ({
 const Toolbar = ({ className, booking, ...rest }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleCancelClick = (_id) => {
     if (window.confirm(`คุณต้องการยกเลิกการจองห้องพิเศษรหัส ${_id} ใช่หรือไม่ ?`)) {
       console.log(_id);
 
-      dispatch(bookingActions.cancel(_id));
+      dispatch(bookingActions.cancel(_id, navigate));
     }
   };
 
@@ -47,7 +49,7 @@ const Toolbar = ({ className, booking, ...rest }) => {
     if (window.confirm(`คุณต้องการจำหน่ายผู้ป่วย AN ${ipAn} ใช่หรือไม่ ?`)) {
       console.log(_id);
 
-      dispatch(bookingActions.discharge(_id));
+      dispatch(bookingActions.discharge(_id, navigate));
     }
   };
 
