@@ -70,7 +70,7 @@ function FormRoom({
       {(formik) => {
         return (
           <Form>
-            <Typography variant="h5">
+            <Typography variant="h3">
               {room ? 'แก้ไขข้อมูลห้อง' : 'เพิ่มรายการห้องใหม่'}
             </Typography>
             <Grid container spacing={5}>
