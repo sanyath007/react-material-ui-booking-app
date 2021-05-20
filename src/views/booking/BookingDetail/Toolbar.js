@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import {
@@ -36,6 +36,7 @@ const Toolbar = ({ className, booking, ...rest }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { auth } = useSelector((state) => state.auth);
 
   const handleCancelClick = (_id) => {
     if (window.confirm(`คุณต้องการยกเลิกการจองห้องพิเศษรหัส ${_id} ใช่หรือไม่ ?`)) {
@@ -60,14 +61,16 @@ const Toolbar = ({ className, booking, ...rest }) => {
       style={{ marginBottom: '20px' }}
     >
       <Box display="flex" justifyContent="flex-end">
-        <MuiButton
-          className={classes.dischargeButton}
-          variant="contained"
-          onClick={() => handleDischargeClick(booking.book_id, booking?.ip?.an)}
-          endIcon={<MeetingRoomIcon />}
-        >
-          จำหน่าย
-        </MuiButton>
+        {[1, 2].includes(parseInt(auth.role, 10)) && (
+          <MuiButton
+            className={classes.dischargeButton}
+            variant="contained"
+            onClick={() => handleDischargeClick(booking.book_id, booking?.ip?.an)}
+            endIcon={<MeetingRoomIcon />}
+          >
+            จำหน่าย
+          </MuiButton>
+        )}
         <MuiButton
           className={classes.cancelButton}
           variant="contained"
