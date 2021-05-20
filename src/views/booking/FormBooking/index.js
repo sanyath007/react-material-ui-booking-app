@@ -108,7 +108,7 @@ const FormBooking = ({
         isOfficer: booking?.is_officer === '1' || false,
         description: booking?.description || '',
         remark: booking?.remark || '',
-        roomTypeSelecteds: []
+        roomTypeSelecteds: booking ? booking?.room_types?.split(',') : []
       }}
       validationSchema={bookingSchema}
       onSubmit={handleSubmit}
@@ -137,34 +137,20 @@ const FormBooking = ({
                 />
 
                 <Grid item sm={6} xs={12}>
-                  {booking
-                    ? (
-                      <TextField
-                        variant="standard"
-                        name="an"
-                        label="AN ผู้ป่วย"
-                        fullWidth
-                        value={formik.values.an}
-                        onChange={formik.handleChange}
-                        error={formik.errors.an && formik.touched.an}
-                        helperText={<ErrorMessage name="an" />}
-                        inputProps={{
-                          readOnly: true,
-                        }}
-                      />
-                    ) : (
-                      <TextField
-                        variant="standard"
-                        name="an"
-                        label="AN ผู้ป่วย"
-                        fullWidth
-                        value={formik.values.an}
-                        onChange={formik.handleChange}
-                        onClick={(e) => handleAnOnFocus(e)}
-                        error={formik.errors.an && formik.touched.an}
-                        helperText={<ErrorMessage name="an" />}
-                      />
-                    )}
+                  <TextField
+                    variant="standard"
+                    name="an"
+                    label="AN ผู้ป่วย"
+                    fullWidth
+                    value={formik.values.an}
+                    onChange={formik.handleChange}
+                    onClick={(e) => !booking && handleAnOnFocus(e)}
+                    error={formik.errors.an && formik.touched.an}
+                    helperText={<ErrorMessage name="an" />}
+                    inputProps={{
+                      readOnly: true,
+                    }}
+                  />
                 </Grid>
                 <Grid item sm={6} xs={12}>
                   <FormControls.DatePickerInput
@@ -175,6 +161,7 @@ const FormBooking = ({
                     onChange={formik.handleChange}
                     error={formik.errors.book_date && formik.touched.book_date}
                     helperText={<ErrorMessage name="book_date" />}
+                    readOnly={booking && true}
                   />
                 </Grid>
                 <Grid item sm={12} xs={12} style={{ paddingLeft: '15px' }}>

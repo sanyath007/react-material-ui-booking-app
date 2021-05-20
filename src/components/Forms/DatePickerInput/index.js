@@ -9,7 +9,8 @@ const DatePickerInput = ({
   format,
   onChange,
   error,
-  helperText
+  helperText,
+  readOnly
 }) => {
   const convertToDefEventParams = (target, date) => ({ target: { name: target, value: date } });
 
@@ -25,6 +26,7 @@ const DatePickerInput = ({
       onChange={(date) => onChange(convertToDefEventParams(name, date))}
       error={error}
       helperText={helperText}
+      readOnly={readOnly}
     />
   );
 };
@@ -37,6 +39,7 @@ DatePickerInput.propTypes = {
   onChange: PropTypes.func,
   error: PropTypes.bool,
   helperText: PropTypes.any,
+  readOnly: PropTypes.bool,
 };
 
 export default DatePickerInput;
