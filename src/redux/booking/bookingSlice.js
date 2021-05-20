@@ -130,9 +130,9 @@ export const fetchBookingฺByAn = (an) => async (dispatch) => {
   }
 };
 
-export const fetchHistories = (id, an) => async (dispatch) => {
+export const fetchHistories = (id, hn) => async (dispatch) => {
   try {
-    const res = await api.get(`/bookings/${id}/${an}/histories`);
+    const res = await api.get(`/bookings/${id}/${hn}/histories`);
     console.log(res);
     return dispatch(fetchHistoriesSuccess(res.data));
   } catch (error) {
