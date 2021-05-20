@@ -1,5 +1,8 @@
 import React from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import {
+  // Link as RouterLink,
+  useNavigate
+} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -8,7 +11,7 @@ import {
   Button,
   Container,
   // Grid,
-  Link,
+  // Link,
   TextField,
   Typography,
   makeStyles
@@ -78,14 +81,14 @@ const LoginView = () => {
                     color="textPrimary"
                     variant="h2"
                   >
-                    Sign in
+                    เข้าสู่ระบบ
                   </Typography>
                   <Typography
                     color="textSecondary"
                     gutterBottom
                     variant="body2"
                   >
-                    Sign in on the internal platform
+                    ลงทะเบียนเข้าสู่ระบบบริหารห้องผู้ป่วยพิเศษ (VIP Room MS)
                   </Typography>
                 </Box>
                 {/* <Grid
@@ -171,10 +174,10 @@ const LoginView = () => {
                     type="submit"
                     variant="contained"
                   >
-                    Sign in now
+                    เข้าสู่ระบบ
                   </Button>
                 </Box>
-                <Typography
+                {/* <Typography
                   color="textSecondary"
                   variant="body1"
                 >
@@ -187,7 +190,7 @@ const LoginView = () => {
                   >
                     Sign up
                   </Link>
-                </Typography>
+                </Typography> */}
               </form>
             )}
           </Formik>
