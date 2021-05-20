@@ -130,7 +130,7 @@ const Results = ({
                     >
                       <EditIcon />
                     </Link>
-                    {[1, 2].includes(parseInt(auth.role, 10)) && (
+                    {[1].includes(parseInt(auth.role, 10)) && (
                       <Link
                         to=""
                         title="ลบ"
