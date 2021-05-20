@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
+  Box,
   Container,
   Grid,
   // Divider,
@@ -38,24 +39,26 @@ const BookingDetail = () => {
   }, []);
 
   return (
-    <Page className={classes.root} title="Account">
-      <Container maxWidth="lg">
+    <Page className={classes.root} title="รายละเอียดการจองห้อง">
+      <Container maxWidth={false}>
         <Toolbar booking={booking} />
 
-        <Grid container spacing={3}>
-          <Grid item lg={4} md={6} xs={12}>
+        <Box mt={3}>
+          <Grid container spacing={3}>
+            <Grid item lg={4} md={6} xs={12}>
 
-            <PatientProfile patient={booking?.ip?.patient} />
+              <PatientProfile patient={booking?.ip?.patient} />
 
+            </Grid>
+            <Grid item lg={8} md={6} xs={12}>
+
+              <IpInfo booking={booking} />
+
+              <BookingHistoryList booking={booking} className="mt-3" />
+
+            </Grid>
           </Grid>
-          <Grid item lg={8} md={6} xs={12}>
-
-            <IpInfo booking={booking} />
-
-            <BookingHistoryList booking={booking} className="mt-3" />
-
-          </Grid>
-        </Grid>
+        </Box>
       </Container>
     </Page>
   );

@@ -47,6 +47,8 @@ const RoomList = () => {
             ))}
           </Grid>
         </Box>
+
+        {/* // TODO: add manipulation of pagination */}
         <Box mt={3} display="flex" justifyContent="center">
           <Pagination
             color="primary"

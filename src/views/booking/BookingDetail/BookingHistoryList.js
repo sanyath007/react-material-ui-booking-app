@@ -8,13 +8,14 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Box,
   Card,
+  CardContent,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  // Typography,
-  makeStyles
+  Typography,
+  makeStyles,
 } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import { bookingActions } from '../../../redux';
@@ -39,7 +40,7 @@ const BookingHistoryList = ({
   };
 
   useEffect(() => {
-    dispatch(bookingActions.fetchHistories(booking.book_id, booking.an));
+    dispatch(bookingActions.fetchHistories(booking.book_id, booking.hn));
   }, [booking]);
 
   return (
@@ -47,40 +48,45 @@ const BookingHistoryList = ({
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <PerfectScrollbar>
-        <Box>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell align="center" width="5%">#</TableCell>
-                <TableCell align="center" width="20%">วันที่จอง</TableCell>
-                <TableCell align="center" width="20%">วันที่รับเข้า</TableCell>
-                <TableCell align="center" width="20%">วันที่รับออก</TableCell>
-                <TableCell align="center">วอร์ด</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {bookings && bookings.map((bk) => (
-                <TableRow hover key={bk.book_id}>
-                  <TableCell align="center">{bk.book_id}</TableCell>
-                  <TableCell align="center">{moment().format('DD/MM/YYYY')}</TableCell>
-                  <TableCell align="center">{moment().format('DD/MM/YYYY')}</TableCell>
-                  <TableCell align="center">{moment().format('DD/MM/YYYY')}</TableCell>
-                  <TableCell align="center">xxx</TableCell>
+      <CardContent>
+        <Typography gutterBottom variant="h4">
+          ประวัติการพักห้องพิเศษ
+        </Typography>
+
+        <PerfectScrollbar>
+          <Box>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center" width="5%">#</TableCell>
+                  <TableCell align="center" width="20%">วันที่ Admit</TableCell>
+                  <TableCell align="center" width="20%">วันที่รับเข้า</TableCell>
+                  <TableCell align="center" width="20%">วันที่รับออก</TableCell>
+                  <TableCell align="center">วอร์ด</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Box>
-      </PerfectScrollbar>
+              </TableHead>
+              <TableBody>
+                {bookings && bookings.map((bk) => (
+                  <TableRow hover key={bk.book_id}>
+                    <TableCell align="center">{bk.book_id}</TableCell>
+                    <TableCell align="center">{moment().format('DD/MM/YYYY')}</TableCell>
+                    <TableCell align="center">{moment().format('DD/MM/YYYY')}</TableCell>
+                    <TableCell align="center">{moment().format('DD/MM/YYYY')}</TableCell>
+                    <TableCell align="center">xxx</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Box>
+        </PerfectScrollbar>
 
-      <Pagination
-        count={pager?.last_page}
-        page={page}
-        onChange={handlePageChange}
-        style={{ padding: '5px' }}
-      />
-
+        <Pagination
+          count={pager?.last_page}
+          page={page}
+          onChange={handlePageChange}
+          style={{ padding: '5px' }}
+        />
+      </CardContent>
     </Card>
   );
 };
