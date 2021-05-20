@@ -13,7 +13,7 @@ const DepartCard = ({ depart }) => {
 
   const fetchQueue = async () => {
     const res = await api.get(`queues?depart=${depart.no}`);
-    console.log(res);
+
     setQueues(res.data.items);
   };
 

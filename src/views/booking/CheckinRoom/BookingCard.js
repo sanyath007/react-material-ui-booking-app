@@ -61,6 +61,7 @@ const BookingCard = ({ booking }) => {
 
   return (
     <Grid container className={classes.bookingCard} direction="row">
+      {/* // TODO: separate patient card to own component */}
       <Grid item className={classes.patientCard} xs={12} sm={4} md={4}>
         <Grid
           container
@@ -80,7 +81,7 @@ const BookingCard = ({ booking }) => {
           <Grid item>
             <Grid container direction="column" spacing={1}>
               <Grid item>
-                <Typography variant="h3">
+                <Typography variant="h4">
                   {`${booking?.ip?.patient?.pname}${booking?.ip?.patient?.fname} ${booking?.ip?.patient?.lname}`}
                 </Typography>
               </Grid>
@@ -89,6 +90,9 @@ const BookingCard = ({ booking }) => {
               </Grid>
               <Grid item>
                 <Typography variant="body1">{`Tel. ${booking?.ip?.patient?.hometel}`}</Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant="body1">{`CID ${booking?.ip?.patient?.cid}`}</Typography>
               </Grid>
             </Grid>
           </Grid>
