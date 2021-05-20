@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
+import Swal from 'sweetalert2';
 import {
   Box,
   Button as MuiButton,
@@ -39,19 +40,35 @@ const Toolbar = ({ className, booking, ...rest }) => {
   const { auth } = useSelector((state) => state.auth);
 
   const handleCancelClick = (_id) => {
-    if (window.confirm(`คุณต้องการยกเลิกการจองห้องพิเศษรหัส ${_id} ใช่หรือไม่ ?`)) {
-      console.log(_id);
-
-      dispatch(bookingActions.cancel(_id, navigate));
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `คุณต้องการยกเลิกการจองห้องพิเศษรหัส ${_id} ใช่หรือไม่ ?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ใช่'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(bookingActions.cancel(_id, navigate));
+      }
+    });
   };
 
-  const handleDischargeClick = (_id, ipAn) => {
-    if (window.confirm(`คุณต้องการจำหน่ายผู้ป่วย AN ${ipAn} ใช่หรือไม่ ?`)) {
-      console.log(_id);
-
-      dispatch(bookingActions.discharge(_id, navigate));
-    }
+  const handleDischargeClick = (_id, _an) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `คุณต้องการจำหน่ายผู้ป่วย AN ${_an} ใช่หรือไม่ ?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ใช่'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(bookingActions.discharge(_id, navigate));
+      }
+    });
   };
 
   return (
