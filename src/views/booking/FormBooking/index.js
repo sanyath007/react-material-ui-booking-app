@@ -122,8 +122,8 @@ const FormBooking = ({
             <Grid container direction="row" justify="center" alignItems="flex-start">
               <Grid container justify="center" spacing={1}>
 
-                <Grid item sm={12} xs={12} style={{ textAlign: 'center' }}>
-                  <Typography variant="h5">แก้ไขการจองห้องพิเศษ</Typography>
+                <Grid item sm={12} xs={12}>
+                  <Typography variant="h3">{booking ? 'แก้ไขการจองห้องพิเศษ' : 'เพิ่มการจองห้องพิเศษ'}</Typography>
                 </Grid>
 
                 <PatientModal
