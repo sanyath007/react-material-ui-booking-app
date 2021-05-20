@@ -33,7 +33,7 @@ const Results = ({
   ...rest
 }) => {
   const classes = useStyles();
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [screenW, setScreenW] = useState(window.innerWidth);
   const { auth } = useSelector((state) => state.auth);
 
@@ -41,7 +41,7 @@ const Results = ({
     setScreenW(window.innerWidth);
   };
 
-  const handlePageChange = (e, newPage) => {
+  const handlePageChange = (event, newPage) => {
     setPage(newPage);
     onPageChange(pager.path, newPage);
   };
@@ -62,6 +62,7 @@ const Results = ({
           <Table>
             <TableHead>
               <TableRow>
+                <TableCell align="center" width="3%">#</TableCell>
                 <TableCell align="center" width="8%">AN</TableCell>
                 <TableCell>ผู้ป่วย</TableCell>
                 <TableCell align="center" width="8%">วันที่ Admit</TableCell>
@@ -74,8 +75,13 @@ const Results = ({
             </TableHead>
             <TableBody>
 
-              {bookings && bookings.map((booking) => (
+              {bookings && bookings.map((booking, index) => (
                 <TableRow hover key={booking.book_id}>
+                  <TableCell align="center">
+                    <Typography color="textPrimary" variant="body1">
+                      {pager.from + index}
+                    </Typography>
+                  </TableCell>
                   <TableCell>
                     <Typography color="textPrimary" variant="body1">
                       {`${booking.ip?.an}`}
