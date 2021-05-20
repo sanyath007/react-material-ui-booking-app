@@ -237,7 +237,7 @@ export const discharge = (id, navigate) => async (dispatch) => {
   }
 };
 
-export const checkin = (data) => async (dispatch) => {
+export const checkin = (data, navigate) => async (dispatch) => {
   try {
     const res = await api.post('/bookings/checkin', data);
     console.log(res);
@@ -248,6 +248,8 @@ export const checkin = (data) => async (dispatch) => {
       showConfirmButton: false,
       timer: 1500
     });
+
+    navigate('/app/status');
 
     dispatch(checkinSuccess(res.data));
   } catch (error) {

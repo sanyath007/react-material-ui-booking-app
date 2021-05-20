@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   Button,
   Container,
@@ -14,15 +15,14 @@ import moment from 'moment';
 import FormControls from 'src/components/Forms';
 import withAuth from 'src/components/withAuth';
 import Page from 'src/components/Page';
-import { useDispatch } from 'react-redux';
 import { checkin } from '../../../redux/booking/bookingSlice';
-import useStyles from './styles';
 import api from '../../../api';
 import BookingCard from './BookingCard';
+import useStyles from './styles';
 
 const initialValues = {
   checkinDate: moment(),
-  checkinTime: moment().format('HH:MM'),
+  checkinTime: moment().format('hh:mm'),
   roomId: '',
   haveObserver: false,
   observerName: '',
@@ -32,6 +32,7 @@ const initialValues = {
 const CheckinRoom = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   // const buildings = useSelector((state) => state.building);
   const { bookId } = useParams();
   const [buildings, setBuildings] = useState([]);
@@ -98,7 +99,7 @@ const CheckinRoom = () => {
       haveObserver: haveObserver ? 1 : 0,
       observerName,
       observerTel
-    }));
+    }, navigate));
 
     props.resetForm();
   };
