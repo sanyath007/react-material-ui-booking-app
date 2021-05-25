@@ -47,7 +47,8 @@ const Toolbar = ({ className, booking, ...rest }) => {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'ใช่'
+      confirmButtonText: 'ใช่',
+      cancelButtonText: 'ยกเลิก'
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(bookingActions.cancel(_id, navigate));
@@ -63,14 +64,15 @@ const Toolbar = ({ className, booking, ...rest }) => {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'ใช่'
+      confirmButtonText: 'ใช่',
+      cancelButtonText: 'ยกเลิก'
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(bookingActions.discharge(_id, navigate));
       }
     });
   };
-
+  console.log(booking?.ip);
   return (
     <div
       className={clsx(classes.root, className)}

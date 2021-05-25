@@ -209,9 +209,9 @@ export const cancel = (id, navigate) => async (dispatch) => {
       timer: 1500
     });
 
-    dispatch(cancelSuccess(id));
-
     navigate('/app/bookings');
+
+    dispatch(cancelSuccess(id));
   } catch (error) {
     console.log(error);
   }
@@ -229,9 +229,9 @@ export const discharge = (id, navigate) => async (dispatch) => {
       timer: 1500
     });
 
-    dispatch(dischargeSuccess(id));
-
     navigate('/app/bookings');
+
+    dispatch(dischargeSuccess(id));
   } catch (error) {
     console.log(error);
   }

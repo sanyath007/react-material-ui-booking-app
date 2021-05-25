@@ -162,7 +162,7 @@ const Results = ({
 
 Results.propTypes = {
   className: PropTypes.string,
-  bookings: PropTypes.array.isRequired,
+  bookings: PropTypes.array,
   pager: PropTypes.object,
   onViewDetailClick: PropTypes.func,
   onPageChange: PropTypes.func,
