@@ -260,7 +260,7 @@ const FormBooking = ({
                         block
                         className={classes.buttonSubmit}
                       >
-                        เพิ่ม
+                        บันทึก
                       </Button>
                     )}
                 </Grid>
