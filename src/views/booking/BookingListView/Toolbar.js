@@ -59,7 +59,7 @@ const Toolbar = ({ className, handleSearch, ...rest }) => {
           component={Link}
           to="/app/bookings/new"
         >
-          เพิ่มการจองห้อง
+          ลงทะเบียนจองห้อง
         </MuiButton>
       </Box>
       <Box mt={3}>
