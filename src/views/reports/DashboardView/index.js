@@ -101,10 +101,11 @@ const Dashboard = () => {
           </Grid>
           <Grid
             item
-            lg={4}
-            md={6}
-            xl={3}
             xs={12}
+            sm={12}
+            md={12}
+            lg={4}
+            xl={3}
           >
             <BookingByRoomType />
           </Grid>
