@@ -4,6 +4,7 @@ import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Card, CardContent } from '@material-ui/core';
 import { Alert } from 'react-bootstrap';
+import Swal from 'sweetalert2';
 import EventBusyIcon from '@material-ui/icons/EventBusy';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import { bookingActions } from '../../../redux';
@@ -13,15 +14,37 @@ const BedCard = ({ room, used }) => {
   const { auth } = useSelector((state) => state.auth);
 
   const handleDischargeClick = (bookId, roomId) => {
-    if (window.confirm('คุณต้องการจำหน่ายผู้ป่วย ใช่หรือไม่?')) {
-      dispatch(bookingActions.checkout(bookId, roomId));
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'คุณต้องการจำหน่ายผู้ป่วย ใช่หรือไม่ ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ใช่',
+      cancelButtonText: 'ยกเลิก'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(bookingActions.checkout(bookId, roomId));
+      }
+    });
   };
 
   const handleCancelCheckinClick = (bookId, roomId) => {
-    if (window.confirm('คุณต้องการยกเลิกการรับผู้ป่วยเข้าห้อง ใช่หรือไม่?')) {
-      dispatch(bookingActions.cancelCheckin(bookId, roomId));
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'คุณต้องการยกเลิกการรับผู้ป่วยเข้าห้อง ใช่หรือไม่ ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ใช่',
+      cancelButtonText: 'ยกเลิก'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(bookingActions.cancelCheckin(bookId, roomId));
+      }
+    });
   };
 
   return (
