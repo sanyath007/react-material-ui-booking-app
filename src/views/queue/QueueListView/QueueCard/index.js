@@ -58,11 +58,10 @@ const QueueCard = ({
           <MuiButton
             variant="contained"
             color="secondary"
-            startIcon={<ArrowBackIosIcon />}
             onClick={() => handleSkipOnQueue(-1)}
             style={{ marginRight: '8px' }}
           >
-            กลับ
+            <ArrowBackIosIcon />
           </MuiButton>
         )}
 
@@ -89,10 +88,9 @@ const QueueCard = ({
           <MuiButton
             variant="contained"
             color="secondary"
-            endIcon={<ArrowForwardIosIcon />}
             onClick={() => handleSkipOnQueue(1)}
           >
-            ข้าม
+            <ArrowForwardIosIcon />
           </MuiButton>
         )}
       </Box>
