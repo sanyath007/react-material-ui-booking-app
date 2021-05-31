@@ -71,7 +71,7 @@ function FormRoom({
         return (
           <Form>
             <Typography variant="h3">
-              {room ? 'แก้ไขข้อมูลห้อง' : 'เพิ่มรายการห้องใหม่'}
+              {room ? 'แก้ไขข้อมูลห้อง' : 'เพิ่มข้อมูลห้อง'}
             </Typography>
             <Grid container spacing={5}>
               <Grid item sm={6}>
