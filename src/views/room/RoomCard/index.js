@@ -134,7 +134,7 @@ const RoomCard = ({ className, room, ...rest }) => {
               component={Link}
               to={`/app/rooms/edit/${room.room_id}`}
             >
-              Edit
+              แก้ไข
             </Button>
           </Grid>
           {auth.role === '1' && (
@@ -145,7 +145,7 @@ const RoomCard = ({ className, room, ...rest }) => {
                 startIcon={<DeleteIcon className={classes.statsIcon} />}
                 onClick={() => handleDelete(room.room_id)}
               >
-                Delete
+                ลบ
               </Button>
             </Grid>
           )}
