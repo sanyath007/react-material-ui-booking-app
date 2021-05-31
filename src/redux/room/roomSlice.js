@@ -185,7 +185,7 @@ export const updateStatus = (id, status, navigate) => async (dispatch) => {
 
     Swal.fire({
       icon: 'success',
-      title: 'แก้ไขข้อมูลเรียบร้อย !!',
+      title: 'แก้ไขข้อมูลสถานะห้องเรียบร้อย !!',
       showConfirmButton: false,
       timer: 1500
     });
