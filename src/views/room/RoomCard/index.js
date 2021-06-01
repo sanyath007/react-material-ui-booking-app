@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 import clsx from 'clsx';
 import {
   Avatar,
@@ -51,13 +52,37 @@ const RoomCard = ({ className, room, ...rest }) => {
 
   const handleOverflowMenuSelected = (selectedIndex) => {
     console.log(room.room_id, selectedIndex);
-    dispatch(roomActions.updateStatus(room.room_id, selectedIndex, navigate));
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `คุณต้องการเปลี่ยนสถานะห้องพิเศษเลขที่ ${room.room_no} ใช่หรือไม่ ?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ใช่',
+      cancelButtonText: 'ยกเลิก'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(roomActions.updateStatus(room.room_id, selectedIndex, navigate));
+      }
+    });
   };
 
   const handleDelete = (id) => {
-    if (window.confirm(`คุณต้องการลบห้องพิเศษรหัส ${id} ใช่หรือไม่?`)) {
-      console.log(id);
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `คุณต้องการลบห้องพิเศษรหัส ${id} ใช่หรือไม่ ?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ใช่',
+      cancelButtonText: 'ยกเลิก'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(roomActions.destroy(id));
+      }
+    });
   };
 
   return (
