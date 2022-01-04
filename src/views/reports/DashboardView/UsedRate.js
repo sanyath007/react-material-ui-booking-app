@@ -99,7 +99,7 @@ const UsedRate = ({ className, ...rest }) => {
   };
 
   const fetchBedOcc = async () => {
-    const year = '2021';
+    const year = parseInt(moment().format('MM'), 10) < 10 ? parseInt(moment().format('YYYY'), 10) : parseInt(moment().format('YYYY'), 10) - 1;
     const res = await api.get(`/dashboard/${year}/bed-occ`);
 
     // TODO: separate create chart data logic
@@ -114,7 +114,7 @@ const UsedRate = ({ className, ...rest }) => {
     const newBar = {
       backgroundColor: colors.indigo[500],
       data: [...bedocc],
-      label: '2563'
+      label: year + 543
     };
 
     setData((prev) => ({ ...prev, datasets: [newBar] }));
