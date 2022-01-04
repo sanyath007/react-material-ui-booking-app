@@ -157,7 +157,7 @@ const RoomCard = ({ className, room, ...rest }) => {
               className={classes.editBtn}
               endIcon={<EditIcon className={classes.statsIcon} />}
               component={Link}
-              to={`/app/rooms/edit/${room.room_id}`}
+              to={`edit/${room.room_id}`}
             >
               แก้ไข
             </Button>
