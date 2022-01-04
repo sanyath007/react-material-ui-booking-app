@@ -46,6 +46,12 @@ const Results = ({
     onPageChange(pager.path, newPage);
   };
 
+  /** TODO: To handle on delete action */
+  const handleDelete = (event, booking) => {
+    console.log('On delete action...');
+    console.log(booking);
+  };
+
   useEffect(() => {
     window.addEventListener('resize', updateWindowDimensions);
 
@@ -135,7 +141,7 @@ const Results = ({
                         to=""
                         title="ลบ"
                         className={classes.delBtn}
-                        onClick={() => console.log('On delete action...')}
+                        onClick={(e) => handleDelete(e, booking)}
                       >
                         <DeleteIcon />
                       </Link>
