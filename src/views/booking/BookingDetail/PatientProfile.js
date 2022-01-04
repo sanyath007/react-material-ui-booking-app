@@ -52,8 +52,8 @@ const PatientProfile = ({ patient }) => {
               className={classes.avatar}
               src={
                 patient?.sex === '1'
-                  ? '/static/images/avatars/avatar_8.png'
-                  : '/static/images/avatars/avatar_9.png'
+                  ? `${process.env.PUBLIC_URL}/static/images/avatars/avatar_8.png`
+                  : `${process.env.PUBLIC_URL}/static/images/avatars/avatar_9.png`
               }
             />
             <Typography gutterBottom variant="h4">

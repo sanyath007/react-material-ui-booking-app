@@ -73,8 +73,8 @@ const BookingCard = ({ booking }) => {
               className={classes.avatar}
               src={
                 booking?.ip?.patient?.sex === '1'
-                  ? '/static/images/avatars/avatar_8.png'
-                  : '/static/images/avatars/avatar_2.png'
+                  ? `${process.env.PUBLIC_URL}/static/images/avatars/avatar_4.png`
+                  : `${process.env.PUBLIC_URL}/static/images/avatars/avatar_2.png`
               }
             />
           </Grid>
