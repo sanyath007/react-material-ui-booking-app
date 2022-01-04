@@ -80,9 +80,10 @@ export const roomSlice = createSlice({
       state.rooms = [...newRooms];
     },
     destroySuccess: (state, action) => {
-      const newRooms = state.bookings.filter((booking) => booking.book_id !== action.payload);
+      const newRooms = state.rooms.filter((room) => room.room_id !== action.payload);
 
       state.rooms = [...newRooms];
+      state.filteredRooms = [...newRooms];
     },
   }
 });
@@ -211,7 +212,7 @@ export const destroy = (id) => async (dispatch) => {
       timer: 1500
     });
 
-    dispatch(destroySuccess(res.data));
+    dispatch(destroySuccess(id));
   } catch (error) {
     console.log(error);
   }
