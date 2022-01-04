@@ -3,8 +3,8 @@
   "author": "DeviasIO",
   "licence": "MIT",
   "version": "1.0.0",
-  "homepage": ".",
   "private": false,
+  "homepage": "http://192.168.20.4/viproom",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

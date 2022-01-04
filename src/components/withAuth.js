@@ -9,7 +9,7 @@ const withAuth = (WrappedComponent) => {
       return <WrappedComponent {...props} />;
     }
 
-    return <Navigate to="/login" />;
+    return <Navigate to="/viproom/login" />;
   };
 };
 

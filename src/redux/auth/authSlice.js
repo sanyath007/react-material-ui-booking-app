@@ -39,7 +39,7 @@ export const login = (username, password, navigate) => async (dispatch) => {
 
     dispatch(loginSuccess(res.data));
 
-    navigate('/app/dashboard', { replace: true });
+    navigate('../app/dashboard', { replace: true });
   } catch (error) {
     console.log(error);
   }
@@ -49,7 +49,7 @@ export const logout = (navigate) => async (dispatch) => {
   try {
     dispatch(logoutSucces());
 
-    navigate('/login', { replace: true });
+    navigate('../login', { replace: true });
   } catch (error) {
     console.log(error);
   }
