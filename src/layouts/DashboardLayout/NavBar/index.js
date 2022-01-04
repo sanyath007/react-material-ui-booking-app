@@ -17,7 +17,7 @@ import items from './_nav';
 import useStyles from './styles';
 
 const user = {
-  avatar: '/static/images/avatars/avatar_3.png',
+  avatar: `${process.env.PUBLIC_URL}/static/images/avatars/avatar_3.png`,
   jobTitle: 'Senior Developer',
   name: 'Kobe Jr'
 };

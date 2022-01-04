@@ -10,13 +10,13 @@ import {
 
 const items = [
   {
-    href: '/app/dashboard',
+    href: 'app/dashboard',
     icon: BarChartIcon,
     title: 'Dashboard',
     permission: [1, 2, 3]
   },
   {
-    href: '/app/bookings',
+    href: 'app/bookings',
     icon: HomeIcon,
     title: 'ทะเบียนจองห้อง',
     permission: [1, 2, 3]
@@ -28,31 +28,31 @@ const items = [
   //   permission: [1, 2, 3]
   // },
   {
-    href: '/app/queues',
+    href: 'app/queues',
     icon: CalendarIcon,
     title: 'คิวห้องพิเศษ',
     permission: [1, 2, 3]
   },
   {
-    href: '/app/status',
+    href: 'app/status',
     icon: SlidersIcon,
     title: 'สถานะห้อง',
     permission: [1, 2, 3]
   },
   {
-    href: '/app/rooms',
+    href: 'app/rooms',
     icon: ShoppingBagIcon,
     title: 'ห้องพิเศษ',
     permission: [1, 2]
   },
   {
-    href: '/app/account',
+    href: 'app/account',
     icon: UserIcon,
     title: 'Account',
     permission: [1]
   },
   {
-    href: '/app/settings',
+    href: 'app/settings',
     icon: SettingsIcon,
     title: 'Settings',
     permission: [1]
