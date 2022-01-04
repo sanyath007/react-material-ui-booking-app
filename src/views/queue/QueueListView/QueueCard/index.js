@@ -66,14 +66,14 @@ const QueueCard = ({
         )}
 
         <Link
-          to={`/app/checkin/${booking.book_id}`}
+          to={`../checkin/${booking.book_id}`}
           className={classes.checkinButton}
           onClick={(e) => {
             if (booking?.ip?.dchdate) {
               e.preventDefault();
 
               window.alert('ผู้ป่วยถูกจำหน่ายแล้วไม่สามารถรับเข้าห้องได้ กรุณาจำหน่ายผู้ป่วยออกจากระบบ!!!');
-              navigate(`/app/bookings/${booking.book_id}/detail`);
+              navigate(`../bookings/${booking.book_id}/detail`);
             }
 
             return true;
