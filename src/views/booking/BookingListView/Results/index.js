@@ -117,14 +117,14 @@ const Results = ({
                   )}
                   <TableCell align="center">
                     <Link
-                      to={`/app/bookings/${booking.book_id}/detail`}
+                      to={`${booking.book_id}/detail`}
                       title="รายละเอียด"
                       // onClick={() => onViewDetailClick(booking.ip?.an)}
                     >
                       <VisibilityIcon />
                     </Link>
                     <Link
-                      to={`/app/bookings/${booking.book_id}/edit`}
+                      to={`${booking.book_id}/edit`}
                       title="แก้ไข"
                       className={classes.editBtn}
                     >

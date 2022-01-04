@@ -57,7 +57,7 @@ const Toolbar = ({ className, handleSearch, ...rest }) => {
           color="primary"
           variant="contained"
           component={Link}
-          to="/app/bookings/new"
+          to="new"
         >
           ลงทะเบียนจองห้อง
         </MuiButton>
