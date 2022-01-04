@@ -153,7 +153,7 @@ export const store = (data, navigate) => async (dispatch) => {
 
     dispatch(storeSuccess(res.data));
 
-    navigate('/app/rooms');
+    navigate('/viproom/app/rooms');
   } catch (error) {
     console.log(error);
   }
@@ -173,7 +173,7 @@ export const update = (id, data, navigate) => async (dispatch) => {
     dispatch(updateSuccess({ id, room: res.data.room }));
     dispatch(updateFilteredRooms({ id, room: res.data.room }));
 
-    navigate('/app/rooms');
+    navigate('/viproom/app/rooms');
   } catch (error) {
     console.log(error);
   }
@@ -193,7 +193,7 @@ export const updateStatus = (id, status, navigate) => async (dispatch) => {
     dispatch(updateStatusSuccess({ id, room: res.data.room }));
     dispatch(updateFilteredRooms({ id, room: res.data.room }));
 
-    navigate('/app/rooms');
+    navigate('/viproom/app/rooms');
   } catch (error) {
     console.log(error);
   }
