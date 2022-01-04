@@ -40,8 +40,7 @@ const routes = [
       { path: 'rooms/edit/:roomId', element: <EditRoom /> },
       { path: 'queues', element: <QueueListView /> },
       { path: 'account', element: <AccountView /> },
-      { path: 'settings', element: <SettingsView /> },
-      { path: '*', element: <Navigate to="404" /> }
+      { path: 'settings', element: <SettingsView /> }
     ]
   },
   {

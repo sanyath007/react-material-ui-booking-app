@@ -143,7 +143,6 @@ export const fetchHistories = (id, hn) => async (dispatch) => {
 export const store = (data, navigate) => async (dispatch) => {
   try {
     const res = await api.post('/bookings', data);
-    console.log(res);
 
     Swal.fire({
       icon: 'success',
@@ -154,7 +153,7 @@ export const store = (data, navigate) => async (dispatch) => {
 
     dispatch(storeSuccess(res.data.booking));
 
-    navigate('/app/bookings');
+    navigate('/viproom/app/bookings');
   } catch (error) {
     console.log(error);
   }
@@ -173,7 +172,7 @@ export const update = (id, data, navigate) => async (dispatch) => {
 
     dispatch(updateSuccess({ id, booking: res.data.booking }));
 
-    navigate('/app/bookings');
+    navigate('/viproom/app/bookings', { replace: true });
   } catch (error) {
     console.log(error);
   }
@@ -182,7 +181,6 @@ export const update = (id, data, navigate) => async (dispatch) => {
 export const destroy = (id) => async (dispatch) => {
   try {
     const res = await api.delete(`/bookings/${id}`);
-    console.log(res);
 
     Swal.fire({
       icon: 'success',
@@ -209,7 +207,7 @@ export const cancel = (id, navigate) => async (dispatch) => {
       timer: 1500
     });
 
-    navigate('/app/bookings');
+    navigate('/viproom/app/bookings');
 
     dispatch(cancelSuccess(id));
   } catch (error) {
@@ -229,7 +227,7 @@ export const discharge = (id, navigate) => async (dispatch) => {
       timer: 1500
     });
 
-    navigate('/app/bookings');
+    navigate('/viproom/app/bookings');
 
     dispatch(dischargeSuccess(id));
   } catch (error) {
@@ -249,7 +247,7 @@ export const checkin = (data, navigate) => async (dispatch) => {
       timer: 1500
     });
 
-    navigate('/app/status');
+    navigate('/viproom/app/status');
 
     dispatch(checkinSuccess(res.data));
   } catch (error) {
