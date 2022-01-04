@@ -10,49 +10,49 @@ import {
 
 const items = [
   {
-    href: 'app/dashboard',
+    href: 'dashboard',
     icon: BarChartIcon,
     title: 'Dashboard',
     permission: [1, 2, 3]
   },
   {
-    href: 'app/bookings',
+    href: 'bookings',
     icon: HomeIcon,
     title: 'ทะเบียนจองห้อง',
     permission: [1, 2, 3]
   },
   // {
-  //   href: '/app/calendar',
+  //   href: 'calendar',
   //   icon: CalendarIcon,
   //   title: 'ตารางการจองห้อง',
   //   permission: [1, 2, 3]
   // },
   {
-    href: 'app/queues',
+    href: 'queues',
     icon: CalendarIcon,
     title: 'คิวห้องพิเศษ',
     permission: [1, 2, 3]
   },
   {
-    href: 'app/status',
+    href: 'status',
     icon: SlidersIcon,
     title: 'สถานะห้อง',
     permission: [1, 2, 3]
   },
   {
-    href: 'app/rooms',
+    href: 'rooms',
     icon: ShoppingBagIcon,
     title: 'ห้องพิเศษ',
     permission: [1, 2]
   },
   {
-    href: 'app/account',
+    href: 'account',
     icon: UserIcon,
     title: 'Account',
     permission: [1]
   },
   {
-    href: 'app/settings',
+    href: 'settings',
     icon: SettingsIcon,
     title: 'Settings',
     permission: [1]
