@@ -22,7 +22,7 @@ import useStyles from './styles';
 
 const initialValues = {
   checkinDate: moment(),
-  checkinTime: moment().format('hh:mm'),
+  checkinTime: moment().format('HH:mm'),
   roomId: '',
   haveObserver: false,
   observerName: '',
