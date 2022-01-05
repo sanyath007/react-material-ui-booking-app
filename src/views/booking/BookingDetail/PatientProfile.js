@@ -48,12 +48,13 @@ const PatientProfile = ({ patient }) => {
             display="flex"
             flexDirection="column"
           >
+            {/* Image uri path ${process.env.PUBLIC_URL}/static/images/avatars/avatar_9.png */}
             <Avatar
               className={classes.avatar}
               src={
                 patient?.sex === '1'
-                  ? `${process.env.PUBLIC_URL}/static/images/avatars/avatar_8.png`
-                  : `${process.env.PUBLIC_URL}/static/images/avatars/avatar_9.png`
+                  ? ''
+                  : ''
               }
             />
             <Typography gutterBottom variant="h4">
@@ -74,49 +75,49 @@ const PatientProfile = ({ patient }) => {
             <Typography gutterBottom variant="h4">
               ข้อมูลผู้ป่วย
             </Typography>
-            <Grid container justify="space-between" spacing={1}>
-              <Grid item md={5}>
+            <Grid container justify="space-between" spacing={1} style={{ marginTop: '10px', padding: '10px' }}>
+              <Grid item md={4}>
                 <Typography variant="subtitle2" className={classes.textMuted}>อายุ</Typography>
               </Grid>
-              <Grid item md={7}>
+              <Grid item md={8}>
                 <Typography>{calcAge(patient?.birthday) || 0}</Typography>
               </Grid>
-              <Grid item md={5}>
+              <Grid item md={4}>
                 <Typography variant="subtitle2" className={classes.textMuted}>เพศ</Typography>
               </Grid>
-              <Grid item md={7}>
+              <Grid item md={8}>
                 <Typography>{patient?.sex === '1' ? 'ชาย' : 'หญิง'}</Typography>
               </Grid>
-              <Grid item md={5}>
+              <Grid item md={4}>
                 <Typography variant="subtitle2" className={classes.textMuted}>วันเกิด</Typography>
               </Grid>
-              <Grid item md={7}>
+              <Grid item md={8}>
                 <Typography>{moment(patient?.birthday).format('DD/MM/YYYY')}</Typography>
               </Grid>
-              <Grid item md={5}>
+              <Grid item md={4}>
                 <Typography variant="subtitle2" className={classes.textMuted}>ที่อยู่</Typography>
               </Grid>
-              <Grid item md={7}>
+              <Grid item md={8}>
                 <Typography className={classes.textAddress}>
                   {`${patient?.addrpart} ${patient?.address?.full_name}`}
                 </Typography>
               </Grid>
-              <Grid item md={5}>
+              <Grid item md={4}>
                 <Typography variant="subtitle2" className={classes.textMuted}>โทร</Typography>
               </Grid>
-              <Grid item md={7}>
+              <Grid item md={8}>
                 <Typography>{patient?.hometel}</Typography>
               </Grid>
-              <Grid item md={5}>
+              <Grid item md={4}>
                 <Typography variant="subtitle2" className={classes.textMuted}>ผู้ติดต่อ</Typography>
               </Grid>
-              <Grid item md={7}>
+              <Grid item md={8}>
                 <Typography>{patient?.informname}</Typography>
               </Grid>
-              <Grid item md={5}>
+              <Grid item md={4}>
                 <Typography variant="subtitle2" className={classes.textMuted}>โทรผู้ติดต่อ</Typography>
               </Grid>
-              <Grid item md={7}>
+              <Grid item md={8}>
                 <Typography>{patient?.informtel}</Typography>
               </Grid>
             </Grid>

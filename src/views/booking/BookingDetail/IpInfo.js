@@ -4,7 +4,7 @@ import moment from 'moment';
 import {
   Card,
   CardContent,
-  // Divider,
+  Divider,
   Grid,
   Typography,
   makeStyles
@@ -23,46 +23,59 @@ const IpInfo = ({ booking }) => {
   return (
     <Card>
       <CardContent>
-        <Grid container spacing={2}>
+        <Typography gutterBottom variant="h4">
+          ข้อมูลการจองห้อง
+        </Typography>
+        <Grid container spacing={2} style={{ marginTop: '10px', padding: '10px' }}>
           <Grid item md={6} xs={12}>
             <Typography variant="subtitle2" className={classes.textMuted}>AN</Typography>
             <Typography>{booking?.ip?.an}</Typography>
+            <Divider style={{ marginTop: '10px' }} />
           </Grid>
           <Grid item md={6} xs={12}>
             <Typography variant="subtitle2" className={classes.textMuted}>HN</Typography>
             <Typography>{booking?.ip?.hn}</Typography>
+            <Divider style={{ marginTop: '10px' }} />
           </Grid>
           <Grid item md={6} xs={12}>
             <Typography variant="subtitle2" className={classes.textMuted}>สิทธิการรักษา</Typography>
             <Typography>{`${booking?.ip?.pttype?.pttype}-${booking?.ip?.pttype?.name}`}</Typography>
+            <Divider style={{ marginTop: '10px' }} />
           </Grid>
           <Grid item md={6} xs={12}>
             <Typography variant="subtitle2" className={classes.textMuted}>วอร์ด</Typography>
             <Typography>{`${booking?.ip?.ward?.ward}-${booking?.ip?.ward?.name}`}</Typography>
+            <Divider style={{ marginTop: '10px' }} />
           </Grid>
           <Grid item md={6} xs={12}>
             <Typography variant="subtitle2" className={classes.textMuted}>วันที่ Admit</Typography>
             <Typography>{moment(booking?.ip?.regdate).format('DD/MM/YYYY')}</Typography>
+            <Divider style={{ marginTop: '10px' }} />
           </Grid>
           <Grid item md={6} xs={12}>
             <Typography variant="subtitle2" className={classes.textMuted}>เวลา</Typography>
             <Typography>{booking?.ip?.regtime}</Typography>
+            <Divider style={{ marginTop: '10px' }} />
           </Grid>
           <Grid item md={6} xs={12}>
             <Typography variant="subtitle2" className={classes.textMuted}>แพทย์ผู้ Admit</Typography>
             <Typography>{`${booking?.ip?.admdoctor?.code}-${booking?.ip?.admdoctor?.name}`}</Typography>
+            <Divider style={{ marginTop: '10px' }} />
           </Grid>
           <Grid item md={6} xs={12}>
             <Typography variant="subtitle2" className={classes.textMuted}>Pre Dx</Typography>
             <Typography>{booking?.ip?.prediag}</Typography>
+            <Divider style={{ marginTop: '10px' }} />
           </Grid>
           <Grid item md={6} xs={12}>
             <Typography variant="subtitle2" className={classes.textMuted}>วันที่จองห้องพิเศษ</Typography>
             <Typography>{moment(booking.book_date).format('DD/MM/YYYY')}</Typography>
+            <Divider style={{ marginTop: '10px' }} />
           </Grid>
           <Grid item md={6} xs={12}>
             <Typography variant="subtitle2" className={classes.textMuted}>เวลา</Typography>
             <Typography>{moment(booking.created_at).format('H:mm')}</Typography>
+            <Divider style={{ marginTop: '10px' }} />
           </Grid>
           <Grid item md={6} xs={12}>
             <Typography variant="subtitle2" className={classes.textMuted}>ผู้จองห้องพิเศษ</Typography>
