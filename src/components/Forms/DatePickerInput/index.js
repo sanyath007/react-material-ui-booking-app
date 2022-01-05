@@ -27,6 +27,7 @@ const DatePickerInput = ({
       error={error}
       helperText={helperText}
       readOnly={readOnly}
+      style={{ paddingRight: '16px' }}
     />
   );
 };

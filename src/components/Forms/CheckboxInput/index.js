@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  FormControlLabel,
-  Checkbox
+  Checkbox,
+  FormControlLabel
 } from '@material-ui/core';
 
 function CheckboxInput({

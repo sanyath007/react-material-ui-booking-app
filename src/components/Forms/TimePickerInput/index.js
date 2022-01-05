@@ -23,6 +23,7 @@ const TimePickerInput = ({
       inputProps={{
         step: 300, // 5 min
       }}
+      style={{ paddingRight: '16px' }}
     />
   );
 };

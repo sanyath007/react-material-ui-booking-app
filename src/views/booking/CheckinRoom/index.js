@@ -124,8 +124,8 @@ const CheckinRoom = () => {
             {(formik) => {
               return (
                 <Form>
-                  <Grid container spacing={4}>
-                    <Grid item xs={12} sm={12} md={6}>
+                  <Grid container spacing={4} style={{ paddingTop: '30px' }}>
+                    <Grid item xs={12} sm={12} md={6} style={{ padding: '0px 16px' }}>
                       <FormControls.DatePickerInput
                         variant="standard"
                         name="checkinDate"
@@ -136,7 +136,7 @@ const CheckinRoom = () => {
                         helperText={<ErrorMessage name="checkinDate" />}
                       />
                     </Grid>
-                    <Grid item xs={12} sm={12} md={6}>
+                    <Grid item xs={12} sm={12} md={6} style={{ padding: '0px 16px' }}>
                       <FormControls.TimePickerInput
                         name="checkinTime"
                         label="เวลารับเข้า"
@@ -145,7 +145,7 @@ const CheckinRoom = () => {
                         helperText={<ErrorMessage name="checkinTime" />}
                       />
                     </Grid>
-                    <Grid item xs={12} sm={12} md={6}>
+                    <Grid item xs={12} sm={12} md={6} style={{ padding: '0px 16px' }}>
                       <FormControls.SelectInput
                         name="building"
                         label="อาคาร"
@@ -154,7 +154,7 @@ const CheckinRoom = () => {
                         options={buildings}
                       />
                     </Grid>
-                    <Grid item xs={12} sm={12} md={6}>
+                    <Grid item xs={12} sm={12} md={6} style={{ padding: '0px 16px' }}>
                       <FormControls.SelectInput
                         name="roomId"
                         label="ห้อง"
@@ -164,7 +164,7 @@ const CheckinRoom = () => {
                         options={rooms}
                       />
                     </Grid>
-                    <Grid item xs={12} sm={12} md={12}>
+                    <Grid item xs={12} sm={12} md={12} style={{ padding: '0px 16px' }}>
                       <FormControls.CheckboxInput
                         name="haveObserver"
                         label="มีญาติเฝ้า"
@@ -172,7 +172,7 @@ const CheckinRoom = () => {
                         handleChange={formik.handleChange}
                       />
                     </Grid>
-                    <Grid item xs={12} sm={12} md={6}>
+                    <Grid item xs={12} sm={12} md={6} style={{ padding: '0px 16px' }}>
                       <TextField
                         variant="standard"
                         name="observerName"
@@ -183,9 +183,10 @@ const CheckinRoom = () => {
                         error={formik.errors.observerName && formik.touched.observerName}
                         helperText={<ErrorMessage name="observerName" />}
                         disabled={!formik.values.haveObserver}
+                        style={{ paddingRight: '16px' }}
                       />
                     </Grid>
-                    <Grid item xs={12} sm={12} md={6}>
+                    <Grid item xs={12} sm={12} md={6} style={{ padding: '0px 16px' }}>
                       <TextField
                         variant="standard"
                         name="observerTel"
@@ -196,6 +197,7 @@ const CheckinRoom = () => {
                         error={formik.errors.observerTel && formik.touched.observerTel}
                         helperText={<ErrorMessage name="observerTel" />}
                         disabled={!formik.values.haveObserver}
+                        style={{ paddingRight: '16px' }}
                       />
                     </Grid>
                     <Grid item sm={12}>
