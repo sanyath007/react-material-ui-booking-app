@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Avatar,
+  Divider,
   Grid,
   Typography,
   makeStyles,
@@ -69,27 +70,28 @@ const BookingCard = ({ booking }) => {
           style={{ margin: 'auto 0' }}
         >
           <Grid item>
+            {/* Image uri path ${process.env.PUBLIC_URL}/static/images/avatars/avatar_9.png */}
             <Avatar
               className={classes.avatar}
               src={
                 booking?.ip?.patient?.sex === '1'
-                  ? `${process.env.PUBLIC_URL}/static/images/avatars/avatar_4.png`
-                  : `${process.env.PUBLIC_URL}/static/images/avatars/avatar_2.png`
+                  ? ''
+                  : ''
               }
             />
           </Grid>
           <Grid item>
-            <Grid container direction="column" spacing={1}>
+            <Grid container direction="column" spacing={2} style={{ marginTop: 'auto', marginBottom: 'auto' }}>
               <Grid item>
-                <Typography variant="h4">
+                <Typography variant="h3">
                   {`${booking?.ip?.patient?.pname}${booking?.ip?.patient?.fname} ${booking?.ip?.patient?.lname}`}
                 </Typography>
               </Grid>
               <Grid item>
-                <Typography variant="body1">{`Age ${calAge(booking?.ip?.patient?.birthday)}`}</Typography>
+                <Typography variant="body1">{`อายุ ${calAge(booking?.ip?.patient?.birthday)} ปี`}</Typography>
               </Grid>
               <Grid item>
-                <Typography variant="body1">{`Tel. ${booking?.ip?.patient?.hometel}`}</Typography>
+                <Typography variant="body1">{`โทร. ${booking?.ip?.patient?.hometel}`}</Typography>
               </Grid>
               <Grid item>
                 <Typography variant="body1">{`CID ${booking?.ip?.patient?.cid}`}</Typography>
@@ -99,46 +101,50 @@ const BookingCard = ({ booking }) => {
         </Grid>
       </Grid>
       <Grid item className={classes.bookingContent} xs={12} sm={8} md={8}>
-        <div className={classes.content}>
-          <Grid container direction="row" spacing={2}>
-            <Grid item sm={6} md={3}>
-              <Typography variant="subtitle2" className={classes.textProperty}>AN</Typography>
-              <Typography variant="h4" className={classes.textPropertyValue}>
-                {booking?.an}
-              </Typography>
-            </Grid>
-            <Grid item sm={6} md={3}>
-              <Typography variant="subtitle2" className={classes.textProperty}>HN</Typography>
-              <Typography variant="h4" className={classes.textPropertyValue}>
-                {booking?.hn}
-              </Typography>
-            </Grid>
-            <Grid item sm={12} md={6}>
-              <Typography variant="subtitle2" className={classes.textProperty}>สิทธิ์การรักษา</Typography>
-              <Typography variant="h4" className={classes.textPropertyValue}>
-                {`${booking?.ip?.pttype?.pttype}-${booking?.ip?.pttype?.name}`}
-              </Typography>
-            </Grid>
-            <Grid item sm={6} md={3}>
-              <Typography variant="subtitle2" className={classes.textProperty}>วันที่ Admit</Typography>
-              <Typography variant="h4" className={classes.textPropertyValue}>
-                {moment(booking?.ip?.regdate).format('DD/MM/YYYY')}
-              </Typography>
-            </Grid>
-            <Grid item sm={6} md={3}>
-              <Typography variant="subtitle2" className={classes.textProperty}>เวลา</Typography>
-              <Typography variant="h4" className={classes.textPropertyValue}>
-                {booking?.ip?.regtime}
-              </Typography>
-            </Grid>
-            <Grid item sm={12} md={6}>
-              <Typography variant="subtitle2" className={classes.textProperty}>วอร์ด</Typography>
-              <Typography variant="h4" className={classes.textPropertyValue}>
-                {`${booking?.ip?.ward?.ward}-${booking?.ip?.ward?.name}`}
-              </Typography>
-            </Grid>
+        <Grid container direction="row" spacing={1} style={{ padding: '0px 15px' }}>
+          <Grid item xs={12} sm={12} md={6}>
+            <Typography variant="subtitle2" className={classes.textProperty}>AN</Typography>
+            <Typography className={classes.textPropertyValue}>
+              {booking?.an}
+            </Typography>
+            <Divider style={{ marginTop: '5px' }} />
           </Grid>
-        </div>
+          <Grid item xs={12} sm={12} md={6}>
+            <Typography variant="subtitle2" className={classes.textProperty}>HN</Typography>
+            <Typography className={classes.textPropertyValue}>
+              {booking?.hn}
+            </Typography>
+            <Divider style={{ marginTop: '5px' }} />
+          </Grid>
+          <Grid item xs={12} sm={12} md={6}>
+            <Typography variant="subtitle2" className={classes.textProperty}>วันที่ Admit</Typography>
+            <Typography className={classes.textPropertyValue}>
+              {moment(booking?.ip?.regdate).format('DD/MM/YYYY')}
+            </Typography>
+            <Divider style={{ marginTop: '5px' }} />
+          </Grid>
+          <Grid item xs={12} sm={12} md={6}>
+            <Typography variant="subtitle2" className={classes.textProperty}>เวลา</Typography>
+            <Typography className={classes.textPropertyValue}>
+              {booking?.ip?.regtime}
+            </Typography>
+            <Divider style={{ marginTop: '5px' }} />
+          </Grid>
+          <Grid item xs={12} sm={12} md={6}>
+            <Typography variant="subtitle2" className={classes.textProperty}>วอร์ด</Typography>
+            <Typography className={classes.textPropertyValue}>
+              {`${booking?.ip?.ward?.ward}-${booking?.ip?.ward?.name}`}
+            </Typography>
+            <Divider style={{ marginTop: '5px' }} />
+          </Grid>
+          <Grid item xs={12} sm={12} md={6}>
+            <Typography variant="subtitle2" className={classes.textProperty}>สิทธิ์การรักษา</Typography>
+            <Typography className={classes.textPropertyValue}>
+              {`${booking?.ip?.pttype?.pttype}-${booking?.ip?.pttype?.name}`}
+            </Typography>
+            <Divider style={{ marginTop: '5px' }} />
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
