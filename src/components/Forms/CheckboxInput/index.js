@@ -26,6 +26,7 @@ function CheckboxInput({
           onChange={(e) => handleChange(convertToDefEventParams(name, e.target.checked))}
         />
       )}
+      style={{ padding: '0px 6px' }}
     />
   );
 }
