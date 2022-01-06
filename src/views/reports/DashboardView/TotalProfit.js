@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const TotalProfit = ({ className, ...rest }) => {
+const TotalProfit = ({ className, value, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -49,7 +49,7 @@ const TotalProfit = ({ className, ...rest }) => {
               color="textPrimary"
               variant="h3"
             >
-              $23,200
+              {value.toFixed(2)}
             </Typography>
           </Grid>
           <Grid item>
@@ -64,7 +64,8 @@ const TotalProfit = ({ className, ...rest }) => {
 };
 
 TotalProfit.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  value: PropTypes.number
 };
 
 export default TotalProfit;

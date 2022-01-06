@@ -27,14 +27,16 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
   const classes = useStyles();
-  const [overall, setOverall] = useState({ bookings: {}, rooms: {} });
+  const [overall, setOverall] = useState({ bookings: {}, rooms: {}, income: 0 });
 
   const fetchOverall = async () => {
     const bookings = await api.get('/dashboard/bookings');
 
     const rooms = await api.get('/dashboard/rooms');
 
-    setOverall({ bookings: bookings.data, rooms: rooms.data });
+    const income = await api.get('/dashboard/income');
+
+    setOverall({ bookings: bookings.data, rooms: rooms.data, income: income.data.sum_income });
   };
 
   useEffect(() => {
@@ -88,7 +90,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <TotalProfit />
+            <TotalProfit value={parseFloat(overall.income) || 0} />
           </Grid>
           <Grid
             item
