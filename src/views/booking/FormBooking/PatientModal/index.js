@@ -11,21 +11,25 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 import moment from 'moment';
 import Toolbar from './Toolbar';
-import { ipActions } from '../../../../redux';
+import { ipActions, fetchPatientAll } from '../../../../redux';
 import calcAge from '../../../../utils';
 
 function PatientModal({ isOpen, hideModal, onSelected }) {
   const dispatch = useDispatch();
   const { ips, pager } = useSelector((state) => state.ip);
+  const { patients, pager: ptPager } = useSelector((state) => state.patient);
   const [ipOnly, setIpOnly] = useState(true);
 
   useEffect(() => {
     dispatch(ipActions.fetchIpAll());
+    dispatch(fetchPatientAll());
   }, []);
 
   const handlePageItemClick = (url) => {
     dispatch(ipActions.fetchIpAllWithPage(url));
   };
+
+  console.log(ptPager);
 
   return (
     <Modal
@@ -51,7 +55,7 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
           <thead>
             <tr>
               <th style={{ width: '3%', textAlign: 'center' }}>#</th>
-              <th style={{ width: '10%', textAlign: 'center' }}>AN</th>
+              {ipOnly && <th style={{ width: '10%', textAlign: 'center' }}>AN</th>}
               <th style={{ width: '8%', textAlign: 'center' }}>HN</th>
               <th>ชื่อ-สกุล</th>
               <th style={{ width: '8%', textAlign: 'center' }}>อายุ (ปี)</th>
@@ -61,7 +65,7 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
             </tr>
           </thead>
           <tbody>
-            {ips && ips.map((ip, index) => (
+            {ipOnly && ips && ips.map((ip, index) => (
               <tr key={ip.an}>
                 <td style={{ textAlign: 'center' }}>{pager.from + index}</td>
                 <td style={{ textAlign: 'center' }}>{ip.an}</td>
@@ -70,12 +74,10 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
                 <td style={{ textAlign: 'center' }}>
                   {calcAge(ip.patient?.birthday)}
                 </td>
-                {ipOnly && (
-                  <td style={{ textAlign: 'center' }}>
-                    {moment(ip.regdate).format('DD/MM/YYYY')}
-                  </td>
-                )}
-                {ipOnly && <td>{ip.ward?.name}</td>}
+                <td style={{ textAlign: 'center' }}>
+                  {moment(ip.regdate).format('DD/MM/YYYY')}
+                </td>
+                <td>{ip.ward?.name}</td>
                 <td style={{ textAlign: 'center' }}>
                   <Button
                     onClick={() => {
@@ -84,6 +86,33 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
                         ip.an,
                         `${ip.patient?.pname}${ip.patient?.fname} ${ip.patient?.lname}`,
                         ip.ward?.ward
+                      );
+                      hideModal();
+                    }}
+                    size="sm"
+                  >
+                    เลือก
+                  </Button>
+                </td>
+              </tr>
+            ))}
+
+            {!ipOnly && patients && patients.map((patient, index) => (
+              <tr key={patient.hn}>
+                <td style={{ textAlign: 'center' }}>{pager.from + index}</td>
+                <td style={{ textAlign: 'center' }}>{patient.hn}</td>
+                <td>{`${patient.pname}${patient.fname} ${patient.lname}`}</td>
+                <td style={{ textAlign: 'center' }}>
+                  {calcAge(patient.birthday)}
+                </td>
+                <td style={{ textAlign: 'center' }}>
+                  <Button
+                    onClick={() => {
+                      onSelected(
+                        patient.hn,
+                        '',
+                        `${patient.pname}${patient.fname} ${patient.lname}`,
+                        ''
                       );
                       hideModal();
                     }}

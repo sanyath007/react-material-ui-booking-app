@@ -5,11 +5,13 @@ export const patientSlice = createSlice({
   name: 'patient',
   initialState: {
     patient: {},
-    patients: []
+    patients: [],
+    pager: null,
   },
   reducers: {
     fetchAllSuccess: (state, action) => {
-      state.patients = action.payload;
+      state.patients = action.payload.items;
+      state.pager = action.payload.pager;
     },
   }
 });
@@ -23,7 +25,7 @@ export const fetchPatientAll = () => async (dispatch) => {
   try {
     const res = await api.get('/patients');
 
-    return dispatch(fetchAllSuccess(res.data.items));
+    return dispatch(fetchAllSuccess(res.data));
   } catch (error) {
     console.log(error);
   }
