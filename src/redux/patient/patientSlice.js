@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 import api from '../../api';
 
 export const patientSlice = createSlice({
@@ -24,6 +25,16 @@ const { fetchAllSuccess } = patientSlice.actions;
 export const fetchPatientAll = (qs = '') => async (dispatch) => {
   try {
     const res = await api.get(`/patients${qs}`);
+
+    return dispatch(fetchAllSuccess(res.data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchPatientAllWithPage = (url) => async (dispatch) => {
+  try {
+    const res = await axios.get(url);
 
     return dispatch(fetchAllSuccess(res.data));
   } catch (error) {

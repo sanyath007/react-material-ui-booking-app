@@ -11,7 +11,7 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 import moment from 'moment';
 import Toolbar from './Toolbar';
-import { ipActions, fetchPatientAll } from '../../../../redux';
+import { ipActions, fetchPatientAll, fetchPatientAllWithPage } from '../../../../redux';
 import calcAge from '../../../../utils';
 
 function PatientModal({ isOpen, hideModal, onSelected }) {
@@ -26,11 +26,13 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
     dispatch(fetchPatientAll());
   }, [dispatch, isOpen]);
 
-  const handlePageItemClick = (url) => {
-    dispatch(ipActions.fetchIpAllWithPage(url));
+  const handlePageItemClick = (url, tbName) => {
+    if (tbName === 'ip') {
+      dispatch(ipActions.fetchIpAllWithPage(url));
+    } else {
+      dispatch(fetchPatientAllWithPage(url));
+    }
   };
-
-  console.log(ptPager);
 
   return (
     <Modal
@@ -62,6 +64,7 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
               <th>ชื่อ-สกุล</th>
               <th style={{ width: '8%', textAlign: 'center' }}>อายุ (ปี)</th>
               {ipOnly && <th style={{ width: '12%', textAlign: 'center' }}>วันที่ Admit</th>}
+              {!ipOnly && <th style={{ width: '12%', textAlign: 'center' }}>วันที่มาล่าสุด</th>}
               {ipOnly && <th style={{ width: '20%' }}>วอร์ด</th>}
               <th style={{ width: '8%', textAlign: 'center' }}>Actions</th>
             </tr>
@@ -101,11 +104,14 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
 
             {!ipOnly && patients && patients.map((patient, index) => (
               <tr key={patient.hn}>
-                <td style={{ textAlign: 'center' }}>{pager.from + index}</td>
+                <td style={{ textAlign: 'center' }}>{ptPager.from + index}</td>
                 <td style={{ textAlign: 'center' }}>{patient.hn}</td>
                 <td>{`${patient.pname}${patient.fname} ${patient.lname}`}</td>
                 <td style={{ textAlign: 'center' }}>
                   {calcAge(patient.birthday)}
+                </td>
+                <td style={{ textAlign: 'center' }}>
+                  {moment(patient.last_visit).format('DD/MM/YYYY')}
                 </td>
                 <td style={{ textAlign: 'center' }}>
                   <Button
@@ -135,35 +141,47 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
             ราย
           </Col>
           <Col>
-            <Pagination className="float-right mb-0">
-              <Pagination.First
-                onClick={() => handlePageItemClick(pager?.first_page_url)}
-                disabled={pager?.current_page === 1}
-              />
-              <Pagination.Prev
-                onClick={() => handlePageItemClick(pager?.prev_page_url)}
-                disabled={pager?.current_page === 1}
-              />
-              {/* <Pagination.Item>{1}</Pagination.Item>
-              <Pagination.Ellipsis />
+            {ipOnly && (
+              <Pagination className="float-right mb-0">
+                <Pagination.First
+                  onClick={() => handlePageItemClick(pager?.first_page_url, 'ip')}
+                  disabled={pager?.current_page === 1}
+                />
+                <Pagination.Prev
+                  onClick={() => handlePageItemClick(pager?.prev_page_url, 'ip')}
+                  disabled={pager?.current_page === 1}
+                />
+                <Pagination.Next
+                  onClick={() => handlePageItemClick(pager?.next_page_url, 'ip')}
+                  disabled={pager?.current_page === pager?.last_page}
+                />
+                <Pagination.Last
+                  onClick={() => handlePageItemClick(pager?.last_page_url, 'ip')}
+                  disabled={pager?.current_page === pager?.last_page}
+                />
+              </Pagination>
+            )}
 
-              <Pagination.Item>{10}</Pagination.Item>
-              <Pagination.Item>{11}</Pagination.Item>
-              <Pagination.Item active>{12}</Pagination.Item>
-              <Pagination.Item>{13}</Pagination.Item>
-              <Pagination.Item disabled>{14}</Pagination.Item>
-
-              <Pagination.Ellipsis />
-              <Pagination.Item>{20}</Pagination.Item> */}
-              <Pagination.Next
-                onClick={() => handlePageItemClick(pager?.next_page_url)}
-                disabled={pager?.current_page === pager?.last_page}
-              />
-              <Pagination.Last
-                onClick={() => handlePageItemClick(pager?.last_page_url)}
-                disabled={pager?.current_page === pager?.last_page}
-              />
-            </Pagination>
+            {!ipOnly && (
+              <Pagination className="float-right mb-0">
+                <Pagination.First
+                  onClick={() => handlePageItemClick(ptPager?.first_page_url, 'patient')}
+                  disabled={ptPager?.current_page === 1}
+                />
+                <Pagination.Prev
+                  onClick={() => handlePageItemClick(ptPager?.prev_page_url, 'patient')}
+                  disabled={ptPager?.current_page === 1}
+                />
+                <Pagination.Next
+                  onClick={() => handlePageItemClick(ptPager?.next_page_url, 'patient')}
+                  disabled={ptPager?.current_page === ptPager?.last_page}
+                />
+                <Pagination.Last
+                  onClick={() => handlePageItemClick(ptPager?.last_page_url, 'patient')}
+                  disabled={ptPager?.current_page === ptPager?.last_page}
+                />
+              </Pagination>
+            )}
           </Col>
         </Row>
       </Modal.Body>
