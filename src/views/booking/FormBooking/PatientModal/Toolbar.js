@@ -16,7 +16,13 @@ const useStyles = makeStyles(() => ({
 
 const options = ['ค้นหาชื่อ-สกุล', 'ค้นหา HN', 'ค้นหา AN'];
 
-const Toolbar = ({ className, handleSearch, ...rest }) => {
+const Toolbar = ({
+  handleSearch,
+  handleIpOnlyChecked,
+  isIpOnly,
+  className,
+  ...rest
+}) => {
   const classes = useStyles();
 
   const onSearch = (keyword, type = '') => {
@@ -33,18 +39,32 @@ const Toolbar = ({ className, handleSearch, ...rest }) => {
     handleSearch(searchText);
   };
 
+  const handleChecked = (e) => {
+    handleIpOnlyChecked(e.target.checked);
+  };
+
   return (
     <div
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Box mt={3}>
+      <Box mt={1}>
         <Card>
           <CardContent className="pb-3">
             <Grid container>
-              <Grid item sm={12} md={8} lg={6}>
+              <Grid item sm={12} md={12} lg={12}>
 
                 <SearchInput options={options} onSearch={onSearch} />
+
+                <input
+                  type="checkbox"
+                  className="ml-3 mr-2"
+                  sx={{ my: 'auto' }}
+                  value={isIpOnly}
+                  checked={isIpOnly}
+                  onChange={handleChecked}
+                />
+                <span>เลือกเฉพาะผู้ป่วยใน</span>
 
               </Grid>
             </Grid>
@@ -58,6 +78,8 @@ const Toolbar = ({ className, handleSearch, ...rest }) => {
 Toolbar.propTypes = {
   className: PropTypes.string,
   handleSearch: PropTypes.func,
+  handleIpOnlyChecked: PropTypes.func,
+  isIpOnly: PropTypes.bool,
 };
 
 export default Toolbar;

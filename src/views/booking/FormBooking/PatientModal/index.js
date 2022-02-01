@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -17,6 +17,7 @@ import calcAge from '../../../../utils';
 function PatientModal({ isOpen, hideModal, onSelected }) {
   const dispatch = useDispatch();
   const { ips, pager } = useSelector((state) => state.ip);
+  const [ipOnly, setIpOnly] = useState(true);
 
   useEffect(() => {
     dispatch(ipActions.fetchIpAll());
@@ -37,11 +38,13 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
       <Modal.Body>
 
         <Toolbar
+          isIpOnly={ipOnly}
           handleSearch={(searchText) => {
             const qs = searchText ? `?search=${searchText}` : '';
 
             dispatch(ipActions.fetchIpAll(qs));
           }}
+          handleIpOnlyChecked={(checked) => setIpOnly(checked)}
         />
 
         <table className="table table-bordered table-sm mt-2">
@@ -52,8 +55,8 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
               <th style={{ width: '8%', textAlign: 'center' }}>HN</th>
               <th>ชื่อ-สกุล</th>
               <th style={{ width: '8%', textAlign: 'center' }}>อายุ (ปี)</th>
-              <th style={{ width: '12%', textAlign: 'center' }}>วันที่ Admit</th>
-              <th style={{ width: '20%' }}>วอร์ด</th>
+              {ipOnly && <th style={{ width: '12%', textAlign: 'center' }}>วันที่ Admit</th>}
+              {ipOnly && <th style={{ width: '20%' }}>วอร์ด</th>}
               <th style={{ width: '8%', textAlign: 'center' }}>Actions</th>
             </tr>
           </thead>
@@ -67,10 +70,12 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
                 <td style={{ textAlign: 'center' }}>
                   {calcAge(ip.patient?.birthday)}
                 </td>
-                <td style={{ textAlign: 'center' }}>
-                  {moment(ip.regdate).format('DD/MM/YYYY')}
-                </td>
-                <td>{ip.ward?.name}</td>
+                {ipOnly && (
+                  <td style={{ textAlign: 'center' }}>
+                    {moment(ip.regdate).format('DD/MM/YYYY')}
+                  </td>
+                )}
+                {ipOnly && <td>{ip.ward?.name}</td>}
                 <td style={{ textAlign: 'center' }}>
                   <Button
                     onClick={() => {
