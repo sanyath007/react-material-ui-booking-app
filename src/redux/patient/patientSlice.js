@@ -21,9 +21,9 @@ export default patientSlice.reducer;
 // Actions
 const { fetchAllSuccess } = patientSlice.actions;
 
-export const fetchPatientAll = () => async (dispatch) => {
+export const fetchPatientAll = (qs = '') => async (dispatch) => {
   try {
-    const res = await api.get('/patients');
+    const res = await api.get(`/patients${qs}`);
 
     return dispatch(fetchAllSuccess(res.data));
   } catch (error) {

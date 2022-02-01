@@ -21,9 +21,10 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
   const [ipOnly, setIpOnly] = useState(true);
 
   useEffect(() => {
+    console.log('On useEffect is called ...');
     dispatch(ipActions.fetchIpAll());
     dispatch(fetchPatientAll());
-  }, []);
+  }, [dispatch, isOpen]);
 
   const handlePageItemClick = (url) => {
     dispatch(ipActions.fetchIpAllWithPage(url));
@@ -47,6 +48,7 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
             const qs = searchText ? `?search=${searchText}` : '';
 
             dispatch(ipActions.fetchIpAll(qs));
+            dispatch(fetchPatientAll(qs));
           }}
           handleIpOnlyChecked={(checked) => setIpOnly(checked)}
         />
