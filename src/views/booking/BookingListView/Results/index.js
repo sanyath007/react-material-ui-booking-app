@@ -69,12 +69,10 @@ const Results = ({
             <TableHead>
               <TableRow>
                 <TableCell align="center" width="3%">#</TableCell>
-                <TableCell align="center" width="8%">AN</TableCell>
+                <TableCell align="center" width="8%">HN</TableCell>
                 <TableCell>ผู้ป่วย</TableCell>
-                <TableCell align="center" width="8%">วันที่ Admit</TableCell>
                 <TableCell align="center" width="8%">วันที่จอง</TableCell>
                 {(screenW > 960) && <TableCell align="center" width="12%">เบอร์ติดต่อ</TableCell>}
-                <TableCell width="12%">วอร์ด</TableCell>
                 {(screenW > 960) && <TableCell width="12%">ผู้บันทึก</TableCell>}
                 <TableCell align="center" width="12%">Actions</TableCell>
               </TableRow>
@@ -90,7 +88,7 @@ const Results = ({
                   </TableCell>
                   <TableCell>
                     <Typography color="textPrimary" variant="body1">
-                      {`${booking.ip?.an}`}
+                      {`${booking.hn}`}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -100,22 +98,26 @@ const Results = ({
                           {getInitials('DN Hospital')}
                         </Avatar>
                       )}
-                      <Typography color="textPrimary" variant="body1">
-                        {`${booking.ip?.patient?.pname}${booking.ip?.patient?.fname} ${booking.ip?.patient?.lname}`}
-                      </Typography>
+                      <Box>
+                        {booking.patient.admit && (
+                          <Typography variant="subtitle2" component="p">
+                            <span>AN : </span>
+                            {`${booking.patient.admit?.an}`}
+                          </Typography>
+                        )}
+                        <Typography color="textPrimary" variant="body1">
+                          {`${booking.patient?.pname}${booking.patient?.fname} ${booking.patient?.lname}`}
+                        </Typography>
+                      </Box>
                       {booking.is_officer === '1' && <StarIcon style={{ fill: 'red' }} fontSize="small" />}
                     </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    {moment(booking.ip?.regdate).format('DD/MM/YYYY')}
                   </TableCell>
                   <TableCell align="center">
                     {moment(booking.book_date).format('DD/MM/YYYY')}
                   </TableCell>
                   {(screenW > 960) && (
-                    <TableCell align="center">{`${booking.ip?.patient?.hometel}`}</TableCell>
+                    <TableCell align="center">{`${booking.patient?.hometel}`}</TableCell>
                   )}
-                  <TableCell>{booking.ip?.ward?.name}</TableCell>
                   {(screenW > 960) && (
                     <TableCell>
                       {`${booking.user?.person_firstname} ${booking.user?.person_lastname}`}
