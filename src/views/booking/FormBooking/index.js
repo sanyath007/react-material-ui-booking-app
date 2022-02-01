@@ -39,7 +39,7 @@ const FormBooking = ({
   const [isPatientReserve, setIsPatientReserve] = useState(false);
 
   const bookingSchema = Yup.object().shape({
-    an: Yup.string().required('กรุณาระบุ An ของผู้ป่วยก่อน'),
+    hn: Yup.string().required('กรุณาระบุผู้ป่วยก่อน'),
     book_date: Yup.string().required('กรุณาระบุวันที่จองก่อน'),
     book_name: Yup.string().required('กรุณาระบุชื่อ-สกุลผู้จองก่อน'),
     book_tel: Yup.string().required('กรุณาระบุเบอร์ติดต่อผู้จองก่อน'),
@@ -99,8 +99,9 @@ const FormBooking = ({
       enableReinitialize={booking}
       initialValues={{
         id: booking?.book_id || '',
-        an: booking ? `${booking?.ip?.an}-${booking?.ip?.patient?.pname}${booking?.ip?.patient?.fname} ${booking?.ip?.patient?.lname}` : '',
+        an: booking ? `${booking?.ip?.an}` : '',
         hn: booking ? `${booking?.ip?.hn}` : '',
+        patient: booking ? `${booking?.ip?.patient?.pname}${booking?.ip?.patient?.fname} ${booking?.ip?.patient?.lname}` : '',
         ward: booking ? `${booking?.ward}` : '',
         book_date: moment(booking?.book_date) || new Date(),
         book_name: booking?.book_name || '',
@@ -117,6 +118,7 @@ const FormBooking = ({
         return (
           <Form>
             <input type="hidden" name="hn" value={formik.values.hn} onChange={formik.handleChange} />
+            <input type="hidden" name="an" value={formik.values.an} onChange={formik.handleChange} />
             <input type="hidden" name="ward" value={formik.values.ward} onChange={formik.handleChange} />
 
             <Grid container direction="row" justify="center" alignItems="flex-start">
@@ -129,9 +131,10 @@ const FormBooking = ({
                 <PatientModal
                   isOpen={openModal}
                   hideModal={() => setOpenModal(false)}
-                  onSelected={(an, hn, ward) => {
-                    formik.setFieldValue('an', an);
+                  onSelected={(hn, an, patient, ward) => {
                     formik.setFieldValue('hn', hn);
+                    formik.setFieldValue('an', an);
+                    formik.setFieldValue('patient', patient);
                     formik.setFieldValue('ward', ward);
                   }}
                 />
@@ -139,14 +142,14 @@ const FormBooking = ({
                 <Grid item sm={6} xs={12}>
                   <TextField
                     variant="standard"
-                    name="an"
-                    label="AN ผู้ป่วย"
+                    name="patient"
+                    label="ผู้ป่วย"
                     fullWidth
-                    value={formik.values.an}
+                    value={formik.values.patient}
                     onChange={formik.handleChange}
                     onClick={(e) => !booking && handleAnOnFocus(e)}
-                    error={formik.errors.an && formik.touched.an}
-                    helperText={<ErrorMessage name="an" />}
+                    error={formik.errors.hn && formik.touched.hn}
+                    helperText={<ErrorMessage name="hn" />}
                     inputProps={{
                       readOnly: true,
                     }}

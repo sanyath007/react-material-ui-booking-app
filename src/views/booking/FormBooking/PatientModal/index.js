@@ -10,8 +10,8 @@ import {
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import moment from 'moment';
-import { ipActions } from '../../../../redux';
 import Toolbar from './Toolbar';
+import { ipActions } from '../../../../redux';
 import calcAge from '../../../../utils';
 
 function PatientModal({ isOpen, hideModal, onSelected }) {
@@ -75,8 +75,9 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
                   <Button
                     onClick={() => {
                       onSelected(
-                        `${ip.an}-${ip.patient?.pname}${ip.patient?.fname} ${ip.patient?.lname}`,
                         ip.hn,
+                        ip.an,
+                        `${ip.patient?.pname}${ip.patient?.fname} ${ip.patient?.lname}`,
                         ip.ward?.ward
                       );
                       hideModal();
