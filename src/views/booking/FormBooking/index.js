@@ -12,7 +12,6 @@ import FormControls from 'src/components/Forms';
 import { Formik, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import PatientModal from './PatientModal';
-import api from '../../../api';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -37,6 +36,7 @@ const FormBooking = ({
   const [rtypes, setRtypes] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [isPatientReserve, setIsPatientReserve] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState(null);
 
   const bookingSchema = Yup.object().shape({
     hn: Yup.string().required('กรุณาระบุผู้ป่วยก่อน'),
@@ -77,11 +77,9 @@ const FormBooking = ({
     setIsPatientReserve(e.target.value);
 
     if (e.target.value) {
-      if (formik.values.an !== '') {
-        const res = await api.get(`/ips/${formik.values.an.split('-')[0]}`);
-
-        formik.setFieldValue('book_name', `${res.data.patient?.pname}${res.data.patient?.fname} ${res.data.patient?.lname}`);
-        formik.setFieldValue('book_tel', res.data.patient?.hometel);
+      if (formik.values.hn !== '') {
+        formik.setFieldValue('book_name', `${selectedPatient.pname}${selectedPatient.fname} ${selectedPatient.lname}`);
+        formik.setFieldValue('book_tel', selectedPatient.hometel);
       } else {
         alert('คุณยังไม่ได้เลือกผู้ป่วย กรุณาเลือกผู้ป่วยก่อน !!!');
         setIsPatientReserve(false);
@@ -131,10 +129,12 @@ const FormBooking = ({
                 <PatientModal
                   isOpen={openModal}
                   hideModal={() => setOpenModal(false)}
-                  onSelected={(hn, an, patient, ward) => {
-                    formik.setFieldValue('hn', hn);
+                  onSelected={(patient, an, ward) => {
+                    setSelectedPatient(patient);
+
+                    formik.setFieldValue('hn', patient.hn);
                     formik.setFieldValue('an', an);
-                    formik.setFieldValue('patient', patient);
+                    formik.setFieldValue('patient', `${patient.pname}${patient.fname} ${patient.lname}`);
                     formik.setFieldValue('ward', ward);
                   }}
                 />

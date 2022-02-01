@@ -24,7 +24,7 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
     console.log('On useEffect is called ...');
     dispatch(ipActions.fetchIpAll());
     dispatch(fetchPatientAll());
-  }, [dispatch, isOpen]);
+  }, []);
 
   const handlePageItemClick = (url, tbName) => {
     if (tbName === 'ip') {
@@ -86,12 +86,7 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
                 <td style={{ textAlign: 'center' }}>
                   <Button
                     onClick={() => {
-                      onSelected(
-                        ip.hn,
-                        ip.an,
-                        `${ip.patient?.pname}${ip.patient?.fname} ${ip.patient?.lname}`,
-                        ip.ward?.ward
-                      );
+                      onSelected(ip.patient, ip.an, ip.ward?.ward);
                       hideModal();
                     }}
                     size="sm"
@@ -116,12 +111,7 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
                 <td style={{ textAlign: 'center' }}>
                   <Button
                     onClick={() => {
-                      onSelected(
-                        patient.hn,
-                        '',
-                        `${patient.pname}${patient.fname} ${patient.lname}`,
-                        ''
-                      );
+                      onSelected(patient, '', '');
                       hideModal();
                     }}
                     size="sm"
