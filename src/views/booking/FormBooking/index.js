@@ -97,9 +97,9 @@ const FormBooking = ({
       enableReinitialize={booking}
       initialValues={{
         id: booking?.book_id || '',
-        an: booking ? `${booking?.ip?.an}` : '',
-        hn: booking ? `${booking?.ip?.hn}` : '',
-        patient: booking ? `${booking?.ip?.patient?.pname}${booking?.ip?.patient?.fname} ${booking?.ip?.patient?.lname}` : '',
+        an: booking ? `${booking?.an}` : '',
+        hn: booking ? `${booking?.hn}` : '',
+        patient: booking ? `${booking?.patient?.pname}${booking?.patient?.fname} ${booking?.patient?.lname}` : '',
         ward: booking ? `${booking?.ward}` : '',
         book_date: moment(booking?.book_date) || new Date(),
         book_name: booking?.book_name || '',

@@ -99,7 +99,7 @@ const Results = ({
                         </Avatar>
                       )}
                       <Box>
-                        {booking.patient.admit && (
+                        {booking.patient?.admit && (
                           <Typography variant="subtitle2" component="p">
                             <span>AN : </span>
                             {`${booking.patient.admit?.an}`}
