@@ -72,7 +72,7 @@ const Toolbar = ({ className, booking, ...rest }) => {
       }
     });
   };
-  console.log(booking?.ip);
+
   return (
     <div
       className={clsx(classes.root, className)}
@@ -80,7 +80,7 @@ const Toolbar = ({ className, booking, ...rest }) => {
       style={{ marginBottom: '20px' }}
     >
       <Box display="flex" justifyContent="flex-end">
-        {[1, 2].includes(parseInt(auth.role, 10)) && (
+        {[1, 2].includes(parseInt(auth.role, 10)) && booking?.patient?.admit && (
           <MuiButton
             className={classes.dischargeButton}
             variant="contained"
