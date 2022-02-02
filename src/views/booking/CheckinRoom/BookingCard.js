@@ -84,17 +84,17 @@ const BookingCard = ({ booking }) => {
             <Grid container direction="column" spacing={2} style={{ marginTop: 'auto', marginBottom: 'auto' }}>
               <Grid item>
                 <Typography variant="h3">
-                  {`${booking?.ip?.patient?.pname}${booking?.ip?.patient?.fname} ${booking?.ip?.patient?.lname}`}
+                  {`${booking?.patient?.pname}${booking?.patient?.fname} ${booking?.patient?.lname}`}
                 </Typography>
               </Grid>
               <Grid item>
-                <Typography variant="body1">{`อายุ ${calAge(booking?.ip?.patient?.birthday)} ปี`}</Typography>
+                <Typography variant="body1">{`อายุ ${calAge(booking?.patient?.birthday)} ปี`}</Typography>
               </Grid>
               <Grid item>
-                <Typography variant="body1">{`โทร. ${booking?.ip?.patient?.hometel}`}</Typography>
+                <Typography variant="body1">{`โทร. ${booking?.patient?.hometel}`}</Typography>
               </Grid>
               <Grid item>
-                <Typography variant="body1">{`CID ${booking?.ip?.patient?.cid}`}</Typography>
+                <Typography variant="body1">{`CID ${booking?.patient?.cid}`}</Typography>
               </Grid>
             </Grid>
           </Grid>
@@ -119,28 +119,28 @@ const BookingCard = ({ booking }) => {
           <Grid item xs={12} sm={12} md={6}>
             <Typography variant="subtitle2" className={classes.textProperty}>วันที่ Admit</Typography>
             <Typography className={classes.textPropertyValue}>
-              {moment(booking?.ip?.regdate).format('DD/MM/YYYY')}
+              {moment(booking?.patient?.admit?.regdate).format('DD/MM/YYYY')}
             </Typography>
             <Divider style={{ marginTop: '5px' }} />
           </Grid>
           <Grid item xs={12} sm={12} md={6}>
             <Typography variant="subtitle2" className={classes.textProperty}>เวลา</Typography>
             <Typography className={classes.textPropertyValue}>
-              {booking?.ip?.regtime}
+              {booking?.patient?.admit?.regtime}
             </Typography>
             <Divider style={{ marginTop: '5px' }} />
           </Grid>
           <Grid item xs={12} sm={12} md={6}>
             <Typography variant="subtitle2" className={classes.textProperty}>วอร์ด</Typography>
             <Typography className={classes.textPropertyValue}>
-              {`${booking?.ip?.ward?.ward}-${booking?.ip?.ward?.name}`}
+              {`${booking?.patient?.admit?.ward?.ward}-${booking?.patient?.admit?.ward?.name}`}
             </Typography>
             <Divider style={{ marginTop: '5px' }} />
           </Grid>
           <Grid item xs={12} sm={12} md={6}>
             <Typography variant="subtitle2" className={classes.textProperty}>สิทธิ์การรักษา</Typography>
             <Typography className={classes.textPropertyValue}>
-              {`${booking?.ip?.pttype?.pttype}-${booking?.ip?.pttype?.name}`}
+              {`${booking?.patient?.admit?.pttype?.pttype}-${booking?.patient?.admit?.pttype?.name}`}
             </Typography>
             <Divider style={{ marginTop: '5px' }} />
           </Grid>
