@@ -97,7 +97,10 @@ const QueueCard = ({
     );
   };
 
-  const an = booking.patient?.admit ? `AN ${booking.patient?.admit?.an}` : 'ยังไม่ได้ Admit';
+  const renderAnText = () => {
+    const an = booking.patient?.admit ? `AN ${booking.patient?.admit?.an}` : 'ยังไม่ได้ Admit';
+    return <span style={{ color: booking.patient?.admit ? 'inherit' : 'red' }}>{an}</span>;
+  };
 
   return (
     <Card>
@@ -110,7 +113,7 @@ const QueueCard = ({
         <Typography variant="subtitle1">
           {`HN ${booking.hn}`}
           <span className="px-2">|</span>
-          {an}
+          {renderAnText()}
         </Typography>
         <Typography variant="subtitle1">
           <span>วันที่จอง</span>
