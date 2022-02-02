@@ -17,6 +17,7 @@ function NewBooking() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { roomTypes } = useSelector((state) => state.roomType);
+  const { auth } = useSelector((state) => state.auth);
 
   const handleSubmit = async (values, props) => {
     if (values) {
@@ -30,7 +31,7 @@ function NewBooking() {
         description: values.description,
         remark: values.remark,
         queue: 0,
-        user: '1300200009261', // TODO: set user to logged in user and user's ward
+        user: auth.username,
         ward: values.ward,
         specialist: values.specialist,
         room_types: values.roomTypeSelecteds.toString() // use value in array from useState hook
