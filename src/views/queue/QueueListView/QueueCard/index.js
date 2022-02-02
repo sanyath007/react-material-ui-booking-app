@@ -69,7 +69,14 @@ const QueueCard = ({
           to={`../checkin/${booking.book_id}`}
           className={classes.checkinButton}
           onClick={(e) => {
-            if (booking?.ip?.dchdate) {
+            if (booking.patient?.admit === null) {
+              e.preventDefault();
+
+              window.alert('ไม่สามารถรับเข้าห้องได้ เนื่องจากผู้ป่วยยังไม่ถูก Admit เข้าระบบ HOSxP !!!');
+              return;
+            }
+
+            if (booking?.patient?.admit?.dchdate) {
               e.preventDefault();
 
               window.alert('ผู้ป่วยถูกจำหน่ายแล้วไม่สามารถรับเข้าห้องได้ กรุณาจำหน่ายผู้ป่วยออกจากระบบ!!!');
