@@ -119,9 +119,7 @@ const Results = ({
                     <TableCell align="center">{`${booking.patient?.hometel}`}</TableCell>
                   )}
                   {(screenW > 960) && (
-                    <TableCell>
-                      {`${booking.user?.person_firstname} ${booking.user?.person_lastname}`}
-                    </TableCell>
+                    <TableCell>{booking.created_by}</TableCell>
                   )}
                   <TableCell align="center">
                     <Link
