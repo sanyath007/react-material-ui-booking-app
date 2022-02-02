@@ -27,6 +27,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const specialists = [
+  { id: '', name: 'เลือกสาขา' },
+  { id: '1', name: 'สูติ-นรีเวชกรรม' },
+  { id: '2', name: 'ศัลยกรรม' },
+  { id: '3', name: 'อายุรกรรม' },
+  { id: '4', name: 'กุมารเวชกรรม' },
+  { id: '5', name: 'ศัลยกรรมออร์โธปิดิกส์' },
+  { id: '6', name: 'จักษุ โสต ศอ นาสิก' },
+];
+
 const FormBooking = ({
   booking,
   roomTypes,
@@ -43,11 +53,12 @@ const FormBooking = ({
     book_date: Yup.string().required('กรุณาระบุวันที่จองก่อน'),
     book_name: Yup.string().required('กรุณาระบุชื่อ-สกุลผู้จองก่อน'),
     book_tel: Yup.string().required('กรุณาระบุเบอร์ติดต่อผู้จองก่อน'),
-    // description: Yup.string().required('Description is required'),
-    // remark: Yup.string().required('Remark is required'),
     roomTypeSelecteds: Yup.array().test('', 'กรุณาเลือกประเภทห้องที่อย่างน้อย 1 ประเภท', (value) => {
       return value.length > 0;
     }),
+    specialist: Yup.string().required('กรุณาระบุสาขาที่รักษาก่อน'),
+    // description: Yup.string().required('Description is required'),
+    // remark: Yup.string().required('Remark is required'),
   });
 
   useEffect(() => {
@@ -78,7 +89,9 @@ const FormBooking = ({
 
     if (e.target.value) {
       if (formik.values.hn !== '') {
-        formik.setFieldValue('book_name', `${selectedPatient.pname}${selectedPatient.fname} ${selectedPatient.lname}`);
+        const patientName = `${selectedPatient.pname}${selectedPatient.fname} ${selectedPatient.lname}`;
+
+        formik.setFieldValue('book_name', patientName);
         formik.setFieldValue('book_tel', selectedPatient.hometel);
       } else {
         alert('คุณยังไม่ได้เลือกผู้ป่วย กรุณาเลือกผู้ป่วยก่อน !!!');
@@ -97,10 +110,11 @@ const FormBooking = ({
       enableReinitialize={booking}
       initialValues={{
         id: booking?.book_id || '',
-        an: booking ? `${booking?.an}` : '',
         hn: booking ? `${booking?.hn}` : '',
         patient: booking ? `${booking?.patient?.pname}${booking?.patient?.fname} ${booking?.patient?.lname}` : '',
+        an: booking ? `${booking?.an}` : '',
         ward: booking ? `${booking?.ward}` : '',
+        specialist: booking ? `${booking?.specialist}` : '',
         book_date: moment(booking?.book_date) || new Date(),
         book_name: booking?.book_name || '',
         book_tel: booking?.book_tel || '',
@@ -132,9 +146,9 @@ const FormBooking = ({
                   onSelected={(patient, an, ward) => {
                     setSelectedPatient(patient);
 
+                    formik.setFieldValue('patient', `${patient.pname}${patient.fname} ${patient.lname}`);
                     formik.setFieldValue('hn', patient.hn);
                     formik.setFieldValue('an', an);
-                    formik.setFieldValue('patient', `${patient.pname}${patient.fname} ${patient.lname}`);
                     formik.setFieldValue('ward', ward);
                   }}
                 />
@@ -199,7 +213,7 @@ const FormBooking = ({
                     helperText={<ErrorMessage name="book_tel" />}
                   />
                 </Grid>
-                <Grid item sm={12} xs={12}>
+                <Grid item sm={6} xs={12}>
                   <FormControls.CheckboxGroupInput
                     label="ต้องการจองห้องประเภท (เลือกได้มากกว่า 1)"
                     name="roomTypeSelecteds"
@@ -207,6 +221,16 @@ const FormBooking = ({
                     items={rtypes} // TODO: change all elements of items with id and name
                     itemsDirection="row"
                     error={'roomTypeSelecteds' in formik.errors}
+                  />
+                </Grid>
+                <Grid item sm={6} xs={12}>
+                  <FormControls.SelectInput
+                    label="สาขา"
+                    name="specialist"
+                    value={formik.values.specialist}
+                    handleChange={formik.handleChange}
+                    options={specialists} // TODO: change all elements of items with id and name
+                    error={formik.errors.specialist && formik.touched.specialist}
                   />
                 </Grid>
                 <Grid item sm={6} xs={12}>
