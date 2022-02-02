@@ -97,16 +97,20 @@ const QueueCard = ({
     );
   };
 
+  const an = booking.patient?.admit ? `AN ${booking.patient?.admit?.an}` : 'ยังไม่ได้ Admit';
+
   return (
     <Card>
       <CardContent className={classes.queueCard}>
         {renderSuffix(queue)}
 
         <Typography variant="h4">
-          {`${booking.ip.patient.pname}${booking.ip.patient.fname} ${booking.ip.patient.lname}`}
+          {`${booking.patient.pname}${booking.patient.fname} ${booking.patient.lname}`}
         </Typography>
         <Typography variant="subtitle1">
-          {`HN ${booking.ip.hn} | AN ${booking.ip.an}`}
+          {`HN ${booking.hn}`}
+          <span className="px-2">|</span>
+          {an}
         </Typography>
         <Typography variant="subtitle1">
           <span>วันที่จอง</span>
@@ -116,7 +120,7 @@ const QueueCard = ({
         </Typography>
         <Typography variant="subtitle1">
           <span>วอร์ด</span>
-          <span className={classes.textVal}>{booking?.ip?.ward?.name}</span>
+          <span className={classes.textVal}>{booking?.patient?.admit?.ward?.name}</span>
         </Typography>
       </CardContent>
       <Box flexGrow={1} />
