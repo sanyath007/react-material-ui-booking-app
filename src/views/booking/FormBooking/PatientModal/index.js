@@ -50,7 +50,7 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
             const qs = searchText ? `?search=${searchText}` : '';
 
             dispatch(ipActions.fetchIpAll(qs));
-            // dispatch(fetchPatientAll(qs));
+            dispatch(patientActions.fetchPatients({ qs }));
           }}
           handleIpOnlyChecked={(checked) => setIpOnly(checked)}
         />
@@ -131,6 +131,7 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
             ราย
           </Col>
           <Col>
+
             {ipOnly && (
               <Pagination className="float-right mb-0">
                 <Pagination.First
@@ -172,6 +173,7 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
                 />
               </Pagination>
             )}
+
           </Col>
         </Row>
       </Modal.Body>
