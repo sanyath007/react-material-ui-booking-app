@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Button,
@@ -33,12 +33,12 @@ const CheckinRoom = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const buildings = useSelector((state) => state.building);
   const { bookId } = useParams();
   const [buildings, setBuildings] = useState([]);
   const [building, setBuilding] = useState('');
   const [rooms, setRooms] = useState([]);
   const [booking, setBooking] = useState({});
+  const { auth } = useSelector((state) => state.auth);
 
   const fetchBuildingAll = async () => {
     const res = await api.get('/buildings');
@@ -98,7 +98,8 @@ const CheckinRoom = () => {
       checkinTime: `${checkinTime}:00`,
       haveObserver: haveObserver ? 1 : 0,
       observerName,
-      observerTel
+      observerTel,
+      user: auth.username
     }, navigate));
 
     props.resetForm();
