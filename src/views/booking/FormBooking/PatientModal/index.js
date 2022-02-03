@@ -11,7 +11,7 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 import moment from 'moment';
 import Toolbar from './Toolbar';
-import { ipActions, fetchPatientAll, fetchPatientAllWithPage } from '../../../../redux';
+import { ipActions, patientActions } from '../../../../redux';
 import calcAge from '../../../../utils';
 
 function PatientModal({ isOpen, hideModal, onSelected }) {
@@ -23,14 +23,14 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
   useEffect(() => {
     console.log('On useEffect is called ...');
     dispatch(ipActions.fetchIpAll());
-    dispatch(fetchPatientAll());
+    dispatch(patientActions.fetchPatients({ qs: '' }));
   }, []);
 
   const handlePageItemClick = (url, tbName) => {
     if (tbName === 'ip') {
       dispatch(ipActions.fetchIpAllWithPage(url));
     } else {
-      dispatch(fetchPatientAllWithPage(url));
+      dispatch(patientActions.fetchPatientsWithPage({ url }));
     }
   };
 
@@ -50,7 +50,7 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
             const qs = searchText ? `?search=${searchText}` : '';
 
             dispatch(ipActions.fetchIpAll(qs));
-            dispatch(fetchPatientAll(qs));
+            // dispatch(fetchPatientAll(qs));
           }}
           handleIpOnlyChecked={(checked) => setIpOnly(checked)}
         />
