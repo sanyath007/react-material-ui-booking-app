@@ -1,7 +1,47 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Swal from 'sweetalert2';
 import api from '../../api';
 import { fetchRoomsStatus } from '../room/roomSlice';
+
+export const storeAsync = createAsyncThunk('booking/store', async ({ data, navigate }) => {
+  console.log(navigate);
+  try {
+    const res = await api.post('/bookings', data);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'บันทึกข้อมูลเรียบร้อย !!',
+      showConfirmButton: false,
+      timer: 1500
+    });
+
+    return res.data.booking;
+
+    // navigate('/viproom/app/bookings');
+  } catch (error) {
+    return error;
+  }
+});
+
+export const updateAsync = createAsyncThunk('booking/update', async ({ id, data, navigate }) => {
+  console.log(navigate);
+  try {
+    const res = await api.put(`/bookings/${id}`, data);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'แก้ไขข้อมูลเรียบร้อย !!',
+      showConfirmButton: false,
+      timer: 1500
+    });
+
+    return { id, booking: res.data.booking };
+
+    // navigate('/viproom/app/bookings', { replace: true });
+  } catch (error) {
+    return error;
+  }
+});
 
 export const bookingSlice = createSlice({
   name: 'booking',
@@ -9,6 +49,8 @@ export const bookingSlice = createSlice({
     booking: {},
     bookings: [],
     pager: null,
+    loading: false,
+    error: ''
   },
   reducers: {
     fetchAllSuccess: (state, action) => {
@@ -24,22 +66,6 @@ export const bookingSlice = createSlice({
     fetchHistoriesSuccess: (state, action) => {
       state.bookings = action.payload.items;
       state.pager = action.payload.pager;
-    },
-    storeSuccess: (state, action) => {
-      state.bookings = [...state.bookings, action.payload];
-    },
-    updateSuccess: (state, action) => {
-      const { id, booking: updatedBooking } = action.payload;
-
-      const newBookings = state.bookings.map((booking) => {
-        if (booking.book_id === id) {
-          return updatedBooking;
-        }
-
-        return booking;
-      });
-
-      state.bookings = [...newBookings];
     },
     destroySuccess: (state, action) => {
       const newBookings = state.bookings.filter((booking) => booking.book_id !== action.payload);
@@ -69,6 +95,45 @@ export const bookingSlice = createSlice({
     cancelCheckinSuccess: (state) => {
       return state;
     }
+  },
+  extraReducers: {
+    [storeAsync.pending]: (state) => {
+      state.loading = true;
+      state.error = '';
+    },
+    [storeAsync.fulfilled]: (state, action) => {
+      state.bookings.push(action.payload);
+      state.loading = false;
+      state.error = '';
+    },
+    [storeAsync.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.error;
+    },
+    [updateAsync.pending]: (state) => {
+      state.loading = true;
+      state.error = '';
+    },
+    [updateAsync.fulfilled]: (state, action) => {
+      console.log(action.payload);
+      const { id, booking: updatedBooking } = action.payload;
+
+      const newBookings = state.bookings.map((booking) => {
+        if (booking.book_id === id) {
+          return updatedBooking;
+        }
+
+        return booking;
+      });
+
+      state.bookings = [...newBookings];
+      state.loading = false;
+      state.error = '';
+    },
+    [updateAsync.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.error;
+    }
   }
 });
 
@@ -80,8 +145,6 @@ const {
   fetchBookingฺByIdSuccess,
   fetchBookingฺByAnSuccess,
   fetchHistoriesSuccess,
-  storeSuccess,
-  updateSuccess,
   destroySuccess,
   cancelSuccess,
   dischargeSuccess,
@@ -135,44 +198,6 @@ export const fetchHistories = (id, hn) => async (dispatch) => {
     const res = await api.get(`/bookings/${id}/${hn}/histories`);
     console.log(res);
     return dispatch(fetchHistoriesSuccess(res.data));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const store = (data, navigate) => async (dispatch) => {
-  try {
-    const res = await api.post('/bookings', data);
-
-    Swal.fire({
-      icon: 'success',
-      title: 'บันทึกข้อมูลเรียบร้อย !!',
-      showConfirmButton: false,
-      timer: 1500
-    });
-
-    dispatch(storeSuccess(res.data.booking));
-
-    navigate('/viproom/app/bookings');
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const update = (id, data, navigate) => async (dispatch) => {
-  try {
-    const res = await api.put(`/bookings/${id}`, data);
-
-    Swal.fire({
-      icon: 'success',
-      title: 'แก้ไขข้อมูลเรียบร้อย !!',
-      showConfirmButton: false,
-      timer: 1500
-    });
-
-    dispatch(updateSuccess({ id, booking: res.data.booking }));
-
-    navigate('/viproom/app/bookings', { replace: true });
   } catch (error) {
     console.log(error);
   }

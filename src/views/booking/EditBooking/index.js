@@ -40,7 +40,7 @@ function EditBooking() {
         room_types: values.roomTypeSelecteds.toString() // use value in array from useState hook
       };
 
-      dispatch(bookingActions.update(values.id, data, navigate));
+      dispatch(bookingActions.updateAsync(values.id, data, navigate));
 
       props.resetForm();
     }
