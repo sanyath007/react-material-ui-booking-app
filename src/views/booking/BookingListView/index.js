@@ -27,17 +27,17 @@ const BookingListView = () => {
   };
 
   const handlePageChange = (url, page) => {
-    dispatch(bookingActions.fetchAllWithPage(`${url}?page=${page}`));
+    dispatch(bookingActions.fetchAllWithPageAsync(`${url}?page=${page}`));
   };
 
   const handleSearch = (searchText) => {
     const qs = searchText ? `?search=${searchText}` : '';
 
-    dispatch(bookingActions.fetchBookingAll(qs));
+    dispatch(bookingActions.fetchAllAsync({ qs }));
   };
 
   useEffect(() => {
-    dispatch(bookingActions.fetchBookingAll());
+    dispatch(bookingActions.fetchAllAsync({ qs: '' }));
   }, []);
 
   return (

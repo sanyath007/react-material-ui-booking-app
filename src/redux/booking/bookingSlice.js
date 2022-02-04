@@ -9,9 +9,25 @@ export const fetchAllAsync = createAsyncThunk('booking/fetchAll', async ({ qs })
 
     return res.data;
   } catch (err) {
-    console.log('On catch block ...');
-    console.log('Error is ', err);
+    if ([400, 401, 403, 404, 409, 500].includes(err.response.status)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'พบข้อผิดพลาด !!',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
 
+    return new Promise((resolve, reject) => reject(err));
+  }
+});
+
+export const fetchAllWithPageAsync = createAsyncThunk('booking/fetchAll', async ({ url }) => {
+  try {
+    const res = await api.get(url);
+
+    return res.data;
+  } catch (err) {
     if ([400, 401, 403, 404, 409, 500].includes(err.response.status)) {
       Swal.fire({
         icon: 'error',
@@ -27,7 +43,6 @@ export const fetchAllAsync = createAsyncThunk('booking/fetchAll', async ({ qs })
 
 export const storeAsync = createAsyncThunk('booking/store', async ({ data, navigate }, { dispatch }) => {
   try {
-    console.log('On try block ...');
     await api.post('/bookings', data);
 
     Swal.fire({
@@ -41,9 +56,6 @@ export const storeAsync = createAsyncThunk('booking/store', async ({ data, navig
 
     navigate('/viproom/app/bookings', { replace: true });
   } catch (err) {
-    console.log('On catch block ...');
-    console.log('Error is ', err);
-
     if (err.response.status === 409) {
       Swal.fire({
         icon: 'error',
@@ -153,12 +165,29 @@ export const bookingSlice = createSlice({
     [fetchAllAsync.fulfilled]: (state, action) => {
       const { items, pager } = action.payload;
 
-      state.bookings = items;
+      state.bookings = [...items];
       state.pager = pager;
       state.loading = false;
       state.error = '';
     },
     [fetchAllAsync.rejected]: (state, action) => {
+      console.log(action);
+      state.loading = false;
+      state.error = action.error;
+    },
+    [fetchAllWithPageAsync.pending]: (state) => {
+      state.loading = true;
+      state.error = '';
+    },
+    [fetchAllWithPageAsync.fulfilled]: (state, action) => {
+      const { items, pager } = action.payload;
+
+      state.bookings = [...items];
+      state.pager = pager;
+      state.loading = false;
+      state.error = '';
+    },
+    [fetchAllWithPageAsync.rejected]: (state, action) => {
       console.log(action);
       state.loading = false;
       state.error = action.error;
@@ -206,7 +235,6 @@ export default bookingSlice.reducer;
 
 // Actions
 const {
-  fetchAllSuccess,
   fetchBookingฺByIdSuccess,
   fetchBookingฺByAnSuccess,
   fetchHistoriesSuccess,
@@ -217,26 +245,6 @@ const {
   checkoutSuccess,
   cancelCheckinSuccess,
 } = bookingSlice.actions;
-
-export const fetchBookingAll = (qs = '') => async (dispatch) => {
-  try {
-    const res = await api.get(`/bookings${qs}`);
-    console.log(res);
-    return dispatch(fetchAllSuccess(res.data));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const fetchAllWithPage = (url) => async (dispatch) => {
-  try {
-    const res = await api.get(url);
-
-    return dispatch(fetchAllSuccess(res.data));
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 export const fetchBookingฺById = (id) => async (dispatch) => {
   try {
