@@ -3,10 +3,32 @@ import Swal from 'sweetalert2';
 import api from '../../api';
 import { fetchRoomsStatus } from '../room/roomSlice';
 
-export const storeAsync = createAsyncThunk('booking/store', async ({ data, navigate }) => {
-  console.log(navigate);
+export const fetchAllAsync = createAsyncThunk('booking/fetchAll', async ({ qs }) => {
   try {
-    const res = await api.post('/bookings', data);
+    const res = await api.get(`/bookings${qs}`);
+
+    return res.data;
+  } catch (err) {
+    console.log('On catch block ...');
+    console.log('Error is ', err);
+
+    if ([400, 401, 403, 404, 409, 500].includes(err.response.status)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'พบข้อผิดพลาด !!',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+
+    return new Promise((resolve, reject) => reject(err));
+  }
+});
+
+export const storeAsync = createAsyncThunk('booking/store', async ({ data, navigate }, { dispatch }) => {
+  try {
+    console.log('On try block ...');
+    await api.post('/bookings', data);
 
     Swal.fire({
       icon: 'success',
@@ -15,16 +37,34 @@ export const storeAsync = createAsyncThunk('booking/store', async ({ data, navig
       timer: 1500
     });
 
-    return res.data.booking;
+    dispatch(fetchAllAsync({ qs: '' }));
 
-    // navigate('/viproom/app/bookings');
-  } catch (error) {
-    return error;
+    navigate('/viproom/app/bookings', { replace: true });
+  } catch (err) {
+    console.log('On catch block ...');
+    console.log('Error is ', err);
+
+    if (err.response.status === 409) {
+      Swal.fire({
+        icon: 'error',
+        title: 'ผู้ป่วยมีการจองห้องพิเศษอยู่แล้ว !!',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'พบข้อผิดพลาด !!',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+
+    return new Promise((resolve, reject) => reject(err));
   }
 });
 
 export const updateAsync = createAsyncThunk('booking/update', async ({ id, data, navigate }) => {
-  console.log(navigate);
   try {
     const res = await api.put(`/bookings/${id}`, data);
 
@@ -35,11 +75,20 @@ export const updateAsync = createAsyncThunk('booking/update', async ({ id, data,
       timer: 1500
     });
 
-    return { id, booking: res.data.booking };
+    navigate('/viproom/app/bookings', { replace: true });
 
-    // navigate('/viproom/app/bookings', { replace: true });
-  } catch (error) {
-    return error;
+    return { id, booking: res.data.booking };
+  } catch (err) {
+    if ([400, 401, 403, 404, 409, 500].includes(err.response.status)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'พบข้อผิดพลาด !!',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+
+    return new Promise((resolve, reject) => reject(err));
   }
 });
 
@@ -97,25 +146,41 @@ export const bookingSlice = createSlice({
     }
   },
   extraReducers: {
+    [fetchAllAsync.pending]: (state) => {
+      state.loading = true;
+      state.error = '';
+    },
+    [fetchAllAsync.fulfilled]: (state, action) => {
+      const { items, pager } = action.payload;
+
+      state.bookings = items;
+      state.pager = pager;
+      state.loading = false;
+      state.error = '';
+    },
+    [fetchAllAsync.rejected]: (state, action) => {
+      console.log(action);
+      state.loading = false;
+      state.error = action.error;
+    },
     [storeAsync.pending]: (state) => {
       state.loading = true;
       state.error = '';
     },
-    [storeAsync.fulfilled]: (state, action) => {
-      state.bookings.push(action.payload);
+    [storeAsync.fulfilled]: (state) => {
       state.loading = false;
       state.error = '';
     },
     [storeAsync.rejected]: (state, action) => {
+      console.log(action);
       state.loading = false;
-      state.error = action.payload.error;
+      state.error = action.error;
     },
     [updateAsync.pending]: (state) => {
       state.loading = true;
       state.error = '';
     },
     [updateAsync.fulfilled]: (state, action) => {
-      console.log(action.payload);
       const { id, booking: updatedBooking } = action.payload;
 
       const newBookings = state.bookings.map((booking) => {
@@ -132,7 +197,7 @@ export const bookingSlice = createSlice({
     },
     [updateAsync.rejected]: (state, action) => {
       state.loading = false;
-      state.error = action.payload.error;
+      state.error = action.error;
     }
   }
 });
