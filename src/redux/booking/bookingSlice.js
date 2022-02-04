@@ -104,6 +104,34 @@ export const updateAsync = createAsyncThunk('booking/update', async ({ id, data,
   }
 });
 
+export const destroy = createAsyncThunk('booking/destroy', async ({ id, navigate }, { dispatch }) => {
+  try {
+    await api.delete(`/bookings/${id}`);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'ลบข้อมูลเรียบร้อย !!',
+      showConfirmButton: false,
+      timer: 1500
+    });
+
+    dispatch(fetchAllAsync({ qs: '' }));
+
+    navigate('/viproom/app/bookings', { replace: true });
+  } catch (err) {
+    if ([400, 401, 403, 404, 409, 500].includes(err.response.status)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'พบข้อผิดพลาด !!',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+
+    return new Promise((resolve, reject) => reject(err));
+  }
+});
+
 export const bookingSlice = createSlice({
   name: 'booking',
   initialState: {
@@ -114,10 +142,6 @@ export const bookingSlice = createSlice({
     error: ''
   },
   reducers: {
-    fetchAllSuccess: (state, action) => {
-      state.bookings = action.payload.items;
-      state.pager = action.payload.pager;
-    },
     fetchBookingฺByIdSuccess: (state, action) => {
       state.booking = action.payload;
     },
@@ -127,11 +151,6 @@ export const bookingSlice = createSlice({
     fetchHistoriesSuccess: (state, action) => {
       state.bookings = action.payload.items;
       state.pager = action.payload.pager;
-    },
-    destroySuccess: (state, action) => {
-      const newBookings = state.bookings.filter((booking) => booking.book_id !== action.payload);
-
-      state.bookings = [...newBookings];
     },
     cancelSuccess: (state, action) => {
       const newBookings = state.bookings.filter((booking) => booking.book_id !== action.payload);
@@ -209,22 +228,23 @@ export const bookingSlice = createSlice({
       state.loading = true;
       state.error = '';
     },
-    [updateAsync.fulfilled]: (state, action) => {
-      const { id, booking: updatedBooking } = action.payload;
-
-      const newBookings = state.bookings.map((booking) => {
-        if (booking.book_id === id) {
-          return updatedBooking;
-        }
-
-        return booking;
-      });
-
-      state.bookings = [...newBookings];
+    [updateAsync.fulfilled]: (state) => {
       state.loading = false;
       state.error = '';
     },
     [updateAsync.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
+    [destroy.pending]: (state) => {
+      state.loading = true;
+      state.error = '';
+    },
+    [destroy.fulfilled]: (state) => {
+      state.loading = false;
+      state.error = '';
+    },
+    [destroy.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.error;
     }
@@ -238,7 +258,6 @@ const {
   fetchBookingฺByIdSuccess,
   fetchBookingฺByAnSuccess,
   fetchHistoriesSuccess,
-  destroySuccess,
   cancelSuccess,
   dischargeSuccess,
   checkinSuccess,
@@ -271,23 +290,6 @@ export const fetchHistories = (id, hn) => async (dispatch) => {
     const res = await api.get(`/bookings/${id}/${hn}/histories`);
     console.log(res);
     return dispatch(fetchHistoriesSuccess(res.data));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const destroy = (id) => async (dispatch) => {
-  try {
-    const res = await api.delete(`/bookings/${id}`);
-
-    Swal.fire({
-      icon: 'success',
-      title: 'ลบข้อมูลเรียบร้อย !!',
-      showConfirmButton: false,
-      timer: 1500
-    });
-
-    dispatch(destroySuccess(res.data));
   } catch (error) {
     console.log(error);
   }

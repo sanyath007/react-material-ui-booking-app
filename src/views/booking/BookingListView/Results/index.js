@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Avatar,
@@ -23,6 +23,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import getInitials from 'src/utils/getInitials';
 import useStyles from './styles';
+import { bookingActions } from '../../../../redux';
 
 const Results = ({
   className,
@@ -33,6 +34,8 @@ const Results = ({
   ...rest
 }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [screenW, setScreenW] = useState(window.innerWidth);
   const { auth } = useSelector((state) => state.auth);
@@ -46,10 +49,8 @@ const Results = ({
     onPageChange(pager.path, newPage);
   };
 
-  /** TODO: To handle on delete action */
-  const handleDelete = (event, booking) => {
-    console.log('On delete action...');
-    console.log(booking);
+  const handleDelete = (event, id) => {
+    dispatch(bookingActions.destroy({ id, navigate }));
   };
 
   useEffect(() => {
@@ -141,7 +142,7 @@ const Results = ({
                         to=""
                         title="ลบ"
                         className={classes.delBtn}
-                        onClick={(e) => handleDelete(e, booking)}
+                        onClick={(e) => handleDelete(e, booking.book_id)}
                       >
                         <DeleteIcon />
                       </Link>
