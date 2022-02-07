@@ -34,7 +34,7 @@ const BookingDetail = () => {
 
   useEffect(() => {
     if (bookId) {
-      dispatch(bookingActions.fetchBookingฺById(bookId));
+      dispatch(bookingActions.fetchById({ id: bookId }));
     }
   }, []);
 

@@ -24,6 +24,36 @@ export const fetchAllWithPageAsync = createAsyncThunk('booking/fetchAll', async 
   }
 });
 
+export const fetchById = createAsyncThunk('booking/fetchById', async ({ id }) => {
+  try {
+    const res = await api.get(`/bookings/${id}`);
+
+    return res.data;
+  } catch (err) {
+    errorHandler(err);
+  }
+});
+
+export const fetchByAn = createAsyncThunk('booking/fetchByAn', async ({ an }) => {
+  try {
+    const res = await api.get(`/bookings/an/${an}`);
+
+    return res.data;
+  } catch (err) {
+    errorHandler(err);
+  }
+});
+
+export const fetchHistories = createAsyncThunk('booking/fetchHistories', async ({ id, hn }) => {
+  try {
+    const res = await api.get(`/bookings/${id}/${hn}/histories`);
+
+    return res.data;
+  } catch (err) {
+    errorHandler(err);
+  }
+});
+
 export const storeAsync = createAsyncThunk('booking/store', async ({ data, navigate }, { dispatch }) => {
   try {
     await api.post('/bookings', data);
@@ -200,12 +230,6 @@ export const bookingSlice = createSlice({
     error: ''
   },
   reducers: {
-    fetchBookingฺByIdSuccess: (state, action) => {
-      state.booking = action.payload;
-    },
-    fetchBookingฺByAnSuccess: (state, action) => {
-      state.booking = action.payload;
-    },
     fetchHistoriesSuccess: (state, action) => {
       state.bookings = action.payload.items;
       state.pager = action.payload.pager;
@@ -242,6 +266,49 @@ export const bookingSlice = createSlice({
       state.error = '';
     },
     [fetchAllWithPageAsync.rejected]: (state, action) => {
+      console.log(action);
+      state.loading = false;
+      state.error = action.error;
+    },
+    [fetchById.pending]: (state) => {
+      state.loading = true;
+      state.error = '';
+    },
+    [fetchById.fulfilled]: (state, action) => {
+      state.booking = action.payload;
+      state.loading = false;
+      state.error = '';
+    },
+    [fetchById.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
+    [fetchByAn.pending]: (state) => {
+      state.loading = true;
+      state.error = '';
+    },
+    [fetchByAn.fulfilled]: (state, action) => {
+      state.booking = action.payload;
+      state.loading = false;
+      state.error = '';
+    },
+    [fetchByAn.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
+    [fetchHistories.pending]: (state) => {
+      state.loading = true;
+      state.error = '';
+    },
+    [fetchHistories.fulfilled]: (state, action) => {
+      const { items, pager } = action.payload;
+
+      state.bookings = [...items];
+      state.pager = pager;
+      state.loading = false;
+      state.error = '';
+    },
+    [fetchHistories.rejected]: (state, action) => {
       console.log(action);
       state.loading = false;
       state.error = action.error;
@@ -347,40 +414,3 @@ export const bookingSlice = createSlice({
 });
 
 export default bookingSlice.reducer;
-
-// Actions
-const {
-  fetchBookingฺByIdSuccess,
-  fetchBookingฺByAnSuccess,
-  fetchHistoriesSuccess,
-} = bookingSlice.actions;
-
-export const fetchBookingฺById = (id) => async (dispatch) => {
-  try {
-    const res = await api.get(`/bookings/${id}`);
-
-    return dispatch(fetchBookingฺByIdSuccess(res.data));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const fetchBookingฺByAn = (an) => async (dispatch) => {
-  try {
-    const res = await api.get(`/bookings/an/${an}`);
-
-    return dispatch(fetchBookingฺByAnSuccess(res.data));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const fetchHistories = (id, hn) => async (dispatch) => {
-  try {
-    const res = await api.get(`/bookings/${id}/${hn}/histories`);
-    console.log(res);
-    return dispatch(fetchHistoriesSuccess(res.data));
-  } catch (error) {
-    console.log(error);
-  }
-};
