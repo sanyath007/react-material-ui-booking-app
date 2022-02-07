@@ -97,9 +97,9 @@ export const destroy = createAsyncThunk('booking/destroy', async ({ id, navigate
   }
 });
 
-export const cancel = createAsyncThunk('booking/cancel', async ({ id, navigate }, { dispatch }) => {
+export const cancel = createAsyncThunk('booking/cancel', async ({ id, user, navigate }, { dispatch }) => {
   try {
-    const res = await api.put(`/bookings/${id}/cancel`);
+    const res = await api.put(`/bookings/${id}/cancel`, { user });
     console.log(res);
 
     Swal.fire({
@@ -117,9 +117,9 @@ export const cancel = createAsyncThunk('booking/cancel', async ({ id, navigate }
   }
 });
 
-export const discharge = createAsyncThunk('booking/cancel', async ({ id, navigate }, { dispatch }) => {
+export const discharge = createAsyncThunk('booking/cancel', async ({ id, user, navigate }, { dispatch }) => {
   try {
-    const res = await api.put(`/bookings/${id}/discharge`);
+    const res = await api.put(`/bookings/${id}/discharge`, { user });
     console.log(res);
 
     Swal.fire({

@@ -51,7 +51,7 @@ const Toolbar = ({ className, booking, ...rest }) => {
       cancelButtonText: 'ยกเลิก'
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(bookingActions.cancel(_id, navigate));
+        dispatch(bookingActions.cancel({ id: _id, user: auth.username, navigate }));
       }
     });
   };
@@ -68,7 +68,7 @@ const Toolbar = ({ className, booking, ...rest }) => {
       cancelButtonText: 'ยกเลิก'
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(bookingActions.discharge(_id, navigate));
+        dispatch(bookingActions.discharge({ id: _id, user: auth.username, navigate }));
       }
     });
   };
