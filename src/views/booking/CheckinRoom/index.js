@@ -91,7 +91,7 @@ const CheckinRoom = () => {
       observerTel
     } = values;
 
-    dispatch(checkin({
+    const data = {
       bookId,
       roomId,
       checkinDate: moment(checkinDate).format('YYYY-MM-DD'),
@@ -100,7 +100,9 @@ const CheckinRoom = () => {
       observerName,
       observerTel,
       user: auth.username
-    }, navigate));
+    };
+
+    dispatch(checkin({ data, navigate }));
 
     props.resetForm();
   };

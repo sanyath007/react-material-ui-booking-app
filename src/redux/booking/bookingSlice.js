@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Swal from 'sweetalert2';
-import api from '../../api';
+import errorHandler from 'src/utils/responseErrorHandler';
 import { fetchRoomsStatus } from '../room/roomSlice';
+import api from '../../api';
 
 export const fetchAllAsync = createAsyncThunk('booking/fetchAll', async ({ qs }) => {
   try {
@@ -9,16 +10,7 @@ export const fetchAllAsync = createAsyncThunk('booking/fetchAll', async ({ qs })
 
     return res.data;
   } catch (err) {
-    if ([400, 401, 403, 404, 409, 500].includes(err.response.status)) {
-      Swal.fire({
-        icon: 'error',
-        title: 'พบข้อผิดพลาด !!',
-        showConfirmButton: false,
-        timer: 1500
-      });
-    }
-
-    return new Promise((resolve, reject) => reject(err));
+    errorHandler(err);
   }
 });
 
@@ -28,16 +20,7 @@ export const fetchAllWithPageAsync = createAsyncThunk('booking/fetchAll', async 
 
     return res.data;
   } catch (err) {
-    if ([400, 401, 403, 404, 409, 500].includes(err.response.status)) {
-      Swal.fire({
-        icon: 'error',
-        title: 'พบข้อผิดพลาด !!',
-        showConfirmButton: false,
-        timer: 1500
-      });
-    }
-
-    return new Promise((resolve, reject) => reject(err));
+    errorHandler(err);
   }
 });
 
@@ -91,16 +74,7 @@ export const updateAsync = createAsyncThunk('booking/update', async ({ id, data,
 
     return { id, booking: res.data.booking };
   } catch (err) {
-    if ([400, 401, 403, 404, 409, 500].includes(err.response.status)) {
-      Swal.fire({
-        icon: 'error',
-        title: 'พบข้อผิดพลาด !!',
-        showConfirmButton: false,
-        timer: 1500
-      });
-    }
-
-    return new Promise((resolve, reject) => reject(err));
+    errorHandler(err);
   }
 });
 
@@ -119,16 +93,102 @@ export const destroy = createAsyncThunk('booking/destroy', async ({ id, navigate
 
     navigate('/viproom/app/bookings', { replace: true });
   } catch (err) {
-    if ([400, 401, 403, 404, 409, 500].includes(err.response.status)) {
-      Swal.fire({
-        icon: 'error',
-        title: 'พบข้อผิดพลาด !!',
-        showConfirmButton: false,
-        timer: 1500
-      });
-    }
+    errorHandler(err);
+  }
+});
 
-    return new Promise((resolve, reject) => reject(err));
+export const cancel = createAsyncThunk('booking/cancel', async ({ id, navigate }, { dispatch }) => {
+  try {
+    const res = await api.put(`/bookings/${id}/cancel`);
+    console.log(res);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'ยกเลิกการจองห้องเรียบร้อย !!',
+      showConfirmButton: false,
+      timer: 1500
+    });
+
+    dispatch(fetchAllAsync({ qs: '' }));
+
+    navigate('/viproom/app/bookings', { replace: true });
+  } catch (err) {
+    errorHandler(err);
+  }
+});
+
+export const discharge = createAsyncThunk('booking/cancel', async ({ id, navigate }, { dispatch }) => {
+  try {
+    const res = await api.put(`/bookings/${id}/discharge`);
+    console.log(res);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'จำหน่ายผู้ป่วยเรียบร้อย !!',
+      showConfirmButton: false,
+      timer: 1500
+    });
+
+    dispatch(fetchAllAsync({ qs: '' }));
+
+    navigate('/viproom/app/bookings', { replace: true });
+  } catch (err) {
+    errorHandler(err);
+  }
+});
+
+export const checkin = createAsyncThunk('booking/checkin', async ({ data, navigate }) => {
+  try {
+    const res = await api.post('/bookings/checkin', data);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'บันทึกรับผู้ป่วยเข้าห้องเรียบร้อย !!',
+      showConfirmButton: false,
+      timer: 1500
+    });
+
+    navigate('/viproom/app/status');
+
+    return res.data;
+  } catch (err) {
+    errorHandler(err);
+  }
+});
+
+export const checkout = createAsyncThunk('booking/checkout', async ({ bookId, roomId }, { dispatch }) => {
+  try {
+    const res = await api.put(`/bookings/${bookId}/${roomId}/checkout`);
+    console.log(res);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'บันทึกรับผู้ป่วยออกจากห้องเรียบร้อย !!',
+      showConfirmButton: false,
+      timer: 1500
+    });
+
+    dispatch(fetchRoomsStatus());
+  } catch (err) {
+    errorHandler(err);
+  }
+});
+
+export const cancelCheckin = createAsyncThunk('booking/cancel', async ({ bookId, roomId }, { dispatch }) => {
+  try {
+    const res = await api.put(`/bookings/${bookId}/${roomId}/cancel-checkin`);
+    console.log(res);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'ยกเลิกการรับผู้ป่วยเข้าห้องเรียบร้อย !!',
+      showConfirmButton: false,
+      timer: 1500
+    });
+
+    dispatch(fetchRoomsStatus());
+  } catch (err) {
+    errorHandler(err);
   }
 });
 
@@ -152,29 +212,6 @@ export const bookingSlice = createSlice({
       state.bookings = action.payload.items;
       state.pager = action.payload.pager;
     },
-    cancelSuccess: (state, action) => {
-      const newBookings = state.bookings.filter((booking) => booking.book_id !== action.payload);
-
-      state.bookings = [...newBookings];
-    },
-    dischargeSuccess: (state, action) => {
-      const newBookings = state.bookings.filter((booking) => booking.book_id !== action.payload);
-
-      state.bookings = [...newBookings];
-    },
-    checkinSuccess: (state, action) => {
-      const newBookings = state.bookings.filter((booking) => {
-        return booking.book_id !== action.payload.book_id;
-      });
-
-      state.bookings = [...newBookings];
-    },
-    checkoutSuccess: (state) => {
-      return state;
-    },
-    cancelCheckinSuccess: (state) => {
-      return state;
-    }
   },
   extraReducers: {
     [fetchAllAsync.pending]: (state) => {
@@ -247,6 +284,66 @@ export const bookingSlice = createSlice({
     [destroy.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.error;
+    },
+    [cancel.pending]: (state) => {
+      state.loading = true;
+      state.error = '';
+    },
+    [cancel.fulfilled]: (state) => {
+      state.loading = false;
+      state.error = '';
+    },
+    [cancel.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
+    [discharge.pending]: (state) => {
+      state.loading = true;
+      state.error = '';
+    },
+    [discharge.fulfilled]: (state) => {
+      state.loading = false;
+      state.error = '';
+    },
+    [discharge.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
+    [checkin.pending]: (state) => {
+      state.loading = true;
+      state.error = '';
+    },
+    [checkin.fulfilled]: (state) => {
+      state.loading = false;
+      state.error = '';
+    },
+    [checkin.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
+    [checkout.pending]: (state) => {
+      state.loading = true;
+      state.error = '';
+    },
+    [checkout.fulfilled]: (state) => {
+      state.loading = false;
+      state.error = '';
+    },
+    [checkout.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
+    [cancelCheckin.pending]: (state) => {
+      state.loading = true;
+      state.error = '';
+    },
+    [cancelCheckin.fulfilled]: (state) => {
+      state.loading = false;
+      state.error = '';
+    },
+    [cancelCheckin.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
     }
   }
 });
@@ -258,11 +355,6 @@ const {
   fetchBookingฺByIdSuccess,
   fetchBookingฺByAnSuccess,
   fetchHistoriesSuccess,
-  cancelSuccess,
-  dischargeSuccess,
-  checkinSuccess,
-  checkoutSuccess,
-  cancelCheckinSuccess,
 } = bookingSlice.actions;
 
 export const fetchBookingฺById = (id) => async (dispatch) => {
@@ -290,104 +382,6 @@ export const fetchHistories = (id, hn) => async (dispatch) => {
     const res = await api.get(`/bookings/${id}/${hn}/histories`);
     console.log(res);
     return dispatch(fetchHistoriesSuccess(res.data));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const cancel = (id, navigate) => async (dispatch) => {
-  try {
-    const res = await api.put(`/bookings/${id}/cancel`);
-    console.log(res);
-
-    Swal.fire({
-      icon: 'success',
-      title: 'ยกเลิกการจองห้องเรียบร้อย !!',
-      showConfirmButton: false,
-      timer: 1500
-    });
-
-    navigate('/viproom/app/bookings');
-
-    dispatch(cancelSuccess(id));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const discharge = (id, navigate) => async (dispatch) => {
-  try {
-    const res = await api.put(`/bookings/${id}/discharge`);
-    console.log(res);
-
-    Swal.fire({
-      icon: 'success',
-      title: 'จำหน่ายผู้ป่วยเรียบร้อย !!',
-      showConfirmButton: false,
-      timer: 1500
-    });
-
-    navigate('/viproom/app/bookings');
-
-    dispatch(dischargeSuccess(id));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const checkin = (data, navigate) => async (dispatch) => {
-  try {
-    const res = await api.post('/bookings/checkin', data);
-    console.log(res);
-
-    Swal.fire({
-      icon: 'success',
-      title: 'บันทึกรับผู้ป่วยเข้าห้องเรียบร้อย !!',
-      showConfirmButton: false,
-      timer: 1500
-    });
-
-    navigate('/viproom/app/status');
-
-    dispatch(checkinSuccess(res.data));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const checkout = (bookId, roomId) => async (dispatch) => {
-  try {
-    const res = await api.put(`/bookings/${bookId}/${roomId}/checkout`);
-    console.log(res);
-
-    Swal.fire({
-      icon: 'success',
-      title: 'บันทึกรับผู้ป่วยออกจากห้องเรียบร้อย !!',
-      showConfirmButton: false,
-      timer: 1500
-    });
-
-    dispatch(checkoutSuccess());
-    dispatch(fetchRoomsStatus());
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const cancelCheckin = (bookId, roomId) => async (dispatch) => {
-  try {
-    const res = await api.put(`/bookings/${bookId}/${roomId}/cancel-checkin`);
-    console.log(res);
-
-    Swal.fire({
-      icon: 'success',
-      title: 'ยกเลิกการรับผู้ป่วยเข้าห้องเรียบร้อย !!',
-      showConfirmButton: false,
-      timer: 1500
-    });
-
-    dispatch(cancelCheckinSuccess());
-    dispatch(fetchRoomsStatus());
   } catch (error) {
     console.log(error);
   }
