@@ -25,7 +25,7 @@ const BedCard = ({ room, used }) => {
       cancelButtonText: 'ยกเลิก'
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(bookingActions.checkout(bookId, roomId));
+        dispatch(bookingActions.checkout({ bookId, roomId }));
       }
     });
   };
@@ -42,14 +42,13 @@ const BedCard = ({ room, used }) => {
       cancelButtonText: 'ยกเลิก'
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(bookingActions.cancelCheckin(bookId, roomId));
+        dispatch(bookingActions.cancelCheckin({ bookId, roomId }));
       }
     });
   };
 
   return (
     <Card>
-      {/* // TODO: styling CardContent */}
       <CardContent style={{ height: '200px', fontSize: '14px' }}>
         <h5>{room.room_name}</h5>
 
