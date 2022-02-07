@@ -13,7 +13,7 @@ const BedCard = ({ room, used }) => {
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state.auth);
 
-  const handleDischargeClick = (bookId, roomId) => {
+  const handleCheckoutClick = (bookId, roomId) => {
     Swal.fire({
       title: 'Are you sure?',
       text: 'คุณต้องการจำหน่ายผู้ป่วย ใช่หรือไม่ ?',
@@ -25,7 +25,7 @@ const BedCard = ({ room, used }) => {
       cancelButtonText: 'ยกเลิก'
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(bookingActions.checkout({ bookId, roomId }));
+        dispatch(bookingActions.checkout({ bookId, roomId, user: auth.username }));
       }
     });
   };
@@ -42,7 +42,7 @@ const BedCard = ({ room, used }) => {
       cancelButtonText: 'ยกเลิก'
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(bookingActions.cancelCheckin({ bookId, roomId }));
+        dispatch(bookingActions.cancelCheckin({ bookId, roomId, user: auth.username }));
       }
     });
   };
@@ -84,7 +84,7 @@ const BedCard = ({ room, used }) => {
               variant="contained"
               color="primary"
               onClick={() => {
-                handleDischargeClick(used.booking_room.book_id, used.booking_room.room_id);
+                handleCheckoutClick(used.booking_room.book_id, used.booking_room.room_id);
               }}
               endIcon={<MeetingRoomIcon fontSize="small" />}
             >

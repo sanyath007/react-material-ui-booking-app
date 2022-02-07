@@ -156,9 +156,9 @@ export const checkin = createAsyncThunk('booking/checkin', async ({ data, naviga
   }
 });
 
-export const checkout = createAsyncThunk('booking/checkout', async ({ bookId, roomId }, { dispatch }) => {
+export const checkout = createAsyncThunk('booking/checkout', async ({ bookId, roomId, user }, { dispatch }) => {
   try {
-    await api.put(`/bookings/${bookId}/${roomId}/checkout`);
+    await api.put(`/bookings/${bookId}/${roomId}/checkout`, { user });
 
     Swal.fire({
       icon: 'success',
@@ -173,9 +173,9 @@ export const checkout = createAsyncThunk('booking/checkout', async ({ bookId, ro
   }
 });
 
-export const cancelCheckin = createAsyncThunk('booking/cancel', async ({ bookId, roomId }, { dispatch }) => {
+export const cancelCheckin = createAsyncThunk('booking/cancel', async ({ bookId, roomId, user }, { dispatch }) => {
   try {
-    await api.put(`/bookings/${bookId}/${roomId}/cancel-checkin`);
+    await api.put(`/bookings/${bookId}/${roomId}/cancel-checkin`, { user });
 
     Swal.fire({
       icon: 'success',
