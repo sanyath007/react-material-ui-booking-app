@@ -40,7 +40,7 @@ const BookingHistoryList = ({
   };
 
   useEffect(() => {
-    dispatch(bookingActions.fetchHistories(booking.book_id, booking.hn));
+    dispatch(bookingActions.fetchHistories({ id: booking.book_id, hn: booking.hn }));
   }, [booking]);
 
   return (
@@ -59,22 +59,30 @@ const BookingHistoryList = ({
               <TableHead>
                 <TableRow>
                   <TableCell align="center" width="5%">#</TableCell>
-                  <TableCell align="center" width="20%">วันที่ Admit</TableCell>
+                  <TableCell align="center" width="20%">วันที่จอง</TableCell>
                   <TableCell align="center" width="20%">วันที่รับเข้า</TableCell>
                   <TableCell align="center" width="20%">วันที่รับออก</TableCell>
                   <TableCell align="center">วอร์ด</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {bookings && bookings.map((bk) => (
-                  <TableRow hover key={bk.book_id}>
-                    <TableCell align="center">{bk.book_id}</TableCell>
-                    <TableCell align="center">{moment().format('DD/MM/YYYY')}</TableCell>
-                    <TableCell align="center">{moment().format('DD/MM/YYYY')}</TableCell>
-                    <TableCell align="center">{moment().format('DD/MM/YYYY')}</TableCell>
-                    <TableCell align="center">xxx</TableCell>
-                  </TableRow>
-                ))}
+                {bookings && bookings.map((history) => {
+                  return history.room.length > 0 ? (
+                    <TableRow hover key={history.book_id}>
+                      <TableCell align="center">{history.book_id}</TableCell>
+                      <TableCell align="center">{moment(history.book_date).format('DD/MM/YYYY')}</TableCell>
+                      <TableCell align="center">{moment(history.room[0].checkin_date).format('DD/MM/YYYY')}</TableCell>
+                      <TableCell align="center">{moment(history.room[0].checkout_date).format('DD/MM/YYYY')}</TableCell>
+                      <TableCell align="center">{history.room[0].room_id}</TableCell>
+                    </TableRow>
+                  ) : (
+                    <TableRow hover key={history.book_id}>
+                      <TableCell align="center" colSpan={5} style={{ color: 'red' }}>
+                        -- ไม่พบข้อมูลการเข้าพัก --
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </Box>
