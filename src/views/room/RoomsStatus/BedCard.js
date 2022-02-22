@@ -56,13 +56,13 @@ const BedCard = ({ room, used }) => {
           <Alert variant="danger" style={{ padding: '10px', marginBottom: '5px' }}>
             <div style={{ height: '80px' }}>
               <p style={{ margin: '0' }}>
-                {`AN : ${used.booking_room?.booking?.ip?.an} HN: ${used.booking_room?.booking?.ip?.hn}`}
+                {`AN : ${used.booking_room?.booking?.patient.admit?.an} HN: ${used.booking_room?.booking?.patient?.hn}`}
               </p>
               <p style={{ margin: '0' }}>
-                {`ผู้ป่วย : ${used.booking_room?.booking?.ip?.patient?.pname}${used.booking_room?.booking?.ip?.patient?.fname} ${used.booking_room?.booking?.ip?.patient?.lname}`}
+                {`ผู้ป่วย : ${used.booking_room?.booking?.patient?.pname}${used.booking_room?.booking?.patient?.fname} ${used.booking_room?.booking?.patient?.lname}`}
               </p>
               <p style={{ margin: '0' }}>
-                {`วันที่ Admit : ${moment(used.booking_room?.booking?.ip?.regdate).format('DD/MM/YYYY')}`}
+                {`วันที่ Admit : ${moment(used.booking_room?.booking?.patient.admit?.regdate).format('DD/MM/YYYY')}`}
               </p>
               <p style={{ margin: '0' }}>
                 {`วันที่ย้ายเข้า : ${moment(used.booking_room?.checkin_date).format('DD/MM/YYYY')} ${used.booking_room?.checkin_time}`}
