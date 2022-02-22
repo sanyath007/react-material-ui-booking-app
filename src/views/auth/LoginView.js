@@ -16,6 +16,7 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
+import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 // import FacebookIcon from 'src/icons/Facebook';
 // import GoogleIcon from 'src/icons/Google';
 import Page from 'src/components/Page';
@@ -42,6 +43,8 @@ const LoginView = () => {
       props.resetForm();
     }
   };
+
+  console.log(process.env.REACT_APP_API_URL);
 
   return (
     <Page
@@ -177,6 +180,7 @@ const LoginView = () => {
                     เข้าสู่ระบบ
                   </Button>
                 </Box>
+
                 {/* <Typography
                   color="textSecondary"
                   variant="body1"
@@ -191,6 +195,17 @@ const LoginView = () => {
                     Sign up
                   </Link>
                 </Typography> */}
+
+                <Typography
+                  color="textSecondary"
+                  variant="body1"
+                >
+                  <PictureAsPdfIcon />
+                  {' '}
+                  <a href={`${process.env.REACT_APP_API_URL}assets/uploads/manuals/user_v1.pdf`}>
+                    คู่มือการใช้งาน
+                  </a>
+                </Typography>
               </form>
             )}
           </Formik>
