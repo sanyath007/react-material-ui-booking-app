@@ -44,8 +44,6 @@ const LoginView = () => {
     }
   };
 
-  console.log(process.env.REACT_APP_API_URL);
-
   return (
     <Page
       className={classes.root}
@@ -60,8 +58,8 @@ const LoginView = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              username: 'sanyath',
-              password: '0810736804'
+              username: '',
+              password: ''
             }}
             validationSchema={Yup.object().shape({
               username: Yup.string().max(255).required('Username is required'),
