@@ -1,6 +1,20 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createAsyncThunk,
+} from '@reduxjs/toolkit';
 import Swal from 'sweetalert2';
+import errorHandler from 'src/utils/responseErrorHandler';
 import api from '../../api';
+
+export const fetchAll = createAsyncThunk('room/fetchAll', async () => {
+  try {
+    const res = await api.get('/rooms');
+
+    return res.data;
+  } catch (error) {
+    errorHandler(error);
+  }
+});
 
 export const roomSlice = createSlice({
   name: 'room',
@@ -12,6 +26,8 @@ export const roomSlice = createSlice({
     floor2: [],
     floor3: [],
     usedRooms: [],
+    loading: false,
+    error: ''
   },
   reducers: {
     fetchAllSuccess: (state, action) => {
@@ -36,6 +52,16 @@ export const roomSlice = createSlice({
       } else {
         state.filteredRooms = state.rooms;
       }
+    },
+    filterRoomByBuilding: (state, action) => {
+      state.filteredRooms = state.rooms.filter((room) => {
+        return room.building?.building_id === action.payload;
+      });
+    },
+    filterRoomByFloor: (state, action) => {
+      state.filteredRooms = state.rooms.filter((room) => {
+        return room.floor === action.payload;
+      });
     },
     storeSuccess: (state, action) => {
       state.rooms = [...state.rooms, action.payload];
@@ -85,11 +111,26 @@ export const roomSlice = createSlice({
       state.rooms = [...newRooms];
       state.filteredRooms = [...newRooms];
     },
+  },
+  extraReducers: {
+    [fetchAll.pending]: (state) => {
+      state.loading = true;
+      state.error = '';
+    },
+    [fetchAll.fulfilled]: (state, action) => {
+      state.rooms = action.payload.items;
+      state.pager = action.payload.pager;
+      state.loading = false;
+    },
+    [fetchAll.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    }
   }
 });
 
 export default roomSlice.reducer;
-
+export const { filterRoomByBuilding, filterRoomByFloor } = roomSlice.actions;
 // Actions
 const {
   fetchAllSuccess,
@@ -216,4 +257,8 @@ export const destroy = (id) => async (dispatch) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const getRoomsById = (state, id) => {
+  return state.room.rooms.filter((room) => room.room_id === id);
 };

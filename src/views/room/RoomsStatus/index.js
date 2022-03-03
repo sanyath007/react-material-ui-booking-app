@@ -19,6 +19,7 @@ const RoomsStatus = () => {
 
   useEffect(() => {
     dispatch(roomActions.fetchRoomsStatus());
+    dispatch(roomActions.fetchAll());
   }, []);
 
   return (
