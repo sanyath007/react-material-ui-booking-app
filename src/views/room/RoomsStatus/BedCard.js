@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Card, CardContent } from '@material-ui/core';
 import { Alert } from 'react-bootstrap';
 import Swal from 'sweetalert2';
-import EventBusyIcon from '@material-ui/icons/EventBusy';
-import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import CancelIcon from '@material-ui/icons/Cancel';
+import CachedIcon from '@material-ui/icons/Cached';
 import { bookingActions } from '../../../redux';
 
 const BedCard = ({ room, used }) => {
@@ -28,6 +29,10 @@ const BedCard = ({ room, used }) => {
         dispatch(bookingActions.checkout({ bookId, roomId, user: auth.username }));
       }
     });
+  };
+
+  const handleMoveClick = (bookId, roomId) => {
+    console.log(bookId, roomId);
   };
 
   const handleCancelCheckinClick = (bookId, roomId) => {
@@ -78,7 +83,7 @@ const BedCard = ({ room, used }) => {
         )}
 
         {[1, 2].includes(parseInt(auth.role, 10)) && used && (
-          <>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Button
               size="small"
               variant="contained"
@@ -86,9 +91,20 @@ const BedCard = ({ room, used }) => {
               onClick={() => {
                 handleCheckoutClick(used.booking_room.book_id, used.booking_room.room_id);
               }}
-              endIcon={<MeetingRoomIcon fontSize="small" />}
+              endIcon={<ExitToAppIcon fontSize="small" />}
             >
               D/C
+            </Button>
+
+            <Button
+              size="small"
+              variant="outlined"
+              onClick={() => {
+                handleMoveClick(used.booking_room.book_id, used.booking_room.room_id);
+              }}
+              endIcon={<CachedIcon fontSize="small" />}
+            >
+              ย้ายห้อง
             </Button>
 
             <Button
@@ -99,11 +115,11 @@ const BedCard = ({ room, used }) => {
                 handleCancelCheckinClick(used.booking_room.book_id, used.booking_room.room_id);
               }}
               className="float-right"
-              endIcon={<EventBusyIcon fontSize="small" />}
+              endIcon={<CancelIcon fontSize="small" />}
             >
               ยกเลิก
             </Button>
-          </>
+          </div>
         )}
       </CardContent>
     </Card>
