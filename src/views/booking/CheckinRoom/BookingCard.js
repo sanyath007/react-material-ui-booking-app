@@ -105,7 +105,7 @@ const BookingCard = ({ booking }) => {
           <Grid item xs={12} sm={12} md={6}>
             <Typography variant="subtitle2" className={classes.textProperty}>AN</Typography>
             <Typography className={classes.textPropertyValue}>
-              {booking?.an}
+              {booking?.patient?.admit?.an}
             </Typography>
             <Divider style={{ marginTop: '5px' }} />
           </Grid>
