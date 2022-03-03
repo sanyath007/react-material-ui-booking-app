@@ -7,6 +7,7 @@ import * as patientActions from './patient/patientSlice';
 import * as ipActions from './ip/ipSlice';
 import * as userActions from './user/userSlice';
 import * as authActions from './auth/authSlice';
+import * as specialistActions from './specialist';
 
 export {
   authActions,
@@ -18,4 +19,5 @@ export {
   bookingActions,
   patientActions,
   ipActions,
+  specialistActions,
 };

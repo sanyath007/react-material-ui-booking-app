@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { Button } from 'react-bootstrap';
 import {
@@ -11,6 +12,7 @@ import {
 import FormControls from 'src/components/Forms';
 import { Formik, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { specialistActions } from 'src/redux';
 import PatientModal from './PatientModal';
 
 const useStyles = makeStyles((theme) => ({
@@ -27,22 +29,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const specialists = [
-  { id: '', name: 'เลือกสาขา' },
-  { id: '1', name: 'สูติ-นรีเวชกรรม' },
-  { id: '2', name: 'ศัลยกรรม' },
-  { id: '3', name: 'อายุรกรรม' },
-  { id: '4', name: 'กุมารเวชกรรม' },
-  { id: '5', name: 'ศัลยกรรมกระดูกและข้อ' },
-  { id: '6', name: 'จักษุ โสต ศอ นาสิก' },
-];
-
 const FormBooking = ({
   booking,
   roomTypes,
   handleSubmit
 }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const { specialists } = useSelector((state) => state.specialist);
   const [rtypes, setRtypes] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [isPatientReserve, setIsPatientReserve] = useState(false);
@@ -60,6 +54,10 @@ const FormBooking = ({
     // description: Yup.string().required('Description is required'),
     // remark: Yup.string().required('Remark is required'),
   });
+
+  useEffect(() => {
+    dispatch(specialistActions.fetchAll({ queryParams: '' }));
+  }, []);
 
   useEffect(() => {
     const bookingRoomTypes = booking?.room_types?.split(',');
