@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,10 +9,12 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CachedIcon from '@material-ui/icons/Cached';
 import { bookingActions } from '../../../redux';
+import MovingRoomModal from './MovingRoomModal';
 
 const BedCard = ({ room, used }) => {
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state.auth);
+  const [openModal, setOpenModal] = useState(false);
 
   const handleCheckoutClick = (bookId, roomId) => {
     Swal.fire({
@@ -33,6 +35,7 @@ const BedCard = ({ room, used }) => {
 
   const handleMoveClick = (bookId, roomId) => {
     console.log(bookId, roomId);
+    setOpenModal(true);
   };
 
   const handleCancelCheckinClick = (bookId, roomId) => {
@@ -56,6 +59,11 @@ const BedCard = ({ room, used }) => {
     <Card>
       <CardContent style={{ height: '200px', fontSize: '14px' }}>
         <h5>{room.room_name}</h5>
+
+        <MovingRoomModal
+          isOpen={openModal}
+          onHide={() => setOpenModal(false)}
+        />
 
         {used ? (
           <Alert variant="danger" style={{ padding: '10px', marginBottom: '5px' }}>
