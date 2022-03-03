@@ -11,19 +11,21 @@ import { Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import { filterRoomByBuilding, filterRoomByFloor } from 'src/redux/room/roomSlice';
 
-const MovingRoomModal = ({ isOpen, onHide }) => {
+const MovingRoomModal = ({ isOpen, onHide, booking }) => {
   const dispatch = useDispatch();
   const { filteredRooms } = useSelector((state) => state.room);
   const [building, setBuilding] = useState('');
   const [floor, setFloor] = useState('');
+  const [selectedRoom, setSelectedRoom] = useState('');
 
   useEffect(() => {
-    console.log('====================================');
-    console.log('Reset inputs....');
-    console.log('====================================');
     setBuilding('');
     setFloor('');
   }, [isOpen]);
+
+  const onSave = () => {
+    console.log(booking);
+  };
 
   return (
     <Modal
@@ -70,7 +72,12 @@ const MovingRoomModal = ({ isOpen, onHide }) => {
             </Form.Group>
             <Form.Group>
               <Form.Label>ห้อง</Form.Label>
-              <select name="room" className="form-control">
+              <select
+                name="room"
+                value={selectedRoom}
+                className="form-control"
+                onChange={(e) => setSelectedRoom(e.target.value)}
+              >
                 <option value="">เลือกห้อง</option>
                 {filteredRooms && filteredRooms.map((room) => {
                   return (
@@ -89,9 +96,7 @@ const MovingRoomModal = ({ isOpen, onHide }) => {
           size="small"
           variant="contained"
           color="primary"
-          onClick={() => {
-            console.log(dispatch);
-          }}
+          onClick={onSave}
           endIcon={<SendIcon fontSize="small" />}
         >
           บันทึก
@@ -104,6 +109,7 @@ const MovingRoomModal = ({ isOpen, onHide }) => {
 MovingRoomModal.propTypes = {
   isOpen: PropTypes.bool,
   onHide: PropTypes.func,
+  booking: PropTypes.any
 };
 
 export default MovingRoomModal;

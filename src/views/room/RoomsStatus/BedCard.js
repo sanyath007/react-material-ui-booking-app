@@ -15,6 +15,7 @@ const BedCard = ({ room, used }) => {
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state.auth);
   const [openModal, setOpenModal] = useState(false);
+  const [moved, setMoved] = useState(null);
 
   const handleCheckoutClick = (bookId, roomId) => {
     Swal.fire({
@@ -33,8 +34,8 @@ const BedCard = ({ room, used }) => {
     });
   };
 
-  const handleMoveClick = (bookId, roomId) => {
-    console.log(bookId, roomId);
+  const handleMoveClick = (booking) => {
+    setMoved(booking);
     setOpenModal(true);
   };
 
@@ -63,6 +64,7 @@ const BedCard = ({ room, used }) => {
         <MovingRoomModal
           isOpen={openModal}
           onHide={() => setOpenModal(false)}
+          booking={moved}
         />
 
         {used ? (
@@ -108,7 +110,7 @@ const BedCard = ({ room, used }) => {
               size="small"
               variant="outlined"
               onClick={() => {
-                handleMoveClick(used.booking_room.book_id, used.booking_room.room_id);
+                handleMoveClick(used);
               }}
               endIcon={<CachedIcon fontSize="small" />}
             >
