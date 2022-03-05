@@ -44,24 +44,19 @@ export const roomSlice = createSlice({
 
       state.usedRooms = action.payload.usedRooms;
     },
-    filterRoomByFloorSuccess: (state, action) => {
-      if (action.payload) {
-        state.filteredRooms = state.rooms.filter((room) => {
-          return parseInt(room.floor, 10) === action.payload;
-        });
-      } else {
-        state.filteredRooms = state.rooms;
-      }
-    },
-    filterRoomByBuilding: (state, action) => {
+    filterRoomsByBuilding: (state, action) => {
       state.filteredRooms = state.rooms.filter((room) => {
         return room.building?.building_id === action.payload;
       });
     },
-    filterRoomByFloor: (state, action) => {
-      state.filteredRooms = state.rooms.filter((room) => {
-        return room.floor === action.payload;
-      });
+    filterRoomsByFloor: (state, action) => {
+      if (action.payload) {
+        state.filteredRooms = state.rooms.filter((room) => {
+          return room.floor === action.payload;
+        });
+      } else {
+        state.filteredRooms = state.rooms;
+      }
     },
     storeSuccess: (state, action) => {
       state.rooms = [...state.rooms, action.payload];
@@ -118,6 +113,7 @@ export const roomSlice = createSlice({
       state.error = '';
     },
     [fetchAll.fulfilled]: (state, action) => {
+      state.filteredRooms = action.payload.items;
       state.rooms = action.payload.items;
       state.pager = action.payload.pager;
       state.loading = false;
@@ -130,13 +126,13 @@ export const roomSlice = createSlice({
 });
 
 export default roomSlice.reducer;
-export const { filterRoomByBuilding, filterRoomByFloor } = roomSlice.actions;
 // Actions
-const {
+export const {
   fetchAllSuccess,
   fetchByIdSuccess,
   fetchRoomsStatusSuccess,
-  filterRoomByFloorSuccess,
+  filterRoomsByBuilding,
+  filterRoomsByFloor,
   storeSuccess,
   updateFilteredRooms,
   updateSuccess,
@@ -172,10 +168,6 @@ export const fetchRoomsStatus = () => async (dispatch) => {
   } catch (error) {
     console.log(error);
   }
-};
-
-export const filterRoomsByFloor = (floor = '') => async (dispatch) => {
-  dispatch(filterRoomByFloorSuccess(floor));
 };
 
 export const store = (data, navigate) => async (dispatch) => {

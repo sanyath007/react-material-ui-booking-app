@@ -19,7 +19,7 @@ const RoomList = () => {
   const { filteredRooms } = useSelector((state) => state.room);
 
   const showFilteredRoom = (floor = '') => {
-    dispatch(roomActions.filterRoomsByFloor(floor));
+    dispatch(roomActions.filterRoomsByFloor(floor.toString()));
   };
 
   useEffect(() => {
