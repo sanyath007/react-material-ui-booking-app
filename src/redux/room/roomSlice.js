@@ -119,6 +119,7 @@ export const roomSlice = createSlice({
       state.error = '';
     },
     [fetchAll.fulfilled]: (state, action) => {
+      state.filteredRooms = action.payload.items;
       state.rooms = action.payload.items;
       state.pager = action.payload.pager;
       state.loading = false;
@@ -158,6 +159,7 @@ export const roomSlice = createSlice({
 });
 
 export default roomSlice.reducer;
+
 // Actions
 export const {
   filterRoomsByBuilding,

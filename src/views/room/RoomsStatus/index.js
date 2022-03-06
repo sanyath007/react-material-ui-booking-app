@@ -18,7 +18,7 @@ const RoomsStatus = () => {
   } = useSelector((state) => state.room);
 
   useEffect(() => {
-    dispatch(roomActions.fetchRoomsStatus());
+    dispatch(roomActions.fetchStatus());
     dispatch(roomActions.fetchAll());
   }, []);
 
