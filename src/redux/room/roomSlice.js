@@ -16,6 +16,26 @@ export const fetchAll = createAsyncThunk('room/fetchAll', async () => {
   }
 });
 
+export const fetchById = createAsyncThunk('room/fetchById', async ({ id }) => {
+  try {
+    const res = await api.get(`/rooms/${id}`);
+
+    return res.data;
+  } catch (error) {
+    errorHandler(error);
+  }
+});
+
+export const fetchStatus = createAsyncThunk('room/fetchStatus', async () => {
+  try {
+    const res = await api.get('/rooms-status');
+
+    return res.data;
+  } catch (error) {
+    errorHandler(error);
+  }
+});
+
 export const roomSlice = createSlice({
   name: 'room',
   initialState: {
@@ -30,20 +50,6 @@ export const roomSlice = createSlice({
     error: ''
   },
   reducers: {
-    fetchAllSuccess: (state, action) => {
-      state.rooms = action.payload;
-      state.filteredRooms = state.rooms;
-    },
-    fetchByIdSuccess: (state, action) => {
-      state.room = action.payload;
-    },
-    fetchRoomsStatusSuccess: (state, action) => {
-      state.floor1 = action.payload.rooms.filter((room) => parseInt(room.floor, 10) === 1);
-      state.floor2 = action.payload.rooms.filter((room) => parseInt(room.floor, 10) === 2);
-      state.floor3 = action.payload.rooms.filter((room) => parseInt(room.floor, 10) === 3);
-
-      state.usedRooms = action.payload.usedRooms;
-    },
     filterRoomsByBuilding: (state, action) => {
       state.filteredRooms = state.rooms.filter((room) => {
         return room.building?.building_id === action.payload;
@@ -113,12 +119,38 @@ export const roomSlice = createSlice({
       state.error = '';
     },
     [fetchAll.fulfilled]: (state, action) => {
-      state.filteredRooms = action.payload.items;
       state.rooms = action.payload.items;
       state.pager = action.payload.pager;
       state.loading = false;
     },
     [fetchAll.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
+    [fetchById.pending]: (state) => {
+      state.loading = true;
+      state.error = '';
+    },
+    [fetchById.fulfilled]: (state, action) => {
+      state.room = action.payload;
+      state.loading = false;
+    },
+    [fetchById.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
+    [fetchStatus.pending]: (state) => {
+      state.loading = true;
+      state.error = '';
+    },
+    [fetchStatus.fulfilled]: (state, action) => {
+      state.floor1 = action.payload.rooms.filter((room) => parseInt(room.floor, 10) === 1);
+      state.floor2 = action.payload.rooms.filter((room) => parseInt(room.floor, 10) === 2);
+      state.floor3 = action.payload.rooms.filter((room) => parseInt(room.floor, 10) === 3);
+      state.usedRooms = action.payload.usedRooms;
+      state.loading = false;
+    },
+    [fetchStatus.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.error;
     }
@@ -128,9 +160,6 @@ export const roomSlice = createSlice({
 export default roomSlice.reducer;
 // Actions
 export const {
-  fetchAllSuccess,
-  fetchByIdSuccess,
-  fetchRoomsStatusSuccess,
   filterRoomsByBuilding,
   filterRoomsByFloor,
   storeSuccess,
@@ -139,36 +168,6 @@ export const {
   updateStatusSuccess,
   destroySuccess,
 } = roomSlice.actions;
-
-export const fetchRoomAll = () => async (dispatch) => {
-  try {
-    const res = await api.get('/rooms');
-
-    dispatch(fetchAllSuccess(res.data.items));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const fetchById = (id) => async (dispatch) => {
-  try {
-    const res = await api.get(`/rooms/${id}`);
-
-    dispatch(fetchByIdSuccess(res.data));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const fetchRoomsStatus = () => async (dispatch) => {
-  try {
-    const res = await api.get('/rooms-status');
-
-    dispatch(fetchRoomsStatusSuccess(res.data));
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 export const store = (data, navigate) => async (dispatch) => {
   try {
@@ -252,5 +251,5 @@ export const destroy = (id) => async (dispatch) => {
 };
 
 export const getRoomsById = (state, id) => {
-  return state.room.rooms.filter((room) => room.room_id === id);
+  return state.room.rooms.find((room) => room.room_id === id);
 };

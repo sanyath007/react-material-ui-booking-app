@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Swal from 'sweetalert2';
 import errorHandler from 'src/utils/responseErrorHandler';
-import { fetchRoomsStatus } from '../room/roomSlice';
+import { fetchStatus as fetchRoomsStatus } from '../room/roomSlice';
 import api from '../../api';
 
 export const fetchAllAsync = createAsyncThunk('booking/fetchAll', async ({ qs }) => {

@@ -23,7 +23,7 @@ const RoomList = () => {
   };
 
   useEffect(() => {
-    dispatch(roomActions.fetchRoomAll());
+    dispatch(roomActions.fetchAll());
   }, []);
 
   return (

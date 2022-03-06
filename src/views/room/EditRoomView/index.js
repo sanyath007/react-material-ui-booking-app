@@ -21,7 +21,7 @@ const EditRoomView = () => {
   const { roomTypes } = useSelector((state) => state.roomType);
   const { roomGroups } = useSelector((state) => state.roomGroup);
   const { buildings } = useSelector((state) => state.building);
-  const { room } = useSelector((state) => state.room);
+  const room = useSelector((state) => roomActions.getRoomsById(state, parseInt(roomId, 10)));
 
   const handleSubmit = async (data) => {
     const { room_id: id, ...rest } = data;
@@ -34,7 +34,6 @@ const EditRoomView = () => {
     dispatch(roomTypeActions.fetchRoomTypeAll());
     dispatch(roomGroupActions.fetchRoomGroupAll());
     dispatch(buildingActions.fetchBuildingAll());
-    dispatch(roomActions.fetchById(roomId));
   }, []);
 
   return (
