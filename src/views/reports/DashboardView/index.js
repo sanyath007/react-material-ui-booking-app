@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Dashboard = () => {
+  let isMounted = false;
   const classes = useStyles();
   const [overall, setOverall] = useState({ bookings: {}, rooms: {}, income: 0 });
 
@@ -36,11 +37,19 @@ const Dashboard = () => {
 
     const income = await api.get('/dashboard/income');
 
-    setOverall({ bookings: bookings.data, rooms: rooms.data, income: income.data.sum_income });
+    if (isMounted) {
+      setOverall({ bookings: bookings.data, rooms: rooms.data, income: income.data.sum_income });
+    }
   };
 
   useEffect(() => {
+    isMounted = true;
+
     fetchOverall();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (
