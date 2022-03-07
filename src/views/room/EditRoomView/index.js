@@ -31,9 +31,9 @@ const EditRoomView = () => {
 
   useEffect(() => {
     console.log('on load EditRoomView');
-    dispatch(roomTypeActions.fetchRoomTypeAll());
-    dispatch(roomGroupActions.fetchRoomGroupAll());
-    dispatch(buildingActions.fetchBuildingAll());
+    dispatch(roomTypeActions.fetchAll());
+    dispatch(roomGroupActions.fetchAll());
+    dispatch(buildingActions.fetchAll());
   }, []);
 
   return (

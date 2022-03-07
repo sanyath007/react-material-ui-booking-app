@@ -9,7 +9,7 @@ import {
 } from 'react-bootstrap';
 import { Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
-import { filterRoomsByBuilding, filterRoomsByFloor } from 'src/redux/room/roomSlice';
+import { roomActions } from 'src/redux';
 
 const MovingRoomModal = ({ isOpen, onHide, booking }) => {
   const dispatch = useDispatch();
@@ -46,7 +46,7 @@ const MovingRoomModal = ({ isOpen, onHide, booking }) => {
                 value={building}
                 onChange={(e) => {
                   setBuilding(e.target.value);
-                  dispatch(filterRoomsByBuilding(e.target.value));
+                  dispatch(roomActions.filterRoomsByBuilding(e.target.value));
                 }}
               >
                 <option value="">เลือกอาคาร</option>
@@ -61,7 +61,7 @@ const MovingRoomModal = ({ isOpen, onHide, booking }) => {
                 value={floor}
                 onChange={(e) => {
                   setFloor(e.target.value);
-                  dispatch(filterRoomsByFloor(e.target.value));
+                  dispatch(roomActions.filterRoomsByFloor(e.target.value));
                 }}
               >
                 <option value="">เลือกชั้น</option>

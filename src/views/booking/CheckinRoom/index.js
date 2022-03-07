@@ -15,7 +15,7 @@ import moment from 'moment';
 import FormControls from 'src/components/Forms';
 import withAuth from 'src/components/withAuth';
 import Page from 'src/components/Page';
-import { checkin } from '../../../redux/booking/bookingSlice';
+import { bookingActions } from '../../../redux';
 import api from '../../../api';
 import BookingCard from './BookingCard';
 import useStyles from './styles';
@@ -40,6 +40,7 @@ const CheckinRoom = () => {
   const [booking, setBooking] = useState({});
   const { auth } = useSelector((state) => state.auth);
 
+  // TODO: Should use building from store
   const fetchBuildingAll = async () => {
     const res = await api.get('/buildings');
     const arrBuildings = res.data.map((b) => ({ id: b.building_id, name: b.building_name }));
@@ -102,7 +103,7 @@ const CheckinRoom = () => {
       user: auth.username
     };
 
-    dispatch(checkin({ data, navigate }));
+    dispatch(bookingActions.checkin({ data, navigate }));
 
     props.resetForm();
   };
