@@ -21,14 +21,13 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
   const [ipOnly, setIpOnly] = useState(true);
 
   useEffect(() => {
-    console.log('On useEffect is called ...');
-    dispatch(ipActions.fetchIpAll());
+    dispatch(ipActions.fetchAll({ qs: '' }));
     dispatch(patientActions.fetchPatients({ qs: '' }));
   }, []);
 
   const handlePageItemClick = (url, tbName) => {
     if (tbName === 'ip') {
-      dispatch(ipActions.fetchIpAllWithPage(url));
+      dispatch(ipActions.fetchAllWithPage({ url }));
     } else {
       dispatch(patientActions.fetchPatientsWithPage({ url }));
     }

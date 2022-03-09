@@ -49,7 +49,7 @@ function EditBooking() {
   useEffect(() => {
     dispatch(bookingActions.fetchBookingฺById(bookId));
 
-    dispatch(roomTypeActions.fetchRoomTypeAll());
+    dispatch(roomTypeActions.fetchAll());
   }, []);
 
   return (

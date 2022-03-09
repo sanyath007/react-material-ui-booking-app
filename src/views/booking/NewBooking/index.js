@@ -44,7 +44,7 @@ function NewBooking() {
   };
 
   useEffect(() => {
-    dispatch(roomTypeActions.fetchRoomTypeAll());
+    dispatch(roomTypeActions.fetchAll());
   }, []);
 
   return (
