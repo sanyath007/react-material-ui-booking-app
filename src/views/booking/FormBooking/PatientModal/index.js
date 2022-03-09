@@ -48,7 +48,7 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
           handleSearch={(searchText) => {
             const qs = searchText ? `?search=${searchText}` : '';
 
-            dispatch(ipActions.fetchIpAll(qs));
+            dispatch(ipActions.fetchAll(qs));
             dispatch(patientActions.fetchPatients({ qs }));
           }}
           handleIpOnlyChecked={(checked) => setIpOnly(checked)}

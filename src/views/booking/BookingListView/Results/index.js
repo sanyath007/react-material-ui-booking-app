@@ -16,6 +16,7 @@ import {
   TableRow,
   Typography
 } from '@material-ui/core';
+import Swal from 'sweetalert2';
 import Pagination from '@material-ui/lab/Pagination';
 import StarIcon from '@material-ui/icons/Star';
 import EditIcon from '@material-ui/icons/Edit';
@@ -50,7 +51,20 @@ const Results = ({
   };
 
   const handleDelete = (event, id) => {
-    dispatch(bookingActions.destroy({ id, navigate }));
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `คุณต้องการลบข้อมูลการจอง ID: ${id} ใช่หรือไม่ ?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ใช่',
+      cancelButtonText: 'ยกเลิก'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(bookingActions.destroy({ id, navigate }));
+      }
+    });
   };
 
   useEffect(() => {
