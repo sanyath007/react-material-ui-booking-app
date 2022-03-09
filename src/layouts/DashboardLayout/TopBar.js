@@ -38,7 +38,7 @@ const TopBar = ({
   const [notifications] = useState([]);
 
   const handleLogout = () => {
-    dispatch(authActions.logout(navigate));
+    dispatch(authActions.tryLogout(navigate));
   };
 
   return (

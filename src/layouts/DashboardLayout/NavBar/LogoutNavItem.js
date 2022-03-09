@@ -51,7 +51,7 @@ const LogoutNavItem = ({
     >
       <Button
         className={classes.button}
-        onClick={() => dispatch(authActions.logout(navigate))}
+        onClick={() => dispatch(authActions.tryLogout(navigate))}
       >
         {Icon && (
           <Icon
