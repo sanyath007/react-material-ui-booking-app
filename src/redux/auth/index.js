@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import errorHandler from 'src/utils/responseErrorHandler';
 import jwt from 'jwt-decode';
 import api from '../../api';
 
@@ -6,48 +7,56 @@ const initialAuth = localStorage.getItem('access_token')
   ? jwt(JSON.parse(localStorage.getItem('access_token')))?.sub
   : null;
 
+export const login = createAsyncThunk('auth/login', async ({ username, password }) => {
+  try {
+    const res = await api.post('/login', { username, password });
+
+    return res.data;
+  } catch (error) {
+    errorHandler(error);
+  }
+});
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    auth: initialAuth
+    auth: initialAuth,
+    loading: false,
+    error: ''
   },
   reducers: {
-    loginSuccess: (state, action) => {
+    logout: (state) => {
+      state.auth = null;
+      localStorage.removeItem('access_token');
+    },
+  },
+  extraReducers: {
+    [login.pending]: (state) => {
+      state.loading = true;
+      state.error = '';
+    },
+    [login.fulfilled]: (state, action) => {
       const decoded = jwt(action.payload);
 
       state.auth = decoded.sub;
       localStorage.setItem('access_token', JSON.stringify(action.payload));
+
+      state.loading = false;
     },
-    logoutSucces: (state) => {
-      state.auth = null;
-      localStorage.removeItem('access_token');
+    [login.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
     },
   }
 });
 
 export default authSlice.reducer;
 
-// Actions
-const {
-  loginSuccess,
-  logoutSucces
-} = authSlice.actions;
+const { logout } = authSlice.actions;
 
-export const login = (username, password, navigate) => async (dispatch) => {
+export const tryLogout = (navigate) => async (dispatch) => {
   try {
-    const res = await api.post('/login', { username, password });
-
-    dispatch(loginSuccess(res.data));
-
-    navigate('../app/dashboard', { replace: true });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const logout = (navigate) => async (dispatch) => {
-  try {
-    dispatch(logoutSucces());
+    dispatch(logout());
 
     navigate('../login', { replace: true });
   } catch (error) {

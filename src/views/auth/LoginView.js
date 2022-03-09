@@ -3,7 +3,7 @@ import {
   // Link as RouterLink,
   useNavigate
 } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import {
@@ -35,14 +35,20 @@ const LoginView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { auth } = useSelector((state) => state.auth);
 
   const handleLogin = (values, props) => {
     if (values) {
-      dispatch(authActions.login(values.username, values.password, navigate));
+      dispatch(authActions.login({ username: values.username, password: values.password }));
 
       props.resetForm();
     }
   };
+
+  // Once logged in, render the redirection
+  if (auth) {
+    navigate('../app/dashboard', { replace: true });
+  }
 
   return (
     <Page
