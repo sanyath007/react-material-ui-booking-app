@@ -103,6 +103,47 @@ const FormBooking = ({
     }
   };
 
+  const setSpecialist = (spclty, formik) => {
+    if (!spclty) return;
+
+    console.log(spclty);
+    switch (spclty) {
+      case '01':
+        console.log('อายุรกรรม');
+        formik.setFieldValue('specialist', 3);
+        break;
+      case '02':
+      case '19':
+      case '22':
+      case '43':
+      case '44':
+        console.log('ศัลยกรรม');
+        formik.setFieldValue('specialist', 2);
+        break;
+      case '03':
+      case '04':
+        console.log('สูติ-นรีเวช');
+        formik.setFieldValue('specialist', 1);
+        break;
+      case '05':
+        console.log('กุมารเวชกรรม');
+        formik.setFieldValue('specialist', 4);
+        break;
+      case '06':
+      case '07':
+        console.log('โสต ศอ นาสิก จักษุ');
+        formik.setFieldValue('specialist', 6);
+        break;
+      case '08':
+        console.log('ศัลยกรรมกระดูกและข้อ');
+        formik.setFieldValue('specialist', 5);
+        break;
+      default:
+        console.log('อื่นๆ');
+        break;
+    }
+  };
+
   return (
     <Formik
       enableReinitialize={booking}
@@ -141,13 +182,15 @@ const FormBooking = ({
                 <PatientModal
                   isOpen={openModal}
                   hideModal={() => setOpenModal(false)}
-                  onSelected={(patient, an, ward) => {
+                  onSelected={(patient, an, ward, spclty) => {
                     setSelectedPatient(patient);
 
                     formik.setFieldValue('patient', `${patient.pname}${patient.fname} ${patient.lname}`);
                     formik.setFieldValue('hn', patient.hn);
                     formik.setFieldValue('an', an);
                     formik.setFieldValue('ward', ward);
+
+                    setSpecialist(spclty, formik);
                   }}
                 />
 

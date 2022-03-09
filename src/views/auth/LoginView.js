@@ -40,7 +40,7 @@ const LoginView = () => {
 
   const handleLogin = (values, props) => {
     if (values) {
-      dispatch(authActions.loginAsync({ username: values.username, password: values.password }));
+      dispatch(authActions.login({ username: values.username, password: values.password }));
 
       props.resetForm();
     }

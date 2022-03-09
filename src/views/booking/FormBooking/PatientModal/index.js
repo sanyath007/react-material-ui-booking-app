@@ -85,7 +85,7 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
                 <td style={{ textAlign: 'center' }}>
                   <Button
                     onClick={() => {
-                      onSelected(ip.patient, ip.an, ip.ward?.ward);
+                      onSelected(ip.patient, ip.an, ip.ward?.ward, ip.spclty);
                       hideModal();
                     }}
                     size="sm"
