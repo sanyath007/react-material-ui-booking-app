@@ -126,7 +126,9 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
         <Row>
           <Col>
             จำนวนทั้งหมด
-            <span style={{ margin: 'auto 5px', fontWeight: 'bold' }}>{pager?.total}</span>
+            <span style={{ margin: 'auto 5px', fontWeight: 'bold' }}>
+              {ipOnly ? pager?.total : ptPager?.total}
+            </span>
             ราย
           </Col>
           <Col>

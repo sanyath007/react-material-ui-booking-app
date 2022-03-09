@@ -29,7 +29,9 @@ const Toolbar = ({
     let searchText = '';
 
     if (keyword !== '' && type === 0) {
-      searchText = `fname:${keyword}`;
+      const [fname, lname = ''] = keyword.split(' ');
+
+      searchText = `name:${fname},${lname}`;
     } else if (keyword !== '' && type === 1) {
       searchText = `hn:${keyword}`;
     } else if (keyword !== '' && type === 2) {
