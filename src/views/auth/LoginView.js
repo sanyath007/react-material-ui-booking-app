@@ -6,6 +6,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import { Alert } from 'react-bootstrap';
 import {
   Box,
   Button,
@@ -35,11 +36,11 @@ const LoginView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { auth } = useSelector((state) => state.auth);
+  const { auth, error } = useSelector((state) => state.auth);
 
   const handleLogin = (values, props) => {
     if (values) {
-      dispatch(authActions.login({ username: values.username, password: values.password }));
+      dispatch(authActions.loginAsync({ username: values.username, password: values.password }));
 
       props.resetForm();
     }
@@ -62,6 +63,14 @@ const LoginView = () => {
         justifyContent="center"
       >
         <Container maxWidth="sm">
+
+          {error && (
+            <Alert variant="danger" dismissible>
+              <Alert.Heading>ผลการทำงาน</Alert.Heading>
+              <p>ไม่สามารถเข้าสู่ระบบได้ เนื่องจากมีบางอย่างผิดพลาด!!</p>
+            </Alert>
+          )}
+
           <Formik
             initialValues={{
               username: '',
