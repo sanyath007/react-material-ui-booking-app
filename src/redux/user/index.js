@@ -1,48 +1,65 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import errorHandler from 'src/utils/responseErrorHandler';
 import api from '../../api';
+
+// Actions
+export const fetchUsers = createAsyncThunk('user/fetchUsers', async () => {
+  try {
+    const res = await api.get('/api/users');
+
+    return res.data;
+  } catch (error) {
+    errorHandler(error);
+  }
+});
+
+export const fetchUser = createAsyncThunk('user/fetchUser', async ({ username }) => {
+  try {
+    const res = await api.get(`/api/users/${username}`);
+
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
     user: null,
     users: [],
-    pager: {},
+    pager: null,
+    loading: false,
+    error: ''
   },
-  reducers: {
-    fetchAllSuccess: (state, action) => {
+  reducers: {},
+  extraReducers: {
+    [fetchUsers.pending]: (state) => {
+      state.loading = true;
+      state.error = '';
+    },
+    [fetchUsers.fulfilled]: (state, action) => {
       state.users = action.payload.users;
       state.pager = action.payload.pager;
+      state.loading = false;
     },
-    fetchByIdSuccess: (state, action) => {
+    [fetchUsers.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
+    [fetchUser.pending]: (state) => {
+      state.loading = true;
+      state.error = '';
+    },
+    [fetchUser.fulfilled]: (state, action) => {
       state.user = action.payload;
+      state.loading = false;
     },
-  },
+    [fetchUser.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
+  }
 });
 
 export default userSlice.reducer;
-
-// Actions
-const {
-  fetchAllSuccess,
-  fetchByIdSuccess,
-} = userSlice.actions;
-
-export const fetchAll = () => async (dispatch) => {
-  try {
-    const res = await api.get('/api/users');
-
-    dispatch(fetchAllSuccess(res.data));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const fetchById = (username) => async (dispatch) => {
-  try {
-    const res = await api.get(`/api/users/${username}`);
-
-    dispatch(fetchByIdSuccess(res.data));
-  } catch (error) {
-    console.log(error);
-  }
-};
