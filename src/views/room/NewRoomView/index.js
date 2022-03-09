@@ -23,9 +23,9 @@ const NewRoom = () => {
   const { buildings } = useSelector((state) => state.building);
 
   useEffect(() => {
-    dispatch(roomTypeActions.fetchRoomTypeAll());
-    dispatch(roomGroupActions.fetchRoomGroupAll());
-    dispatch(buildingActions.fetchBuildingAll());
+    dispatch(roomTypeActions.fetchAll());
+    dispatch(roomGroupActions.fetchAll());
+    dispatch(buildingActions.fetchAll());
   }, []);
 
   const handleSubmit = async (room) => {
