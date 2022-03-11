@@ -15,6 +15,7 @@ const MovingRoomModal = ({ isOpen, onHide, booking }) => {
   const dispatch = useDispatch();
   const { filteredRooms } = useSelector((state) => state.room);
   const { buildings } = useSelector((state) => state.building);
+  const [floors, setFloors] = useState([]);
   const [building, setBuilding] = useState('');
   const [floor, setFloor] = useState('');
   const [selectedRoom, setSelectedRoom] = useState('');
@@ -23,6 +24,12 @@ const MovingRoomModal = ({ isOpen, onHide, booking }) => {
     setBuilding('');
     setFloor('');
   }, [isOpen]);
+
+  const setBuildingFloors = (id) => {
+    const selectedBuilding = buildings.find((bd) => bd.building_id === id);
+
+    setFloors(selectedBuilding.vip_room.split(','));
+  };
 
   const onSave = () => {
     console.log(booking);
@@ -47,6 +54,7 @@ const MovingRoomModal = ({ isOpen, onHide, booking }) => {
                 value={building}
                 onChange={(e) => {
                   setBuilding(e.target.value);
+                  setBuildingFloors(e.target.value);
                   dispatch(roomActions.filterRoomsByBuilding(e.target.value));
                 }}
               >
@@ -72,9 +80,14 @@ const MovingRoomModal = ({ isOpen, onHide, booking }) => {
                 }}
               >
                 <option value="">เลือกชั้น</option>
-                <option value="1">ชั้น 1</option>
-                <option value="2">ชั้น 2</option>
-                <option value="3">ชั้น 3</option>
+                {floors && floors.map((fl) => {
+                  return (
+                    <option key={fl} value={fl}>
+                      ชั้น
+                      {` ${fl}`}
+                    </option>
+                  );
+                })}
               </select>
             </Form.Group>
             <Form.Group>
