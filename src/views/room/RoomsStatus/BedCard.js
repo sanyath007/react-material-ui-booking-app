@@ -70,14 +70,30 @@ const BedCard = ({ room, used }) => {
         {used ? (
           <Alert variant="danger" style={{ padding: '10px', marginBottom: '5px' }}>
             <div style={{ height: '80px' }}>
-              <p style={{ margin: '0' }}>
-                {`AN : ${used.booking_room?.booking?.patient.admit?.an} HN: ${used.booking_room?.booking?.patient?.hn}`}
-              </p>
+              <div style={{ margin: '0' }}>
+                {
+                  used.booking_room?.booking?.patient.admit
+                    ? (
+                      <span style={{ marginRight: '5px' }}>
+                        {`AN : ${used.booking_room?.booking?.patient.admit?.an}`}
+                      </span>
+                    ) : (
+                      <span className="badge badge-danger" style={{ padding: '5px', marginRight: '5px' }}>
+                        (ผู้ป่วย D/C แล้ว)
+                      </span>
+                    )
+                }
+                <span>{`HN: ${used.booking_room?.booking?.patient?.hn}`}</span>
+              </div>
               <p style={{ margin: '0' }}>
                 {`ผู้ป่วย : ${used.booking_room?.booking?.patient?.pname}${used.booking_room?.booking?.patient?.fname} ${used.booking_room?.booking?.patient?.lname}`}
               </p>
               <p style={{ margin: '0' }}>
-                {`วันที่ Admit : ${moment(used.booking_room?.booking?.patient.admit?.regdate).format('DD/MM/YYYY')}`}
+                {
+                  used.booking_room?.booking?.patient.admit
+                    ? `วันที่ Admit : ${moment(used.booking_room?.booking?.patient.admit?.regdate).format('DD/MM/YYYY')}`
+                    : 'วันที่ Admit : - '
+                }
               </p>
               <p style={{ margin: '0' }}>
                 {`วันที่ย้ายเข้า : ${moment(used.booking_room?.checkin_date).format('DD/MM/YYYY')} ${used.booking_room?.checkin_time}`}
