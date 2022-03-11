@@ -28,7 +28,9 @@ const MovingRoomModal = ({ isOpen, onHide, booking }) => {
   const setBuildingFloors = (id) => {
     const selectedBuilding = buildings.find((bd) => bd.building_id === id);
 
-    setFloors(selectedBuilding.vip_room.split(','));
+    if (selectedBuilding) {
+      setFloors(selectedBuilding.vip_room.split(','));
+    }
   };
 
   const onSave = () => {
@@ -99,13 +101,15 @@ const MovingRoomModal = ({ isOpen, onHide, booking }) => {
                 onChange={(e) => setSelectedRoom(e.target.value)}
               >
                 <option value="">เลือกห้อง</option>
-                {filteredRooms && filteredRooms.map((room) => {
-                  return (
-                    <option key={room.room_id} value={room.room_id}>
-                      {room.room_name}
-                    </option>
-                  );
-                })}
+                {filteredRooms && filteredRooms
+                  .filter((filtered) => filtered.room_status === '0')
+                  .map((room) => {
+                    return (
+                      <option key={room.room_id} value={room.room_id}>
+                        {room.room_name}
+                      </option>
+                    );
+                  })}
               </select>
             </Form.Group>
           </Col>
