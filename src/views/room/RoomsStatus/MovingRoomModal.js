@@ -24,6 +24,7 @@ const MovingRoomModal = ({ isOpen, hideModal, booking }) => {
   useEffect(() => {
     setBuilding('');
     setFloor('');
+    setSelectedRoom('');
   }, [isOpen]);
 
   const setBuildingFloors = (id) => {
@@ -37,14 +38,13 @@ const MovingRoomModal = ({ isOpen, hideModal, booking }) => {
   const onSave = () => {
     const { booking_room: bookingRoom } = booking;
 
-    dispatch(bookingActions.changeRoom(
-      {
-        bookId: bookingRoom.book_id,
-        newRoom: selectedRoom,
-        user: auth.username
-      }
-    ));
+    dispatch(bookingActions.changeRoom({
+      bookId: bookingRoom.book_id,
+      newRoom: selectedRoom,
+      user: auth.username
+    }));
 
+    /** Hide modal window */
     hideModal();
   };
 

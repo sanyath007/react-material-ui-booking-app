@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Swal from 'sweetalert2';
 import errorHandler from 'src/utils/responseErrorHandler';
-import { fetchStatus as fetchRoomsStatus } from '../room';
+import { fetchStatus as fetchRoomsStatus, fetchRooms } from '../room';
 import api from '../../api';
 
 export const fetchAllAsync = createAsyncThunk('booking/fetchAll', async ({ qs }) => {
@@ -232,6 +232,9 @@ export const changeRoom = createAsyncThunk('booking/changeRoom', async ({ bookId
     });
 
     dispatch(fetchRoomsStatus());
+
+    /** Re-fetch rooms data and updating store */
+    dispatch(fetchRooms());
   } catch (err) {
     errorHandler(err);
   }
