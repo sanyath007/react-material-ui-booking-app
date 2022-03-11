@@ -192,7 +192,7 @@ export const checkout = createAsyncThunk('booking/checkout', async ({ bookId, ro
 
     Swal.fire({
       icon: 'success',
-      title: 'บันทึกรับผู้ป่วยออกจากห้องเรียบร้อย !!',
+      title: 'จำหน่ายผู้ป่วยออกจากห้องเรียบร้อย !!',
       showConfirmButton: false,
       timer: 1500
     });
