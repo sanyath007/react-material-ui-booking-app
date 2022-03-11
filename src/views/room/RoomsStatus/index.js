@@ -20,7 +20,7 @@ const RoomsStatus = () => {
   useEffect(() => {
     dispatch(roomActions.fetchStatus());
     dispatch(roomActions.fetchAll());
-    dispatch(buildingActions.fetchAll({ params: '?haveVip=1' }));
+    dispatch(buildingActions.fetchBuildings({ params: '?haveVip=1' }));
   }, []);
 
   return (
