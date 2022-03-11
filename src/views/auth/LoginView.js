@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   // Link as RouterLink,
   useNavigate
@@ -37,17 +37,29 @@ const LoginView = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { auth, error } = useSelector((state) => state.auth);
+  let isMounted = false;
 
   const handleLogin = (values, props) => {
     if (values) {
       dispatch(authActions.login({ username: values.username, password: values.password }));
 
-      props.resetForm();
+      if (isMounted) {
+        props.resetForm();
+      }
     }
   };
 
+  useEffect(() => {
+    isMounted = true;
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   // Once logged in, render the redirection
   if (auth) {
+    console.log('auth is ', auth);
     navigate('../app/dashboard', { replace: true });
   }
 
