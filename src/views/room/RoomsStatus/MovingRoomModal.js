@@ -14,6 +14,7 @@ import { roomActions } from 'src/redux';
 const MovingRoomModal = ({ isOpen, onHide, booking }) => {
   const dispatch = useDispatch();
   const { filteredRooms } = useSelector((state) => state.room);
+  const { buildings } = useSelector((state) => state.building);
   const [building, setBuilding] = useState('');
   const [floor, setFloor] = useState('');
   const [selectedRoom, setSelectedRoom] = useState('');
@@ -50,7 +51,13 @@ const MovingRoomModal = ({ isOpen, onHide, booking }) => {
                 }}
               >
                 <option value="">เลือกอาคาร</option>
-                <option value="3">อาคาร 3</option>
+                {buildings && buildings.map((item) => {
+                  return (
+                    <option key={item.building_id} value={item.building_id}>
+                      {item.building_name}
+                    </option>
+                  );
+                })}
               </select>
             </Form.Group>
             <Form.Group>

@@ -5,7 +5,7 @@ import withAuth from 'src/components/withAuth';
 import Page from 'src/components/Page';
 import useStyles from './styles';
 import FloorCard from './FloorCard';
-import { roomActions } from '../../../redux';
+import { roomActions, buildingActions } from '../../../redux';
 
 const RoomsStatus = () => {
   const classes = useStyles();
@@ -20,6 +20,7 @@ const RoomsStatus = () => {
   useEffect(() => {
     dispatch(roomActions.fetchStatus());
     dispatch(roomActions.fetchAll());
+    dispatch(buildingActions.fetchAll({ params: '?haveVip=1' }));
   }, []);
 
   return (
