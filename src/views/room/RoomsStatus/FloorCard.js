@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Row, Col, Card } from 'react-bootstrap';
 import { Grid, makeStyles } from '@material-ui/core';
 import BedCard from './BedCard';
+import FloorTitle from './FloorTitle';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -14,20 +15,18 @@ const useStyles = makeStyles(() => ({
     padding: '10px',
     paddingBottom: '0px'
   },
-  floorName: {
-    marginLeft: '10px',
-    textDecoration: 'underline'
-  }
 }));
 
 const FloorCard = ({ floor, rooms, usedRooms }) => {
   const classes = useStyles();
+  const emptyRoom = rooms ? rooms.filter((filtered) => filtered.room_status === '0').length : 0;
 
   return (
     <Card className={classes.floorCard}>
       <Row>
         <Col className={classes.floorWrapper}>
-          <h3 className={classes.floorName}>{floor}</h3>
+          <FloorTitle title={floor} empty={emptyRoom} total={rooms.length} />
+
           <Grid container>
             {rooms.map((room) => {
               const used = usedRooms.filter((us) => us.room_id === room.room_id);
