@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import errorHandler from 'src/utils/responseErrorHandler';
 import api from '../../api';
 
-export const fetchAll = createAsyncThunk('room/fetchAll', async () => {
+export const fetchRooms = createAsyncThunk('room/fetchRooms', async () => {
   try {
     const res = await api.get('/rooms');
 
@@ -16,7 +16,7 @@ export const fetchAll = createAsyncThunk('room/fetchAll', async () => {
   }
 });
 
-export const fetchById = createAsyncThunk('room/fetchById', async ({ id }) => {
+export const fetchRoom = createAsyncThunk('room/fetchRoom', async ({ id }) => {
   try {
     const res = await api.get(`/rooms/${id}`);
 
@@ -114,29 +114,29 @@ export const roomSlice = createSlice({
     },
   },
   extraReducers: {
-    [fetchAll.pending]: (state) => {
+    [fetchRooms.pending]: (state) => {
       state.loading = true;
       state.error = '';
     },
-    [fetchAll.fulfilled]: (state, action) => {
+    [fetchRooms.fulfilled]: (state, action) => {
       state.filteredRooms = action.payload.items;
       state.rooms = action.payload.items;
       state.pager = action.payload.pager;
       state.loading = false;
     },
-    [fetchAll.rejected]: (state, action) => {
+    [fetchRooms.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.error;
     },
-    [fetchById.pending]: (state) => {
+    [fetchRoom.pending]: (state) => {
       state.loading = true;
       state.error = '';
     },
-    [fetchById.fulfilled]: (state, action) => {
+    [fetchRoom.fulfilled]: (state, action) => {
       state.room = action.payload;
       state.loading = false;
     },
-    [fetchById.rejected]: (state, action) => {
+    [fetchRoom.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.error;
     },
