@@ -220,6 +220,23 @@ export const cancelCheckin = createAsyncThunk('booking/cancel', async ({ bookId,
   }
 });
 
+export const changeRoom = createAsyncThunk('booking/changeRoom', async ({ bookId, newRoom, user }, { dispatch }) => {
+  try {
+    await api.put(`/bookings/${bookId}/change-room`, { user, new_room: newRoom });
+
+    Swal.fire({
+      icon: 'success',
+      title: 'ย้ายห้องผู้ป่วยเรียบร้อย !!',
+      showConfirmButton: false,
+      timer: 1500
+    });
+
+    dispatch(fetchRoomsStatus());
+  } catch (err) {
+    errorHandler(err);
+  }
+});
+
 export const bookingSlice = createSlice({
   name: 'booking',
   initialState: {
@@ -407,6 +424,18 @@ export const bookingSlice = createSlice({
       state.error = '';
     },
     [cancelCheckin.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
+    [changeRoom.pending]: (state) => {
+      state.loading = true;
+      state.error = '';
+    },
+    [changeRoom.fulfilled]: (state) => {
+      state.loading = false;
+      state.error = '';
+    },
+    [changeRoom.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.error;
     }

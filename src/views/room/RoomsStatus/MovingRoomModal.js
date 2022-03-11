@@ -9,10 +9,11 @@ import {
 } from 'react-bootstrap';
 import { Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
-import { roomActions } from 'src/redux';
+import { roomActions, bookingActions } from 'src/redux';
 
-const MovingRoomModal = ({ isOpen, onHide, booking }) => {
+const MovingRoomModal = ({ isOpen, hideModal, booking }) => {
   const dispatch = useDispatch();
+  const { auth } = useSelector((state) => state.auth);
   const { filteredRooms } = useSelector((state) => state.room);
   const { buildings } = useSelector((state) => state.building);
   const [floors, setFloors] = useState([]);
@@ -34,13 +35,23 @@ const MovingRoomModal = ({ isOpen, onHide, booking }) => {
   };
 
   const onSave = () => {
-    console.log(booking);
+    const { booking_room: bookingRoom } = booking;
+
+    dispatch(bookingActions.changeRoom(
+      {
+        bookId: bookingRoom.book_id,
+        newRoom: selectedRoom,
+        user: auth.username
+      }
+    ));
+
+    hideModal();
   };
 
   return (
     <Modal
       show={isOpen}
-      onHide={onHide}
+      onHide={hideModal}
       size="lg"
       style={{ top: '50px', zIndex: '1500' }}
     >
@@ -132,7 +143,7 @@ const MovingRoomModal = ({ isOpen, onHide, booking }) => {
 
 MovingRoomModal.propTypes = {
   isOpen: PropTypes.bool,
-  onHide: PropTypes.func,
+  hideModal: PropTypes.func,
   booking: PropTypes.any
 };
 

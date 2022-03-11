@@ -63,7 +63,7 @@ const BedCard = ({ room, used }) => {
 
         <MovingRoomModal
           isOpen={openModal}
-          onHide={() => setOpenModal(false)}
+          hideModal={() => setOpenModal(false)}
           booking={moved}
         />
 
