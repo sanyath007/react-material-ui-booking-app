@@ -21,6 +21,7 @@ import SettingsView from 'src/views/settings/SettingsView';
 import LoginView from 'src/views/auth/LoginView';
 import RegisterView from 'src/views/auth/RegisterView';
 import NotFoundView from 'src/views/errors/NotFoundView';
+import RoomDetail from './views/room/RoomDetail';
 
 const routes = [
   {
@@ -38,6 +39,7 @@ const routes = [
       { path: 'rooms', element: <RoomListView /> },
       { path: 'rooms/new', element: <NewRoom /> },
       { path: 'rooms/edit/:roomId', element: <EditRoom /> },
+      { path: 'rooms/detail/:roomId', element: <RoomDetail /> },
       { path: 'queues', element: <QueueListView /> },
       { path: 'account', element: <AccountView /> },
       { path: 'settings', element: <SettingsView /> }

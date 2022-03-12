@@ -114,13 +114,15 @@ const RoomCard = ({ className, room, ...rest }) => {
         title={room.room_name}
       />
       <CardContent>
-        <Typography
-          align="left"
-          color="textPrimary"
-          variant="body1"
-        >
-          {room.description}
-        </Typography>
+        <Link to={`detail/${room.room_id}`}>
+          <Typography
+            align="left"
+            color="textPrimary"
+            variant="body1"
+          >
+            {room.room_name}
+          </Typography>
+        </Link>
         <Typography
           color="textSecondary"
           display="inline"
