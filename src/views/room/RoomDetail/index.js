@@ -7,13 +7,14 @@ import {
   Box,
   Card,
   Container,
-  Icon,
   makeStyles
 } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
 import Page from 'src/components/Page';
 import StarIcon from '@material-ui/icons/Star';
 import { roomActions } from '../../../redux';
+import ImageLists from './ImageLists';
+import AmenityLists from './AmenityLists';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -27,6 +28,8 @@ const useStyles = makeStyles(() => ({
     alignItems: 'center',
   },
 }));
+
+const amenities = [];
 
 const RoomDetail = () => {
   const classes = useStyles();
@@ -49,81 +52,13 @@ const RoomDetail = () => {
                 <div style={{ display: 'flex' }}>
                   <span>test</span>
                 </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    height: '360px',
-                    overflow: 'hidden',
-                    borderRadius: '10px'
-                  }}
-                >
-                  <div style={{ width: '50%' }}>
-                    <img
-                      src={room.room_img_url ? room.room_img_url : '/static/images/products/product_5.png'}
-                      alt=""
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                      }}
-                    />
-                  </div>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '12px',
-                      width: '25%',
-                      padding: '0 10px',
-                    }}
-                  >
-                    <img
-                      src={room.room_img_url ? room.room_img_url : '/static/images/products/product_5.png'}
-                      alt=""
-                      style={{
-                        width: '100%',
-                        height: '50%',
-                      }}
-                    />
-                    <img
-                      src={room.room_img_url ? room.room_img_url : '/static/images/products/product_5.png'}
-                      alt=""
-                      style={{
-                        width: '100%',
-                        height: '50%',
-                      }}
-                    />
-                  </div>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '12px',
-                      width: '25%'
-                    }}
-                  >
-                    <img
-                      src={room.room_img_url ? room.room_img_url : '/static/images/products/product_5.png'}
-                      alt=""
-                      style={{
-                        width: '100%',
-                        height: '50%',
-                      }}
-                    />
-                    <img
-                      src={room.room_img_url ? room.room_img_url : '/static/images/products/product_5.png'}
-                      alt=""
-                      style={{
-                        width: '100%',
-                        height: '50%',
-                      }}
-                    />
-                  </div>
-                </div>
+
+                <ImageLists room={room} />
+
                 <div
                   style={{
                     position: 'relative',
-                    marginTop: '10px'
+                    marginTop: '20px',
                   }}
                 >
                   <h5>รายละเอียด</h5>
@@ -140,52 +75,7 @@ const RoomDetail = () => {
                   }}
                 >
                   <h5>สิ่งอำนวยความสะดวก</h5>
-                  <div>
-                    <div style={{ paddingBottom: '16px' }}>
-                      <Icon>bathtub</Icon>
-                      <span style={{ marginLeft: '10px' }}>ห้องน้ำ</span>
-                    </div>
-                    <div style={{ paddingBottom: '16px' }}>
-                      <Icon>shower</Icon>
-                      <span style={{ marginLeft: '10px' }}>เครื่องทำน้ำอุ่น</span>
-                    </div>
-                    <div style={{ paddingBottom: '16px' }}>
-                      <Icon>bed</Icon>
-                      <span style={{ marginLeft: '10px' }}>เตียงไฟฟ้า</span>
-                    </div>
-                    <div style={{ paddingBottom: '16px' }}>
-                      <Icon>tv</Icon>
-                      <span style={{ marginLeft: '10px' }}>โทรทัศน์</span>
-                    </div>
-                    <div style={{ paddingBottom: '16px' }}>
-                      <Icon>air</Icon>
-                      <span style={{ marginLeft: '10px' }}>เครื่องปรับอากาศ</span>
-                    </div>
-                    <div style={{ paddingBottom: '16px' }}>
-                      <Icon>kitchen</Icon>
-                      <span style={{ marginLeft: '10px' }}>ตู้เย็น</span>
-                    </div>
-                    <div style={{ paddingBottom: '16px' }}>
-                      <Icon>microwave</Icon>
-                      <span style={{ marginLeft: '10px' }}>ไมโครเวฟ</span>
-                    </div>
-                    <div style={{ paddingBottom: '16px' }}>
-                      <Icon>checkroom</Icon>
-                      <span style={{ marginLeft: '10px' }}>ตู้เสื้อผ้า</span>
-                    </div>
-                    <div style={{ paddingBottom: '16px' }}>
-                      <Icon>chair</Icon>
-                      <span style={{ marginLeft: '10px' }}>โซฟา</span>
-                    </div>
-                    <div style={{ paddingBottom: '16px' }}>
-                      <Icon>table_bar</Icon>
-                      <span style={{ marginLeft: '10px' }}>โต๊ะอาหาร</span>
-                    </div>
-                    <div style={{ paddingBottom: '16px' }}>
-                      <Icon>wifi</Icon>
-                      <span style={{ marginLeft: '10px' }}>Wifi</span>
-                    </div>
-                  </div>
+                  <AmenityLists amenities={amenities} />
                   <a href="#">Show more</a>
                 </div>
 
