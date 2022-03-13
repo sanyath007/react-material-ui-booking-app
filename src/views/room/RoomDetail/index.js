@@ -10,13 +10,12 @@ import {
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 import StarIcon from '@material-ui/icons/Star';
-import ShareIcon from '@material-ui/icons/Share';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { roomActions } from '../../../redux';
 import ImageLists from './ImageLists';
 import AmenityLists from './AmenityLists';
 import Ratings from './Ratings';
 import Comments from './Comments';
+import SubTitle from './SubTitle';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -42,34 +41,7 @@ const RoomDetail = () => {
             <PerfectScrollbar>
               <div style={{ padding: '20px' }}>
                 <h3>{room.room_name}</h3>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    marginBottom: '5px'
-                  }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <span style={{ marginRight: '5px' }}>
-                      <StarIcon color="secondary" />
-                      4.8
-                    </span>
-                    ·
-                    <span style={{ marginLeft: '5px' }}>
-                      <a href="">61 reviews</a>
-                    </span>
-                  </div>
-                  <div style={{ width: '30%', textAlign: 'right' }}>
-                    <span style={{ marginRight: '10px' }}>
-                      <ShareIcon />
-                      <a href="">Share</a>
-                    </span>
-                    <span>
-                      <FavoriteBorderIcon />
-                      <a href="">Like</a>
-                    </span>
-                  </div>
-                </div>
+                <SubTitle />
 
                 <ImageLists room={room} />
 
