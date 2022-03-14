@@ -58,10 +58,9 @@ const RoomDetail = () => {
 
                 <ImageLists room={room} />
 
-                <div style={{ position: 'relative', marginTop: '20px' }}>
+                <div style={{ position: 'relative', margin: '20px 0' }}>
                   <h5>รายละเอียด</h5>
-                  <p>{room.description}</p>
-                  <a href="#">Show more</a>
+                  <p style={{ color: '#525252' }}>{room.description}</p>
                 </div>
 
                 <hr />
@@ -69,7 +68,6 @@ const RoomDetail = () => {
                 <div style={{ position: 'relative', marginTop: '10px' }}>
                   <h5>สิ่งอำนวยความสะดวก</h5>
                   <AmenityLists amenities={room.amenities} />
-                  <a href="#">Show more</a>
                 </div>
 
                 <hr />
@@ -78,8 +76,8 @@ const RoomDetail = () => {
                   {/* TITLE */}
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <h5>Reviews</h5>
-                    <h6>
-                      <StarIcon />
+                    <h6 style={{ color: '#525252' }}>
+                      <StarIcon color="secondary" />
                       4.8 · 61 reviews
                     </h6>
                   </div>
