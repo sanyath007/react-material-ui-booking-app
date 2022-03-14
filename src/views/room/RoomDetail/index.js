@@ -21,7 +21,20 @@ const useStyles = makeStyles(() => ({
   root: {},
 }));
 
-const amenities = [];
+const comments = [
+  {
+    id: 1,
+    user: 'Kobe Jr',
+    date: '2022-03-12',
+    comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
+  },
+  {
+    id: 2,
+    user: 'Query',
+    date: '2022-03-14',
+    comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
+  }
+];
 
 const RoomDetail = () => {
   const classes = useStyles();
@@ -55,7 +68,7 @@ const RoomDetail = () => {
 
                 <div style={{ position: 'relative', marginTop: '10px' }}>
                   <h5>สิ่งอำนวยความสะดวก</h5>
-                  <AmenityLists amenities={amenities} />
+                  <AmenityLists amenities={room.amenities} />
                   <a href="#">Show more</a>
                 </div>
 
@@ -75,7 +88,7 @@ const RoomDetail = () => {
                   <Ratings />
 
                   {/* USER COMMENT */}
-                  <Comments />
+                  <Comments comments={comments} />
 
                 </div>
               </div>
