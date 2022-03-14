@@ -14,10 +14,12 @@ const AmenityLists = ({ amenities }) => {
 
         return (
           <Grid item xs={6} md={3} key={amenity[0].amenity_id}>
-            <Icon>{amenity[0].amenity_icon}</Icon>
-            <span style={{ marginLeft: '10px' }}>
-              {amenity[0].amenity_desc}
-            </span>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <Icon>{amenity[0].amenity_icon}</Icon>
+              <span style={{ marginLeft: '10px' }}>
+                {amenity[0].amenity_desc}
+              </span>
+            </div>
           </Grid>
         );
       })}
