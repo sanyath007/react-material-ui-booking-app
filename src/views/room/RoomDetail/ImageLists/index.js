@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ShowAllButton from './ShowAllButton';
 
 const ImageLists = ({ room }) => {
   return (
@@ -73,6 +74,8 @@ const ImageLists = ({ room }) => {
           }}
         />
       </div>
+
+      <ShowAllButton />
     </div>
   );
 };
