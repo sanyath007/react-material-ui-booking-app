@@ -158,7 +158,7 @@ const FormBooking = ({
         book_name: booking?.book_name || '',
         book_tel: booking?.book_tel || '',
         isLabour: booking?.is_labour === '1' || false,
-        baby: booking?.baby || '',
+        baby: booking?.baby[0].an || '',
         isOfficer: booking?.is_officer === '1' || false,
         description: booking?.description || '',
         remark: booking?.remark || '',
