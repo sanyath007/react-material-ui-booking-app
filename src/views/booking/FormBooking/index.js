@@ -157,6 +157,8 @@ const FormBooking = ({
         book_date: moment(booking?.book_date) || new Date(),
         book_name: booking?.book_name || '',
         book_tel: booking?.book_tel || '',
+        isLabour: booking?.is_labour === '1' || false,
+        baby: booking?.baby || '',
         isOfficer: booking?.is_officer === '1' || false,
         description: booking?.description || '',
         remark: booking?.remark || '',
@@ -272,6 +274,27 @@ const FormBooking = ({
                     handleChange={formik.handleChange}
                     options={specialists} // TODO: change all elements of items with id and name
                     error={formik.errors.specialist && formik.touched.specialist}
+                  />
+                </Grid>
+                <Grid item sm={6} xs={12}>
+                  <FormControls.CheckboxInput
+                    label="เป็นผู้ป่วยคลอดบุตร"
+                    name="isLabour"
+                    value={formik.values.isLabour}
+                    handleChange={formik.handleChange}
+                    error={formik.errors.isLabour && formik.touched.isLabour}
+                  />
+                </Grid>
+                <Grid item sm={6} xs={12}>
+                  <TextField
+                    variant="standard"
+                    name="baby"
+                    label="ชื่อบุตร"
+                    fullWidth
+                    value={formik.values.baby}
+                    onChange={formik.handleChange}
+                    error={formik.errors.baby && formik.touched.baby}
+                    helperText={<ErrorMessage name="baby" />}
                   />
                 </Grid>
                 <Grid item sm={6} xs={12}>
