@@ -22,6 +22,7 @@ import StarIcon from '@material-ui/icons/Star';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import ChildFriendlyIcon from '@material-ui/icons/ChildFriendly';
 import getInitials from 'src/utils/getInitials';
 import useStyles from './styles';
 import { bookingActions } from '../../../../redux';
@@ -123,6 +124,15 @@ const Results = ({
                         <Typography color="textPrimary" variant="body1">
                           {`${booking.patient?.pname}${booking.patient?.fname} ${booking.patient?.lname}`}
                         </Typography>
+                        {
+                          booking.is_labour === '1'
+                            ? (
+                              <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <ChildFriendlyIcon fontSize="small" />
+                                เป็นผู้ป่วยคลอดบุตร
+                              </div>
+                            ) : null
+                        }
                       </Box>
                       {booking.is_officer === '1' && <StarIcon style={{ fill: 'red' }} fontSize="small" />}
                     </Box>
