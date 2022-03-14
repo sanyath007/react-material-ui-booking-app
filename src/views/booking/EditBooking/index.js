@@ -18,7 +18,7 @@ function EditBooking() {
   const dispatch = useDispatch();
   const { bookId } = useParams();
   const { roomTypes } = useSelector((state) => state.roomType);
-  const { booking } = useSelector((state) => state.booking);
+  const booking = useSelector((state) => bookingActions.getBooking(state, bookId));
   const { auth } = useSelector((state) => state.auth);
 
   const handleSubmit = async (values, props) => {
@@ -47,8 +47,6 @@ function EditBooking() {
   };
 
   useEffect(() => {
-    dispatch(bookingActions.fetchBookingฺById(bookId));
-
     dispatch(roomTypeActions.fetchAll());
   }, []);
 

@@ -446,3 +446,7 @@ export const bookingSlice = createSlice({
 });
 
 export default bookingSlice.reducer;
+
+export const getBooking = (state, id) => {
+  return state.booking.bookings.find((book) => book.book_id === parseInt(id, 10));
+};
