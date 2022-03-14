@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Card, CardContent } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import { Alert } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -59,7 +60,9 @@ const BedCard = ({ room, used }) => {
   return (
     <Card>
       <CardContent style={{ height: '200px', fontSize: '14px' }}>
-        <h5>{room.room_name}</h5>
+        <Link to={`../rooms/detail/${room.room_id}`}>
+          <h5>{room.room_name}</h5>
+        </Link>
 
         <MovingRoomModal
           isOpen={openModal}
