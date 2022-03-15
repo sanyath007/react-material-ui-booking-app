@@ -22,10 +22,9 @@ import StarIcon from '@material-ui/icons/Star';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import ChildFriendlyIcon from '@material-ui/icons/ChildFriendly';
 import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
-import ChildCareIcon from '@material-ui/icons/ChildCare';
 import getInitials from 'src/utils/getInitials';
+import PopperIcon from 'src/components/PopperIcon';
 import useStyles from './styles';
 import { bookingActions } from '../../../../redux';
 
@@ -40,9 +39,9 @@ const Results = ({
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { auth } = useSelector((state) => state.auth);
   const [page, setPage] = useState(1);
   const [screenW, setScreenW] = useState(window.innerWidth);
-  const { auth } = useSelector((state) => state.auth);
 
   const updateWindowDimensions = () => {
     setScreenW(window.innerWidth);
@@ -123,18 +122,35 @@ const Results = ({
                             {`${booking.patient.admit?.an}`}
                           </Typography>
                         )}
-                        <Typography color="textPrimary" variant="body1">
-                          {`${booking.patient?.pname}${booking.patient?.fname} ${booking.patient?.lname}`}
-                        </Typography>
-                        {
-                          booking.in_labour === '1'
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                          <Typography color="textPrimary" variant="body1">
+                            {`${booking.patient?.pname}${booking.patient?.fname} ${booking.patient?.lname}`}
+                          </Typography>
+                          {booking.in_labour === '1'
+                            ? <PopperIcon icon="child_friendly" iconColor="primary" />
+                            : null}
+                          {booking.newborn
                             ? (
-                              <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <ChildFriendlyIcon fontSize="small" />
-                                <ChildCareIcon fontSize="small" />
-                              </div>
-                            ) : null
-                        }
+                              <PopperIcon icon="child_care" iconColor="secondary">
+                                <div style={{ fontSize: '14px', padding: '10px' }}>
+                                  <p style={{ margin: '2px' }}>
+                                    <span style={{ width: '2px' }}>AN : </span>
+                                    <span>{booking.newborn[0].an}</span>
+                                  </p>
+                                  <p style={{ margin: '2px' }}>
+                                    <span style={{ width: '14px' }}>HN : </span>
+                                    <span>{booking.newborn[0].hn}</span>
+                                  </p>
+                                  <p style={{ margin: '2px' }}>
+                                    <span>ชื่อ : </span>
+                                    <span>
+                                      {`${booking.newborn[0].patient?.pname}${booking.newborn[0].patient?.fname} ${booking.newborn[0].patient?.lname}`}
+                                    </span>
+                                  </p>
+                                </div>
+                              </PopperIcon>
+                            ) : null}
+                        </div>
                       </Box>
                       {booking.is_officer === '1' && <StarIcon style={{ fill: 'red' }} fontSize="small" />}
                     </Box>
@@ -155,11 +171,7 @@ const Results = ({
                     <TableCell>{booking.created_by}</TableCell>
                   )}
                   <TableCell align="center">
-                    <Link
-                      to={`${booking.book_id}/detail`}
-                      title="รายละเอียด"
-                      // onClick={() => onViewDetailClick(booking.ip?.an)}
-                    >
+                    <Link to={`${booking.book_id}/detail`} title="รายละเอียด">
                       <VisibilityIcon />
                     </Link>
                     <Link
