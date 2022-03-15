@@ -9,6 +9,8 @@ const withAuth = (WrappedComponent) => {
       return <WrappedComponent {...props} />;
     }
 
+    localStorage.removeItem('access_token');
+
     return <Navigate to="/viproom/login" />;
   };
 };
