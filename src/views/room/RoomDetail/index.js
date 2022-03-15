@@ -16,6 +16,7 @@ import AmenityLists from './AmenityLists';
 import Ratings from './Ratings';
 import Comments from './Comments';
 import SubTitle from './SubTitle';
+import ActionsButton from './ActionsButton';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -61,6 +62,8 @@ const RoomDetail = () => {
                 <div style={{ position: 'relative', margin: '20px 0' }}>
                   <h5>รายละเอียด</h5>
                   <p style={{ color: '#525252' }}>{room.description}</p>
+
+                  <ActionsButton room={room} />
                 </div>
 
                 <hr />
