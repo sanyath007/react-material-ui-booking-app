@@ -23,6 +23,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import ChildFriendlyIcon from '@material-ui/icons/ChildFriendly';
+import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
+import ChildCareIcon from '@material-ui/icons/ChildCare';
 import getInitials from 'src/utils/getInitials';
 import useStyles from './styles';
 import { bookingActions } from '../../../../redux';
@@ -88,8 +90,8 @@ const Results = ({
                 <TableCell align="center" width="8%">HN</TableCell>
                 <TableCell>ผู้ป่วย</TableCell>
                 <TableCell align="center" width="8%">วันที่จอง</TableCell>
-                {(screenW > 960) && <TableCell align="center" width="12%">เบอร์ติดต่อ</TableCell>}
-                {(screenW > 960) && <TableCell width="12%">ผู้บันทึก</TableCell>}
+                {(screenW > 960) && <TableCell align="center" width="20%">ผู้จอง</TableCell>}
+                {(screenW > 960) && <TableCell width="10%">ผู้บันทึก</TableCell>}
                 <TableCell align="center" width="12%">Actions</TableCell>
               </TableRow>
             </TableHead>
@@ -125,11 +127,11 @@ const Results = ({
                           {`${booking.patient?.pname}${booking.patient?.fname} ${booking.patient?.lname}`}
                         </Typography>
                         {
-                          booking.is_labour === '1'
+                          booking.in_labour === '1'
                             ? (
                               <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <ChildFriendlyIcon fontSize="small" />
-                                เป็นผู้ป่วยคลอดบุตร
+                                <ChildCareIcon fontSize="small" />
                               </div>
                             ) : null
                         }
@@ -141,7 +143,13 @@ const Results = ({
                     {moment(booking.book_date).format('DD/MM/YYYY')}
                   </TableCell>
                   {(screenW > 960) && (
-                    <TableCell align="center">{`${booking.patient?.hometel}`}</TableCell>
+                    <TableCell align="center">
+                      <p style={{ margin: '0' }}>{`${booking.book_name}`}</p>
+                      <div style={{ margin: '0' }}>
+                        <PhoneAndroidIcon fontSize="small" />
+                        {`${booking.book_tel}`}
+                      </div>
+                    </TableCell>
                   )}
                   {(screenW > 960) && (
                     <TableCell>{booking.created_by}</TableCell>
