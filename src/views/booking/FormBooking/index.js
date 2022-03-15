@@ -157,8 +157,8 @@ const FormBooking = ({
         book_date: moment(booking?.book_date) || new Date(),
         book_name: booking?.book_name || '',
         book_tel: booking?.book_tel || '',
-        isLabour: booking?.is_labour === '1' || false,
-        baby: booking?.baby[0].an || '',
+        inLabour: booking?.in_labour === '1' || false,
+        newborn: booking?.newborn[0].an || '',
         isOfficer: booking?.is_officer === '1' || false,
         description: booking?.description || '',
         remark: booking?.remark || '',
@@ -279,22 +279,22 @@ const FormBooking = ({
                 <Grid item sm={6} xs={12}>
                   <FormControls.CheckboxInput
                     label="เป็นผู้ป่วยคลอดบุตร"
-                    name="isLabour"
-                    value={formik.values.isLabour}
+                    name="inLabour"
+                    value={formik.values.inLabour}
                     handleChange={formik.handleChange}
-                    error={formik.errors.isLabour && formik.touched.isLabour}
+                    error={formik.errors.inLabour && formik.touched.inLabour}
                   />
                 </Grid>
                 <Grid item sm={6} xs={12}>
                   <TextField
                     variant="standard"
-                    name="baby"
+                    name="newborn"
                     label="ชื่อบุตร"
                     fullWidth
-                    value={formik.values.baby}
+                    value={formik.values.newborn}
                     onChange={formik.handleChange}
-                    error={formik.errors.baby && formik.touched.baby}
-                    helperText={<ErrorMessage name="baby" />}
+                    error={formik.errors.newborn && formik.touched.newborn}
+                    helperText={<ErrorMessage name="newborn" />}
                   />
                 </Grid>
                 <Grid item sm={6} xs={12}>

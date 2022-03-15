@@ -27,6 +27,8 @@ function NewBooking() {
         book_date: moment(values.book_date).format('YYYY-MM-DD'),
         book_name: values.book_name,
         book_tel: values.book_tel,
+        in_labour: values.inLabour,
+        newborn: values.newborn,
         is_officer: values.isOfficer,
         description: values.description,
         remark: values.remark,
