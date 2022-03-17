@@ -61,6 +61,8 @@ function FormRoom({
         room_group: room ? parseInt(room?.room_group?.room_group_id, 10) || '' : '',
         building: room ? parseInt(room?.building?.building_id, 10) || '' : '',
         floor: room ? room?.floor || '' : '',
+        price: room ? room?.price || '0' : '0',
+        remark: room ? room?.remark || '' : '',
         room_img_url: room ? room?.room_img_url : '',
         amenities: room ? createAmenityIdLists(room?.amenities) : [],
       }}
@@ -85,6 +87,8 @@ function FormRoom({
                   error={formik.errors.room_no && formik.touched.room_no}
                   helperText={<ErrorMessage name="room_no" />}
                 />
+              </Grid>
+              <Grid item sm={6}>
                 <TextField
                   variant="standard"
                   name="room_name"
@@ -94,16 +98,6 @@ function FormRoom({
                   onChange={formik.handleChange}
                   error={formik.errors.room_name && formik.touched.room_name}
                   helperText={<ErrorMessage name="room_name" />}
-                />
-                <TextField
-                  variant="standard"
-                  name="description"
-                  label="คำอธิบาย"
-                  fullWidth
-                  multiline
-                  rows={5}
-                  value={formik.values.description}
-                  onChange={formik.handleChange}
                 />
               </Grid>
               <Grid item sm={6}>
@@ -128,6 +122,8 @@ function FormRoom({
                     <ErrorMessage name="room_type" />
                   </FormHelperText>
                 </FormControl>
+              </Grid>
+              <Grid item sm={6}>
                 <FormControl className={classes.formControl} fullWidth>
                   <InputLabel htmlFor="room-group" className={classes.selectLabel}>กลุ่ม</InputLabel>
                   <Select
@@ -150,6 +146,8 @@ function FormRoom({
                     <ErrorMessage name="room_group" />
                   </FormHelperText>
                 </FormControl>
+              </Grid>
+              <Grid item sm={6}>
                 <FormControl className={classes.formControl} fullWidth>
                   <InputLabel htmlFor="building" className={classes.selectLabel}>อาคาร</InputLabel>
                   <Select
@@ -172,6 +170,8 @@ function FormRoom({
                     <ErrorMessage name="building" />
                   </FormHelperText>
                 </FormControl>
+              </Grid>
+              <Grid item sm={6}>
                 <TextField
                   variant="standard"
                   name="floor"
@@ -181,6 +181,38 @@ function FormRoom({
                   onChange={formik.handleChange}
                   error={formik.errors.floor && formik.touched.floor}
                   helperText={<ErrorMessage name="floor" />}
+                />
+              </Grid>
+              <Grid item sm={6}>
+                <TextField
+                  variant="standard"
+                  name="price"
+                  label="ราคา"
+                  fullWidth
+                  value={formik.values.price}
+                  onChange={formik.handleChange}
+                />
+              </Grid>
+              <Grid item sm={6}>
+                <TextField
+                  variant="standard"
+                  name="remark"
+                  label="หมายเหตุ"
+                  fullWidth
+                  value={formik.values.remark}
+                  onChange={formik.handleChange}
+                />
+              </Grid>
+              <Grid item sm={12} md={12}>
+                <TextField
+                  variant="standard"
+                  name="description"
+                  label="คำอธิบาย"
+                  fullWidth
+                  multiline
+                  rows={4}
+                  value={formik.values.description}
+                  onChange={formik.handleChange}
                 />
               </Grid>
               <Grid item sm={12} md={6}>
