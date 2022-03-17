@@ -26,22 +26,22 @@ const ratings = [
   {
     id: 1,
     name: 'Cleanliness',
-    rating: 4.5
+    value: 4.5
   },
   {
     id: 2,
     name: 'Location',
-    rating: 4
+    value: 4
   },
   {
     id: 3,
     name: 'Accuracy',
-    rating: 3
+    value: 3
   },
   {
     id: 4,
     name: 'Communication',
-    rating: 3
+    value: 3
   }
 ];
 
@@ -123,7 +123,7 @@ const RoomDetail = () => {
                   </div>
 
                   {/* RATING */}
-                  {ratings && <Ratings items={ratings} />}
+                  {ratings && <Ratings ratings={ratings} />}
 
                   {/* USER COMMENT */}
                   {comments && <Comments comments={comments} />}

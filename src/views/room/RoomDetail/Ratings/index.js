@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
 
@@ -15,29 +16,23 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Ratings = () => {
+const Ratings = ({ ratings }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.ratings}>
-      <div className={classes.ratingItem}>
-        <span>Cleanliness</span>
-        <Rating name="size-small" defaultValue={4} size="small" />
-      </div>
-      <div className={classes.ratingItem}>
-        Accuracy
-        <Rating name="size-small" defaultValue={2} size="small" />
-      </div>
-      <div className={classes.ratingItem}>
-        Location
-        <Rating name="size-small" defaultValue={3} size="small" />
-      </div>
-      <div className={classes.ratingItem}>
-        Communication
-        <Rating name="size-small" defaultValue={5} size="small" />
-      </div>
+      {ratings && ratings.map((rating) => (
+        <div className={classes.ratingItem}>
+          <span>{rating.name}</span>
+          <Rating name="size-small" defaultValue={rating.value} size="small" />
+        </div>
+      ))}
     </div>
   );
+};
+
+Ratings.propTypes = {
+  ratings: PropTypes.array
 };
 
 export default Ratings;
