@@ -25,7 +25,7 @@ const NewRoom = () => {
   useEffect(() => {
     dispatch(roomTypeActions.fetchAll());
     dispatch(roomGroupActions.fetchAll());
-    dispatch(buildingActions.fetchAll());
+    dispatch(buildingActions.fetchAll({ params: '' }));
   }, []);
 
   const handleSubmit = async (room) => {

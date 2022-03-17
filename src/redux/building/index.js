@@ -3,7 +3,7 @@ import errorHandler from 'src/utils/responseErrorHandler';
 import api from '../../api';
 
 // Actions
-export const fetchAll = createAsyncThunk('building/fetchAll', async ({ params = '' }) => {
+export const fetchAll = createAsyncThunk('building/fetchAll', async ({ params }) => {
   try {
     const res = await api.get(`/buildings${params}`);
 
