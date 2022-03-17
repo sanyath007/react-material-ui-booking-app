@@ -33,7 +33,7 @@ const EditRoomView = () => {
     console.log('on load EditRoomView');
     dispatch(roomTypeActions.fetchAll());
     dispatch(roomGroupActions.fetchAll());
-    dispatch(buildingActions.fetchBuildings());
+    dispatch(buildingActions.fetchAll());
   }, []);
 
   return (

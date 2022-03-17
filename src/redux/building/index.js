@@ -3,7 +3,7 @@ import errorHandler from 'src/utils/responseErrorHandler';
 import api from '../../api';
 
 // Actions
-export const fetchBuildings = createAsyncThunk('building/fetchBuildings', async ({ params = '' }) => {
+export const fetchAll = createAsyncThunk('building/fetchAll', async ({ params = '' }) => {
   try {
     const res = await api.get(`/buildings${params}`);
 
@@ -24,15 +24,15 @@ export const buildingSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    [fetchBuildings.pending]: (state) => {
+    [fetchAll.pending]: (state) => {
       state.loading = true;
       state.error = '';
     },
-    [fetchBuildings.fulfilled]: (state, action) => {
+    [fetchAll.fulfilled]: (state, action) => {
       state.loading = false;
       state.buildings = action.payload;
     },
-    [fetchBuildings.rejected]: (state, action) => {
+    [fetchAll.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.error;
     }
