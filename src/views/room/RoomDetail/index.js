@@ -23,26 +23,26 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ratings = [
-  {
-    id: 1,
-    name: 'Cleanliness',
-    value: 4.5
-  },
-  {
-    id: 2,
-    name: 'Location',
-    value: 4
-  },
-  {
-    id: 3,
-    name: 'Accuracy',
-    value: 3
-  },
-  {
-    id: 4,
-    name: 'Communication',
-    value: 3
-  }
+  // {
+  //   id: 1,
+  //   name: 'Cleanliness',
+  //   value: 4.5
+  // },
+  // {
+  //   id: 2,
+  //   name: 'Location',
+  //   value: 4
+  // },
+  // {
+  //   id: 3,
+  //   name: 'Accuracy',
+  //   value: 3
+  // },
+  // {
+  //   id: 4,
+  //   name: 'Communication',
+  //   value: 3
+  // }
 ];
 
 const comments = [
@@ -78,7 +78,7 @@ const RoomDetail = () => {
             <PerfectScrollbar>
               <div style={{ padding: '20px' }}>
                 <h3>{room.room_name}</h3>
-                <SubTitle />
+                <SubTitle roomStatus={parseInt(room.room_status, 10)} />
 
                 <ImageLists room={room} />
 
@@ -101,33 +101,47 @@ const RoomDetail = () => {
                   <p style={{ margin: '0' }}>{room.description}</p>
 
                   <ActionsButton room={room} />
-                </div>
 
-                <hr />
+                  <hr />
+                </div>
 
                 <div style={{ position: 'relative', marginTop: '10px' }}>
                   <h5>สิ่งอำนวยความสะดวก</h5>
                   <AmenityLists amenities={room.amenities} />
+
+                  <hr />
                 </div>
 
-                <hr />
+                {(ratings.length > 0 || comments.length > 0) && (
+                  <div style={{ position: 'relative', marginTop: '10px' }}>
+                    {/* TITLE */}
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                      }}
+                    >
+                      <h5>Reviews</h5>
+                      <h6 style={{ color: '#525252' }}>
+                        <StarIcon color="secondary" />
+                        <span style={{ margin: '0 5px' }}>
+                          {ratings.reduce((acc, curVal) => acc + curVal.value, 0) / ratings.length}
+                        </span>
+                        ·
+                        <span style={{ margin: '0 5px' }}>
+                          {`${comments.length} reviews`}
+                        </span>
+                      </h6>
+                    </div>
 
-                <div style={{ position: 'relative', marginTop: '10px' }}>
-                  {/* TITLE */}
-                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <h5>Reviews</h5>
-                    <h6 style={{ color: '#525252' }}>
-                      <StarIcon color="secondary" />
-                      4.8 · 61 reviews
-                    </h6>
+                    {/* RATING */}
+                    {ratings && <Ratings ratings={ratings} />}
+
+                    {/* USER COMMENT */}
+                    {comments && <Comments comments={comments} />}
                   </div>
-
-                  {/* RATING */}
-                  {ratings && <Ratings ratings={ratings} />}
-
-                  {/* USER COMMENT */}
-                  {comments && <Comments comments={comments} />}
-                </div>
+                )}
               </div>
             </PerfectScrollbar>
           </Card>

@@ -1,9 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import StarIcon from '@material-ui/icons/Star';
 import ShareIcon from '@material-ui/icons/Share';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import RestoreIcon from '@material-ui/icons/Restore';
 
-const SubTitle = () => {
+const roomStatuses = [
+  { id: 0, name: 'ว่าง' },
+  { id: 1, name: 'ใช้งานอยู่' },
+  { id: 2, name: 'ปิดปรับปรุง' },
+  { id: 3, name: 'งดใช้ชั่วคราว' },
+  { id: 9, name: 'ยกเลิกการใช้' }
+];
+
+const SubTitle = ({ roomStatus }) => {
   return (
     <div
       style={{
@@ -23,6 +33,13 @@ const SubTitle = () => {
         <span style={{ marginLeft: '5px' }}>
           <a href="">61 reviews</a>
         </span>
+
+        <span style={{ marginLeft: '10px' }}>
+          <RestoreIcon color="action" fontSize="small" />
+          <span>
+            {roomStatuses.find((rs) => rs.id === parseInt(roomStatus, 10))?.name}
+          </span>
+        </span>
       </div>
       <div style={{ width: '30%', textAlign: 'right' }}>
         <span style={{ marginRight: '10px' }}>
@@ -36,6 +53,10 @@ const SubTitle = () => {
       </div>
     </div>
   );
+};
+
+SubTitle.propTypes = {
+  roomStatus: PropTypes.number
 };
 
 export default SubTitle;
