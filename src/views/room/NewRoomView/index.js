@@ -38,6 +38,8 @@ const NewRoom = () => {
     formData.append('room_group', room.room_group);
     formData.append('building', room.building);
     formData.append('floor', room.floor);
+    formData.append('price', room.price);
+    formData.append('remark', room.remark);
     formData.append('room_img_url', room.room_img_url);
     formData.append('amenities', room.amenities);
 
