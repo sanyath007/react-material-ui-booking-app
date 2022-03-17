@@ -61,7 +61,12 @@ const BedCard = ({ room, used }) => {
     <Card>
       <CardContent style={{ height: '200px', fontSize: '14px' }}>
         <Link to={`../rooms/detail/${room.room_id}`}>
-          <h5>{room.room_name}</h5>
+          <h5>
+            {room.room_name}
+            <span style={{ marginLeft: '5px', fontSize: '16px' }}>
+              {`(${room.room_type.room_type_name})`}
+            </span>
+          </h5>
         </Link>
 
         <MovingRoomModal
