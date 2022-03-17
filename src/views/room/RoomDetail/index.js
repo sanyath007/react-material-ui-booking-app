@@ -22,19 +22,42 @@ const useStyles = makeStyles(() => ({
   root: {},
 }));
 
-const comments = [
+const ratings = [
   {
     id: 1,
-    user: 'Kobe Jr',
-    date: '2022-03-12',
-    comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
+    name: 'Cleanliness',
+    rating: 4.5
   },
   {
     id: 2,
-    user: 'Query',
-    date: '2022-03-14',
-    comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
+    name: 'Location',
+    rating: 4
+  },
+  {
+    id: 3,
+    name: 'Accuracy',
+    rating: 3
+  },
+  {
+    id: 4,
+    name: 'Communication',
+    rating: 3
   }
+];
+
+const comments = [
+  // {
+  //   id: 1,
+  //   user: 'Kobe Jr',
+  //   date: '2022-03-12',
+  //   comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
+  // },
+  // {
+  //   id: 2,
+  //   user: 'Query',
+  //   date: '2022-03-14',
+  //   comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
+  // }
 ];
 
 const RoomDetail = () => {
@@ -100,10 +123,10 @@ const RoomDetail = () => {
                   </div>
 
                   {/* RATING */}
-                  <Ratings />
+                  {ratings && <Ratings items={ratings} />}
 
                   {/* USER COMMENT */}
-                  <Comments comments={comments} />
+                  {comments && <Comments comments={comments} />}
                 </div>
               </div>
             </PerfectScrollbar>
