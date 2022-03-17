@@ -59,9 +59,23 @@ const RoomDetail = () => {
 
                 <ImageLists room={room} />
 
-                <div style={{ position: 'relative', margin: '20px 0' }}>
+                <div style={{ position: 'relative', margin: '20px 0', color: '#525252' }}>
                   <h5>รายละเอียด</h5>
-                  <p style={{ color: '#525252' }}>{room.description}</p>
+                  <p style={{ margin: '0' }}>
+                    <span>ที่ตั้ง : </span>
+                    <span style={{ marginRight: '20px' }}>{room.building?.building_name}</span>
+                    <span>ชั้นที่ : </span>
+                    <span style={{ marginRight: '20px' }}>{room.floor}</span>
+                    <span>ประเภท : </span>
+                    <span style={{ marginRight: '20px' }}>{room.room_type?.room_type_name}</span>
+                    <span>ชนิด : </span>
+                    <span style={{ marginRight: '20px' }}>{room.room_group?.room_group_name}</span>
+                    <span>ราคา/วัน : </span>
+                    <span style={{ marginRight: '20px' }}>
+                      {`${room.price ? room.price : '-'} บาท`}
+                    </span>
+                  </p>
+                  <p style={{ margin: '0' }}>{room.description}</p>
 
                   <ActionsButton room={room} />
                 </div>
@@ -90,7 +104,6 @@ const RoomDetail = () => {
 
                   {/* USER COMMENT */}
                   <Comments comments={comments} />
-
                 </div>
               </div>
             </PerfectScrollbar>
