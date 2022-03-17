@@ -36,10 +36,12 @@ const authSlice = createSlice({
       state.error = '';
     },
     [login.fulfilled]: (state, action) => {
-      const decoded = jwt(action.payload);
+      if (action.payload) {
+        const decoded = jwt(action.payload);
 
-      state.auth = decoded.sub;
-      localStorage.setItem('access_token', JSON.stringify(action.payload));
+        state.auth = decoded.sub;
+        localStorage.setItem('access_token', JSON.stringify(action.payload));
+      }
 
       state.loading = false;
     },

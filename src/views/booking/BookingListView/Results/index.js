@@ -129,7 +129,7 @@ const Results = ({
                           {booking.in_labour === '1'
                             ? <PopperIcon icon="child_friendly" iconColor="primary" />
                             : null}
-                          {booking.newborn
+                          {booking.newborn.length > 0
                             ? (
                               <PopperIcon icon="child_care" iconColor="secondary">
                                 <div style={{ fontSize: '14px', padding: '10px' }}>
