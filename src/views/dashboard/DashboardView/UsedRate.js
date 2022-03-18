@@ -139,7 +139,7 @@ const UsedRate = ({ className, ...rest }) => {
             Last 7 days
           </Button>
         )}
-        title="อัตราครองเตียงต่อเดือน"
+        title="อัตราครองเตียงห้องพิเศษต่อเดือน"
       />
       <Divider />
       <CardContent>
