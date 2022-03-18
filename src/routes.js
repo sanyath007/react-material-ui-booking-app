@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import DashboardLayout from 'src/layouts/DashboardLayout';
 import MainLayout from 'src/layouts/MainLayout';
 
-import DashboardView from 'src/views/reports/DashboardView';
+import DashboardView from 'src/views/dashboard/DashboardView';
 import BookingListView from 'src/views/booking/BookingListView';
 import NewBooking from 'src/views/booking/NewBooking';
 import EditBooking from 'src/views/booking/EditBooking';
