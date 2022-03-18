@@ -23,7 +23,7 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
   useEffect(() => {
     dispatch(ipActions.fetchAll({ qs: '' }));
     dispatch(patientActions.fetchPatients({ qs: '' }));
-  }, []);
+  }, [isOpen]);
 
   const handlePageItemClick = (url, tbName) => {
     if (tbName === 'ip') {
@@ -48,7 +48,7 @@ function PatientModal({ isOpen, hideModal, onSelected }) {
           handleSearch={(searchText) => {
             const qs = searchText ? `?search=${searchText}` : '';
 
-            dispatch(ipActions.fetchAll(qs));
+            dispatch(ipActions.fetchAll({ qs }));
             dispatch(patientActions.fetchPatients({ qs }));
           }}
           handleIpOnlyChecked={(checked) => setIpOnly(checked)}
