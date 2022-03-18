@@ -11,6 +11,7 @@ import {
   colors
 } from '@material-ui/core';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import { currencyFormat } from '../../../utils';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -49,7 +50,7 @@ const TotalProfit = ({ className, value, ...rest }) => {
               color="textPrimary"
               variant="h3"
             >
-              {value.toFixed(2)}
+              {currencyFormat(value)}
             </Typography>
           </Grid>
           <Grid item>

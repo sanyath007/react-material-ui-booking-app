@@ -8,7 +8,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import moment from 'moment';
-import calAge from '../../../utils';
+import { calcAge } from '../../../utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -88,7 +88,7 @@ const BookingCard = ({ booking }) => {
                 </Typography>
               </Grid>
               <Grid item>
-                <Typography variant="body1">{`อายุ ${calAge(booking?.patient?.birthday)} ปี`}</Typography>
+                <Typography variant="body1">{`อายุ ${calcAge(booking?.patient?.birthday)} ปี`}</Typography>
               </Grid>
               <Grid item>
                 <Typography variant="body1">{`โทร. ${booking?.patient?.hometel}`}</Typography>

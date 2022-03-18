@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 
-export default function errorHandler(err) {
+export default function responsedErrorHandler(err) {
   if ([400, 401, 403, 404, 409, 500].includes(err.response.status)) {
     Swal.fire({
       icon: 'error',

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import errorHandler from 'src/utils/responseErrorHandler';
+import { responsedErrorHandler } from 'src/utils';
 import api from '../../api';
 
 // Actions
@@ -9,7 +9,7 @@ export const fetchAll = createAsyncThunk('building/fetchAll', async ({ params })
 
     return res.data;
   } catch (error) {
-    errorHandler(error);
+    responsedErrorHandler(error);
   }
 });
 

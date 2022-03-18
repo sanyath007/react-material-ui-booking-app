@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import errorHandler from 'src/utils/responseErrorHandler';
+import { responsedErrorHandler } from 'src/utils';
 import axios from 'axios';
 import api from '../../api';
 
@@ -10,7 +10,7 @@ export const fetchAll = createAsyncThunk('ip/fetchAll', async ({ qs = '' }) => {
 
     return res.data;
   } catch (error) {
-    errorHandler(error);
+    responsedErrorHandler(error);
   }
 });
 
@@ -20,7 +20,7 @@ export const fetchAllWithPage = createAsyncThunk('ip/fetchAll', async ({ url }) 
 
     return res.data;
   } catch (error) {
-    errorHandler(error);
+    responsedErrorHandler(error);
   }
 });
 
@@ -30,7 +30,7 @@ export const fetchIpByAn = createAsyncThunk('ip/fetchByAn', async ({ an = '' }) 
 
     return res.data;
   } catch (error) {
-    errorHandler(error);
+    responsedErrorHandler(error);
   }
 });
 

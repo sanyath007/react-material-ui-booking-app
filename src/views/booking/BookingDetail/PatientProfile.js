@@ -11,7 +11,7 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import calcAge from '../../../utils';
+import { calcAge } from '../../../utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {

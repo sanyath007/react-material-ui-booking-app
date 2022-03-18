@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import errorHandler from 'src/utils/responseErrorHandler';
+import { responsedErrorHandler } from 'src/utils';
 import jwt from 'jwt-decode';
 import api from '../../api';
 
@@ -13,7 +13,7 @@ export const login = createAsyncThunk('auth/login', async ({ username, password 
 
     return res.data;
   } catch (error) {
-    errorHandler(error);
+    responsedErrorHandler(error);
   }
 });
 

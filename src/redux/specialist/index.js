@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import errorHandler from 'src/utils/responseErrorHandler';
+import { responsedErrorHandler } from 'src/utils';
 import api from '../../api';
 
 export const fetchAll = createAsyncThunk('specialist/fetchAll', async ({ queryParams }) => {
@@ -8,7 +8,7 @@ export const fetchAll = createAsyncThunk('specialist/fetchAll', async ({ queryPa
 
     return res.data;
   } catch (err) {
-    errorHandler(err);
+    responsedErrorHandler(err);
   }
 });
 

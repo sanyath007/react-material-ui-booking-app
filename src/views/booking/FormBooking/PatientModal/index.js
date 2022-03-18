@@ -12,7 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import moment from 'moment';
 import Toolbar from './Toolbar';
 import { ipActions, patientActions } from '../../../../redux';
-import calcAge from '../../../../utils';
+import { calcAge } from '../../../../utils';
 
 function PatientModal({ isOpen, hideModal, onSelected }) {
   const dispatch = useDispatch();

@@ -3,7 +3,7 @@ import {
   createAsyncThunk,
 } from '@reduxjs/toolkit';
 import Swal from 'sweetalert2';
-import errorHandler from 'src/utils/responseErrorHandler';
+import { responsedErrorHandler } from 'src/utils';
 import api from '../../api';
 
 export const fetchRooms = createAsyncThunk('room/fetchRooms', async () => {
@@ -12,7 +12,7 @@ export const fetchRooms = createAsyncThunk('room/fetchRooms', async () => {
 
     return res.data;
   } catch (error) {
-    errorHandler(error);
+    responsedErrorHandler(error);
   }
 });
 
@@ -22,7 +22,7 @@ export const fetchRoom = createAsyncThunk('room/fetchRoom', async ({ id }) => {
 
     return res.data;
   } catch (error) {
-    errorHandler(error);
+    responsedErrorHandler(error);
   }
 });
 
@@ -32,7 +32,7 @@ export const fetchStatus = createAsyncThunk('room/fetchStatus', async () => {
 
     return res.data;
   } catch (error) {
-    errorHandler(error);
+    responsedErrorHandler(error);
   }
 });
 

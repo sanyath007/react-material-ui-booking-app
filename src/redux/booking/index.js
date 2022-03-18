@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Swal from 'sweetalert2';
-import errorHandler from 'src/utils/responseErrorHandler';
+import { responsedErrorHandler } from 'src/utils';
 import { fetchStatus as fetchRoomsStatus, fetchRooms } from '../room';
 import api from '../../api';
 
@@ -10,7 +10,7 @@ export const fetchAllAsync = createAsyncThunk('booking/fetchAll', async ({ qs })
 
     return res.data;
   } catch (err) {
-    errorHandler(err);
+    responsedErrorHandler(err);
   }
 });
 
@@ -20,7 +20,7 @@ export const fetchAllWithPageAsync = createAsyncThunk('booking/fetchAll', async 
 
     return res.data;
   } catch (err) {
-    errorHandler(err);
+    responsedErrorHandler(err);
   }
 });
 
@@ -30,7 +30,7 @@ export const fetchById = createAsyncThunk('booking/fetchById', async ({ id }) =>
 
     return res.data;
   } catch (err) {
-    errorHandler(err);
+    responsedErrorHandler(err);
   }
 });
 
@@ -40,7 +40,7 @@ export const fetchByAn = createAsyncThunk('booking/fetchByAn', async ({ an }) =>
 
     return res.data;
   } catch (err) {
-    errorHandler(err);
+    responsedErrorHandler(err);
   }
 });
 
@@ -50,7 +50,7 @@ export const fetchHistories = createAsyncThunk('booking/fetchHistories', async (
 
     return res.data;
   } catch (err) {
-    errorHandler(err);
+    responsedErrorHandler(err);
   }
 });
 
@@ -104,7 +104,7 @@ export const updateAsync = createAsyncThunk('booking/update', async ({ id, data,
 
     return { id, booking: res.data.booking };
   } catch (err) {
-    errorHandler(err);
+    responsedErrorHandler(err);
   }
 });
 
@@ -123,7 +123,7 @@ export const destroy = createAsyncThunk('booking/destroy', async ({ id, navigate
 
     navigate('/viproom/app/bookings', { replace: true });
   } catch (err) {
-    errorHandler(err);
+    responsedErrorHandler(err);
   }
 });
 
@@ -143,7 +143,7 @@ export const cancel = createAsyncThunk('booking/cancel', async ({ id, user, navi
 
     navigate('/viproom/app/bookings', { replace: true });
   } catch (err) {
-    errorHandler(err);
+    responsedErrorHandler(err);
   }
 });
 
@@ -163,7 +163,7 @@ export const discharge = createAsyncThunk('booking/cancel', async ({ id, user, n
 
     navigate('/viproom/app/bookings', { replace: true });
   } catch (err) {
-    errorHandler(err);
+    responsedErrorHandler(err);
   }
 });
 
@@ -182,7 +182,7 @@ export const checkin = createAsyncThunk('booking/checkin', async ({ data, naviga
 
     return res.data;
   } catch (err) {
-    errorHandler(err);
+    responsedErrorHandler(err);
   }
 });
 
@@ -199,7 +199,7 @@ export const checkout = createAsyncThunk('booking/checkout', async ({ bookId, ro
 
     dispatch(fetchRoomsStatus());
   } catch (err) {
-    errorHandler(err);
+    responsedErrorHandler(err);
   }
 });
 
@@ -216,7 +216,7 @@ export const cancelCheckin = createAsyncThunk('booking/cancel', async ({ bookId,
 
     dispatch(fetchRoomsStatus());
   } catch (err) {
-    errorHandler(err);
+    responsedErrorHandler(err);
   }
 });
 
@@ -236,7 +236,7 @@ export const changeRoom = createAsyncThunk('booking/changeRoom', async ({ bookId
     /** Re-fetch rooms data and updating store */
     dispatch(fetchRooms());
   } catch (err) {
-    errorHandler(err);
+    responsedErrorHandler(err);
   }
 });
 
