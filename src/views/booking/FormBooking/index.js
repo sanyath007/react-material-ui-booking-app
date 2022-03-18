@@ -129,10 +129,13 @@ const FormBooking = ({
         console.log('กุมารเวชกรรม');
         formik.setFieldValue('specialist', 4);
         break;
-      case '06':
       case '07':
-        console.log('โสต ศอ นาสิก จักษุ');
+        console.log('จักษุ');
         formik.setFieldValue('specialist', 6);
+        break;
+      case '06':
+        console.log('โสต ศอ นาสิก');
+        formik.setFieldValue('specialist', 7);
         break;
       case '08':
         console.log('ศัลยกรรมกระดูกและข้อ');
