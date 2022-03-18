@@ -134,7 +134,7 @@ const BookingByRoomType = ({ className, ...rest }) => {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <CardHeader title="การให้บริการแยกตามประเภทห้อง" />
+      <CardHeader title="สัดส่วนการใช้บริการตามประเภทห้อง" />
       <Divider />
       <CardContent>
         <Box
