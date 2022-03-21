@@ -14,6 +14,7 @@ import { Formik, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { specialistActions } from 'src/redux';
 import PatientModal from './PatientModal';
+import NewbornModal from './NewbornModal';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -39,6 +40,7 @@ const FormBooking = ({
   const { specialists } = useSelector((state) => state.specialist);
   const [rtypes, setRtypes] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [openNewbornModal, setOpenNewbornModal] = useState(false);
   const [isPatientReserve, setIsPatientReserve] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState(null);
 
@@ -161,7 +163,7 @@ const FormBooking = ({
         book_name: booking?.book_name || '',
         book_tel: booking?.book_tel || '',
         inLabour: booking?.in_labour === '1' || false,
-        newborn: booking?.newborn[0].an || '',
+        newborn: booking?.newborn.length > 0 ? booking?.newborn[0].an : '',
         isOfficer: booking?.is_officer === '1' || false,
         description: booking?.description || '',
         remark: booking?.remark || '',
@@ -197,6 +199,11 @@ const FormBooking = ({
 
                     setSpecialist(spclty, formik);
                   }}
+                />
+
+                <NewbornModal
+                  isOpen={openNewbornModal}
+                  hideModal={() => setOpenNewbornModal(false)}
                 />
 
                 <Grid item sm={6} xs={12}>
@@ -296,9 +303,11 @@ const FormBooking = ({
                     fullWidth
                     value={formik.values.newborn}
                     onChange={formik.handleChange}
+                    onClick={() => setOpenNewbornModal(true)}
                     error={formik.errors.newborn && formik.touched.newborn}
                     helperText={<ErrorMessage name="newborn" />}
                   />
+                  <input type="hidden" name="newbornAns" />
                 </Grid>
                 <Grid item sm={6} xs={12}>
                   <TextField
