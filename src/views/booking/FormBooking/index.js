@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { Button } from 'react-bootstrap';
 import {
+  FormHelperText,
   Grid,
   Typography,
   TextField,
@@ -55,6 +56,10 @@ const FormBooking = ({
       return value.length > 0;
     }),
     specialist: Yup.string().required('กรุณาระบุสาขาที่รักษาก่อน'),
+    newborn: Yup.string().when('inLabour', {
+      is: (value) => value === true,
+      then: Yup.string().required('กรุณาระบุเด็กทารกก่อน')
+    }),
     // description: Yup.string().required('Description is required'),
     // remark: Yup.string().required('Remark is required'),
   });
@@ -309,17 +314,6 @@ const FormBooking = ({
                   />
                 </Grid>
                 <Grid item sm={6} xs={12}>
-                  {/* <TextField
-                    variant="standard"
-                    name="newborn"
-                    label="ชื่อบุตร"
-                    fullWidth
-                    value={formik.values.newborn}
-                    onChange={formik.handleChange}
-                    onClick={() => setOpenNewbornModal(true)}
-                    error={formik.errors.newborn && formik.touched.newborn}
-                    helperText={<ErrorMessage name="newborn" />}
-                  /> */}
                   <div
                     style={{
                       width: '100%',
@@ -328,7 +322,7 @@ const FormBooking = ({
                       flexWrap: 'wrap',
                       justifyContent: 'flex-start',
                       alignItems: 'flex-end',
-                      margin: '0 5px'
+                      padding: '0 0 0 8px'
                     }}
                   >
                     <div style={{ width: '92%', padding: '5px', borderBottom: '1px solid gray' }}>
@@ -344,6 +338,9 @@ const FormBooking = ({
                         ...
                       </Button>
                     </div>
+                    <FormHelperText error={formik.errors.newborn && formik.touched.newborn}>
+                      <ErrorMessage name="newborn" />
+                    </FormHelperText>
                   </div>
                 </Grid>
                 <Grid item sm={6} xs={12}>
