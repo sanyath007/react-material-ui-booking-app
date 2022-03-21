@@ -15,6 +15,7 @@ import * as Yup from 'yup';
 import { specialistActions } from 'src/redux';
 import PatientModal from './PatientModal';
 import NewbornModal from './NewbornModal';
+import TagInput from './TagInput';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -43,6 +44,7 @@ const FormBooking = ({
   const [openNewbornModal, setOpenNewbornModal] = useState(false);
   const [isPatientReserve, setIsPatientReserve] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState(null);
+  const [newborns, setNewborns] = useState([]);
 
   const bookingSchema = Yup.object().shape({
     hn: Yup.string().required('กรุณาระบุผู้ป่วยก่อน'),
@@ -105,6 +107,12 @@ const FormBooking = ({
     }
   };
 
+  const handleRemoveNewborn = (an) => {
+    const _newborns = newborns.filter((nb) => nb.an !== an);
+
+    setNewborns(_newborns);
+  };
+
   const setSpecialist = (spclty, formik) => {
     if (!spclty) return;
 
@@ -148,6 +156,8 @@ const FormBooking = ({
         break;
     }
   };
+
+  console.log(newborns);
 
   return (
     <Formik
@@ -204,6 +214,9 @@ const FormBooking = ({
                 <NewbornModal
                   isOpen={openNewbornModal}
                   hideModal={() => setOpenNewbornModal(false)}
+                  onSelected={(newborn) => {
+                    setNewborns([...newborns, newborn]);
+                  }}
                 />
 
                 <Grid item sm={6} xs={12}>
@@ -296,7 +309,7 @@ const FormBooking = ({
                   />
                 </Grid>
                 <Grid item sm={6} xs={12}>
-                  <TextField
+                  {/* <TextField
                     variant="standard"
                     name="newborn"
                     label="ชื่อบุตร"
@@ -306,8 +319,32 @@ const FormBooking = ({
                     onClick={() => setOpenNewbornModal(true)}
                     error={formik.errors.newborn && formik.touched.newborn}
                     helperText={<ErrorMessage name="newborn" />}
-                  />
-                  <input type="hidden" name="newbornAns" />
+                  /> */}
+                  <div
+                    style={{
+                      width: '100%',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      flexWrap: 'wrap',
+                      justifyContent: 'flex-start',
+                      alignItems: 'flex-end',
+                      margin: '0 5px'
+                    }}
+                  >
+                    <div style={{ width: '92%', padding: '5px', borderBottom: '1px solid gray' }}>
+                      <TagInput items={newborns} onRemove={(an) => handleRemoveNewborn(an)} />
+                    </div>
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'flex-end'
+                      }}
+                    >
+                      <Button onClick={() => setOpenNewbornModal(true)}>
+                        ...
+                      </Button>
+                    </div>
+                  </div>
                 </Grid>
                 <Grid item sm={6} xs={12}>
                   <TextField

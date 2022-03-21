@@ -11,23 +11,19 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 import moment from 'moment';
 import Toolbar from './Toolbar';
-import { ipActions, patientActions } from '../../../../redux';
+import { newbornActions } from '../../../../redux';
 import { calcAge } from '../../../../utils';
 
 function NewbornModal({ isOpen, hideModal, onSelected }) {
   const dispatch = useDispatch();
-  const { ips, pager } = useSelector((state) => state.ip);
+  const { newborns, pager } = useSelector((state) => state.newborn);
 
   useEffect(() => {
-    dispatch(ipActions.fetchAll({ qs: '' }));
+    dispatch(newbornActions.fetchAll({ params: '' }));
   }, [isOpen]);
 
-  const handlePageItemClick = (url, tbName) => {
-    if (tbName === 'ip') {
-      dispatch(ipActions.fetchAllWithPage({ url }));
-    } else {
-      dispatch(patientActions.fetchPatientsWithPage({ url }));
-    }
+  const handlePageItemClick = (url) => {
+    dispatch(newbornActions.fetchAllWithPage({ url }));
   };
 
   return (
@@ -44,8 +40,7 @@ function NewbornModal({ isOpen, hideModal, onSelected }) {
           handleSearch={(searchText) => {
             const qs = searchText ? `?search=${searchText}` : '';
 
-            dispatch(ipActions.fetchAll({ qs }));
-            dispatch(patientActions.fetchPatients({ qs }));
+            dispatch(newbornActions.fetchAll({ params: qs }));
           }}
         />
 
@@ -63,23 +58,27 @@ function NewbornModal({ isOpen, hideModal, onSelected }) {
             </tr>
           </thead>
           <tbody>
-            {ips && ips.map((ip, index) => (
-              <tr key={ip.an}>
+            {newborns && newborns.map((newborn, index) => (
+              <tr key={newborn.an}>
                 <td style={{ textAlign: 'center' }}>{pager.from + index}</td>
-                <td style={{ textAlign: 'center' }}>{ip.an}</td>
-                <td style={{ textAlign: 'center' }}>{ip.hn}</td>
-                <td>{`${ip.patient?.pname}${ip.patient?.fname} ${ip.patient?.lname}`}</td>
+                <td style={{ textAlign: 'center' }}>{newborn.an}</td>
+                <td style={{ textAlign: 'center' }}>{newborn.hn}</td>
+                <td>{`${newborn?.pname}${newborn?.fname} ${newborn?.lname}`}</td>
                 <td style={{ textAlign: 'center' }}>
-                  {calcAge(ip.patient?.birthday)}
+                  {calcAge(newborn?.birthday)}
                 </td>
                 <td style={{ textAlign: 'center' }}>
-                  {moment(ip.regdate).format('DD/MM/YYYY')}
+                  {moment(newborn.regdate).format('DD/MM/YYYY')}
                 </td>
-                <td>{ip.ward?.name}</td>
+                <td>test</td>
                 <td style={{ textAlign: 'center' }}>
                   <Button
                     onClick={() => {
-                      onSelected(ip.patient, ip.an, ip.ward?.ward, ip.spclty);
+                      onSelected({
+                        hn: newborn.hn,
+                        an: newborn.an,
+                        name: `${newborn?.pname}${newborn?.fname} ${newborn?.lname}`
+                      });
                       hideModal();
                     }}
                     size="sm"
@@ -105,19 +104,19 @@ function NewbornModal({ isOpen, hideModal, onSelected }) {
 
             <Pagination className="float-right mb-0">
               <Pagination.First
-                onClick={() => handlePageItemClick(pager?.first_page_url, 'ip')}
+                onClick={() => handlePageItemClick(pager?.first_page_url)}
                 disabled={pager?.current_page === 1}
               />
               <Pagination.Prev
-                onClick={() => handlePageItemClick(pager?.prev_page_url, 'ip')}
+                onClick={() => handlePageItemClick(pager?.prev_page_url)}
                 disabled={pager?.current_page === 1}
               />
               <Pagination.Next
-                onClick={() => handlePageItemClick(pager?.next_page_url, 'ip')}
+                onClick={() => handlePageItemClick(pager?.next_page_url)}
                 disabled={pager?.current_page === pager?.last_page}
               />
               <Pagination.Last
-                onClick={() => handlePageItemClick(pager?.last_page_url, 'ip')}
+                onClick={() => handlePageItemClick(pager?.last_page_url)}
                 disabled={pager?.current_page === pager?.last_page}
               />
             </Pagination>

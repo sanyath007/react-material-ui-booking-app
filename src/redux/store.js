@@ -9,6 +9,7 @@ import bookingReducer from './booking';
 import patientReducer from './patient';
 import ipReducer from './ip';
 import specialistReducer from './specialist';
+import newbornReducer from './newborn';
 
 export default configureStore({
   reducer: {
@@ -22,5 +23,6 @@ export default configureStore({
     patient: patientReducer,
     ip: ipReducer,
     specialist: specialistReducer,
+    newborn: newbornReducer,
   }
 });

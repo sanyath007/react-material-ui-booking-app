@@ -8,6 +8,7 @@ import * as ipActions from './ip';
 import * as userActions from './user';
 import * as authActions from './auth';
 import * as specialistActions from './specialist';
+import * as newbornActions from './newborn';
 
 export {
   authActions,
@@ -20,4 +21,5 @@ export {
   patientActions,
   ipActions,
   specialistActions,
+  newbornActions,
 };
