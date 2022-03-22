@@ -12,7 +12,7 @@ import CachedIcon from '@material-ui/icons/Cached';
 import { bookingActions } from '../../../redux';
 import MovingRoomModal from './MovingRoomModal';
 
-const BedCard = ({ room, used }) => {
+const BedCard = ({ room, checkedIn }) => {
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state.auth);
   const [openModal, setOpenModal] = useState(false);
@@ -75,15 +75,15 @@ const BedCard = ({ room, used }) => {
           booking={moved}
         />
 
-        {used ? (
+        {checkedIn ? (
           <Alert variant="danger" style={{ padding: '10px', marginBottom: '5px' }}>
             <div style={{ height: '80px' }}>
               <div style={{ margin: '0' }}>
                 {
-                  used.checkin?.booking?.patient.admit
+                  checkedIn?.booking?.patient.admit
                     ? (
                       <span style={{ marginRight: '5px' }}>
-                        {`AN : ${used.checkin?.booking?.patient.admit?.an}`}
+                        {`AN : ${checkedIn?.booking?.patient.admit?.an}`}
                       </span>
                     ) : (
                       <span className="badge badge-danger" style={{ padding: '5px', marginRight: '5px' }}>
@@ -91,20 +91,20 @@ const BedCard = ({ room, used }) => {
                       </span>
                     )
                 }
-                <span>{`HN: ${used.checkin?.booking?.patient?.hn}`}</span>
+                <span>{`HN: ${checkedIn?.booking?.patient?.hn}`}</span>
               </div>
               <p style={{ margin: '0' }}>
-                {`ผู้ป่วย : ${used.checkin?.booking?.patient?.pname}${used.checkin?.booking?.patient?.fname} ${used.checkin?.booking?.patient?.lname}`}
+                {`ผู้ป่วย : ${checkedIn?.booking?.patient?.pname}${checkedIn?.booking?.patient?.fname} ${checkedIn?.booking?.patient?.lname}`}
               </p>
               <p style={{ margin: '0' }}>
                 {
-                  used.checkin?.booking?.patient.admit
-                    ? `วันที่ Admit : ${moment(used.checkin?.booking?.patient.admit?.regdate).format('DD/MM/YYYY')}`
+                  checkedIn?.booking?.patient.admit
+                    ? `วันที่ Admit : ${moment(checkedIn?.booking?.patient.admit?.regdate).format('DD/MM/YYYY')}`
                     : 'วันที่ Admit : - '
                 }
               </p>
               <p style={{ margin: '0' }}>
-                {`วันที่ย้ายเข้า : ${moment(used.checkin?.checkin_date).format('DD/MM/YYYY')} ${used.checkin?.checkin_time}`}
+                {`วันที่ย้ายเข้า : ${moment(checkedIn?.checkin_date).format('DD/MM/YYYY')} ${checkedIn?.checkin_time}`}
               </p>
             </div>
           </Alert>
@@ -116,14 +116,14 @@ const BedCard = ({ room, used }) => {
           </Alert>
         )}
 
-        {[1, 2].includes(parseInt(auth.role, 10)) && used && (
+        {[1, 2].includes(parseInt(auth.role, 10)) && checkedIn && (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Button
               size="small"
               variant="contained"
               color="primary"
               onClick={() => {
-                handleCheckoutClick(used.checkin.book_id, used.checkin.room_id);
+                handleCheckoutClick(checkedIn.book_id, checkedIn.room_id);
               }}
               endIcon={<ExitToAppIcon fontSize="small" />}
             >
@@ -134,7 +134,7 @@ const BedCard = ({ room, used }) => {
               size="small"
               variant="outlined"
               onClick={() => {
-                handleMoveClick(used);
+                handleMoveClick(checkedIn);
               }}
               endIcon={<CachedIcon fontSize="small" />}
             >
@@ -146,7 +146,7 @@ const BedCard = ({ room, used }) => {
               variant="contained"
               color="secondary"
               onClick={() => {
-                handleCancelCheckinClick(used.checkin.book_id, used.checkin.room_id);
+                handleCancelCheckinClick(checkedIn.book_id, checkedIn.room_id);
               }}
               className="float-right"
               endIcon={<CancelIcon fontSize="small" />}
@@ -162,7 +162,7 @@ const BedCard = ({ room, used }) => {
 
 BedCard.propTypes = {
   room: PropTypes.object.isRequired,
-  used: PropTypes.object,
+  checkedIn: PropTypes.object,
 };
 
 export default BedCard;

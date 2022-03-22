@@ -42,7 +42,7 @@ const FloorCard = ({ floor, rooms, usedRooms }) => {
                   key={room.room_id}
                   style={{ padding: '10px' }}
                 >
-                  <BedCard room={room} used={checkedIn} />
+                  <BedCard room={room} checkedIn={checkedIn} />
                 </Grid>
               );
             })}
