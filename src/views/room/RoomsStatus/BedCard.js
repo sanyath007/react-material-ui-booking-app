@@ -80,10 +80,10 @@ const BedCard = ({ room, used }) => {
             <div style={{ height: '80px' }}>
               <div style={{ margin: '0' }}>
                 {
-                  used.booking_room?.booking?.patient.admit
+                  used.checkin?.booking?.patient.admit
                     ? (
                       <span style={{ marginRight: '5px' }}>
-                        {`AN : ${used.booking_room?.booking?.patient.admit?.an}`}
+                        {`AN : ${used.checkin?.booking?.patient.admit?.an}`}
                       </span>
                     ) : (
                       <span className="badge badge-danger" style={{ padding: '5px', marginRight: '5px' }}>
@@ -91,20 +91,20 @@ const BedCard = ({ room, used }) => {
                       </span>
                     )
                 }
-                <span>{`HN: ${used.booking_room?.booking?.patient?.hn}`}</span>
+                <span>{`HN: ${used.checkin?.booking?.patient?.hn}`}</span>
               </div>
               <p style={{ margin: '0' }}>
-                {`ผู้ป่วย : ${used.booking_room?.booking?.patient?.pname}${used.booking_room?.booking?.patient?.fname} ${used.booking_room?.booking?.patient?.lname}`}
+                {`ผู้ป่วย : ${used.checkin?.booking?.patient?.pname}${used.checkin?.booking?.patient?.fname} ${used.checkin?.booking?.patient?.lname}`}
               </p>
               <p style={{ margin: '0' }}>
                 {
-                  used.booking_room?.booking?.patient.admit
-                    ? `วันที่ Admit : ${moment(used.booking_room?.booking?.patient.admit?.regdate).format('DD/MM/YYYY')}`
+                  used.checkin?.booking?.patient.admit
+                    ? `วันที่ Admit : ${moment(used.checkin?.booking?.patient.admit?.regdate).format('DD/MM/YYYY')}`
                     : 'วันที่ Admit : - '
                 }
               </p>
               <p style={{ margin: '0' }}>
-                {`วันที่ย้ายเข้า : ${moment(used.booking_room?.checkin_date).format('DD/MM/YYYY')} ${used.booking_room?.checkin_time}`}
+                {`วันที่ย้ายเข้า : ${moment(used.checkin?.checkin_date).format('DD/MM/YYYY')} ${used.checkin?.checkin_time}`}
               </p>
             </div>
           </Alert>
@@ -123,7 +123,7 @@ const BedCard = ({ room, used }) => {
               variant="contained"
               color="primary"
               onClick={() => {
-                handleCheckoutClick(used.booking_room.book_id, used.booking_room.room_id);
+                handleCheckoutClick(used.checkin.book_id, used.checkin.room_id);
               }}
               endIcon={<ExitToAppIcon fontSize="small" />}
             >
@@ -146,7 +146,7 @@ const BedCard = ({ room, used }) => {
               variant="contained"
               color="secondary"
               onClick={() => {
-                handleCancelCheckinClick(used.booking_room.book_id, used.booking_room.room_id);
+                handleCancelCheckinClick(used.checkin.book_id, used.checkin.room_id);
               }}
               className="float-right"
               endIcon={<CancelIcon fontSize="small" />}
