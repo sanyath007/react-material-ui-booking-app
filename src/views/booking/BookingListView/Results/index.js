@@ -129,27 +129,29 @@ const Results = ({
                           {booking.in_labour === '1'
                             ? <PopperIcon icon="child_friendly" iconColor="primary" />
                             : null}
-                          {booking.newborn.length > 0
-                            ? (
-                              <PopperIcon icon="child_care" iconColor="secondary">
-                                <div style={{ fontSize: '14px', padding: '10px' }}>
-                                  <p style={{ margin: '2px' }}>
-                                    <span style={{ width: '2px' }}>AN : </span>
-                                    <span>{booking.newborn[0].an}</span>
-                                  </p>
-                                  <p style={{ margin: '2px' }}>
-                                    <span style={{ width: '14px' }}>HN : </span>
-                                    <span>{booking.newborn[0].hn}</span>
-                                  </p>
-                                  <p style={{ margin: '2px' }}>
-                                    <span>ชื่อ : </span>
-                                    <span>
-                                      {`${booking.newborn[0].patient?.pname}${booking.newborn[0].patient?.fname} ${booking.newborn[0].patient?.lname}`}
-                                    </span>
-                                  </p>
-                                </div>
-                              </PopperIcon>
-                            ) : null}
+                          {booking.newborns.length > 0
+                            ? booking.newborns.map((newborn) => {
+                              return (
+                                <PopperIcon icon="child_care" iconColor="secondary" key={newborn.an}>
+                                  <div style={{ fontSize: '14px', padding: '10px' }}>
+                                    <p style={{ margin: '2px' }}>
+                                      <span style={{ width: '2px' }}>AN : </span>
+                                      <span>{newborn.an}</span>
+                                    </p>
+                                    <p style={{ margin: '2px' }}>
+                                      <span style={{ width: '14px' }}>HN : </span>
+                                      <span>{newborn.ip?.hn}</span>
+                                    </p>
+                                    <p style={{ margin: '2px' }}>
+                                      <span>ชื่อ : </span>
+                                      <span>
+                                        {`${newborn.ip?.patient?.pname}${newborn.ip?.patient?.fname} ${newborn.ip?.patient?.lname}`}
+                                      </span>
+                                    </p>
+                                  </div>
+                                </PopperIcon>
+                              );
+                            }) : null}
                         </div>
                       </Box>
                       {booking.is_officer === '1' && <StarIcon style={{ fill: 'red' }} fontSize="small" />}
