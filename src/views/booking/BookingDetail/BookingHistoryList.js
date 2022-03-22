@@ -62,18 +62,26 @@ const BookingHistoryList = ({
                   <TableCell align="center" width="20%">วันที่จอง</TableCell>
                   <TableCell align="center" width="20%">วันที่รับเข้า</TableCell>
                   <TableCell align="center" width="20%">วันที่รับออก</TableCell>
-                  <TableCell align="center">วอร์ด</TableCell>
+                  <TableCell align="center">ห้อง</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {bookings && bookings.map((history) => {
-                  return history.room.length > 0 ? (
+                  return history.checkin ? (
                     <TableRow hover key={history.book_id}>
                       <TableCell align="center">{history.book_id}</TableCell>
-                      <TableCell align="center">{moment(history.book_date).format('DD/MM/YYYY')}</TableCell>
-                      <TableCell align="center">{moment(history.room[0].checkin_date).format('DD/MM/YYYY')}</TableCell>
-                      <TableCell align="center">{moment(history.room[0].checkout_date).format('DD/MM/YYYY')}</TableCell>
-                      <TableCell align="center">{history.room[0].room_id}</TableCell>
+                      <TableCell align="center">
+                        {moment(history.book_date).format('DD/MM/YYYY')}
+                      </TableCell>
+                      <TableCell align="center">
+                        {moment(history.checkin?.checkin_date).format('DD/MM/YYYY')}
+                      </TableCell>
+                      <TableCell align="center">
+                        {moment(history.checkin?.checkout_date).format('DD/MM/YYYY')}
+                      </TableCell>
+                      <TableCell align="center">
+                        {history.checkin?.room?.room_name}
+                      </TableCell>
                     </TableRow>
                   ) : (
                     <TableRow hover key={history.book_id}>

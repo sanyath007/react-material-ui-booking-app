@@ -329,7 +329,6 @@ export const bookingSlice = createSlice({
       state.error = '';
     },
     [fetchHistories.rejected]: (state, action) => {
-      console.log(action);
       state.loading = false;
       state.error = action.error;
     },
