@@ -28,7 +28,7 @@ function NewBooking() {
         book_name: values.book_name,
         book_tel: values.book_tel,
         in_labour: values.inLabour,
-        newborn: values.newborn,
+        newborns: values.newborns,
         is_officer: values.isOfficer,
         description: values.description,
         remark: values.remark,

@@ -31,7 +31,7 @@ function EditBooking() {
         book_name: values.book_name,
         book_tel: values.book_tel,
         in_labour: values.inLabour ? '1' : '0',
-        newborn: values.newborn,
+        newborns: values.newborns,
         is_officer: values.isOfficer ? '1' : '0',
         description: values.description,
         remark: values.remark,

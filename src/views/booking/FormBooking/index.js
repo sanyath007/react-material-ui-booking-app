@@ -56,7 +56,7 @@ const FormBooking = ({
       return value.length > 0;
     }),
     specialist: Yup.string().required('กรุณาระบุสาขาที่รักษาก่อน'),
-    newborn: Yup.string().when('inLabour', {
+    newborns: Yup.string().when('inLabour', {
       is: (value) => value === true,
       then: Yup.string().required('กรุณาระบุเด็กทารกก่อน')
     }),
@@ -178,7 +178,7 @@ const FormBooking = ({
         book_name: booking?.book_name || '',
         book_tel: booking?.book_tel || '',
         inLabour: booking?.in_labour === '1' || false,
-        newborn: booking?.newborn.length > 0 ? booking?.newborn[0].an : '',
+        newborns: booking?.newborns.length > 0 ? booking?.newborns[0].an : '',
         isOfficer: booking?.is_officer === '1' || false,
         description: booking?.description || '',
         remark: booking?.remark || '',
@@ -220,7 +220,10 @@ const FormBooking = ({
                   isOpen={openNewbornModal}
                   hideModal={() => setOpenNewbornModal(false)}
                   onSelected={(newborn) => {
-                    setNewborns([...newborns, newborn]);
+                    const _newborns = [...newborns, newborn];
+
+                    setNewborns(_newborns);
+                    formik.setFieldValue('newborns', _newborns.map((nb) => nb.an).toString());
                   }}
                 />
 
@@ -334,12 +337,12 @@ const FormBooking = ({
                         justifyContent: 'flex-end'
                       }}
                     >
-                      <Button onClick={() => setOpenNewbornModal(true)}>
+                      <Button onClick={() => setOpenNewbornModal(true)} variant="secondary">
                         ...
                       </Button>
                     </div>
-                    <FormHelperText error={formik.errors.newborn && formik.touched.newborn}>
-                      <ErrorMessage name="newborn" />
+                    <FormHelperText error={formik.errors.newborns && formik.touched.newborns}>
+                      <ErrorMessage name="newborns" />
                     </FormHelperText>
                   </div>
                 </Grid>
