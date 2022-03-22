@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CachedIcon from '@material-ui/icons/Cached';
+import PopperIcon from 'src/components/PopperIcon';
 import { bookingActions } from '../../../redux';
 import MovingRoomModal from './MovingRoomModal';
 
@@ -59,7 +60,7 @@ const BedCard = ({ room, checkedIn }) => {
 
   return (
     <Card>
-      <CardContent style={{ height: '200px', fontSize: '14px' }}>
+      <CardContent style={{ minHeight: '220px', fontSize: '14px' }}>
         <Link to={`../rooms/detail/${room.room_id}`}>
           <h5>
             {room.room_name}
@@ -77,7 +78,7 @@ const BedCard = ({ room, checkedIn }) => {
 
         {checkedIn ? (
           <Alert variant="danger" style={{ padding: '10px', marginBottom: '5px' }}>
-            <div style={{ height: '80px' }}>
+            <div style={{ minHeight: '80px' }}>
               <div style={{ margin: '0' }}>
                 {
                   checkedIn?.booking?.patient.admit
@@ -93,9 +94,15 @@ const BedCard = ({ room, checkedIn }) => {
                 }
                 <span>{`HN: ${checkedIn?.booking?.patient?.hn}`}</span>
               </div>
-              <p style={{ margin: '0' }}>
+              <div style={{ margin: '0', display: 'flex', alignItems: 'center' }}>
                 {`ผู้ป่วย : ${checkedIn?.booking?.patient?.pname}${checkedIn?.booking?.patient?.fname} ${checkedIn?.booking?.patient?.lname}`}
-              </p>
+                {checkedIn.booking?.in_labour === '1'
+                  ? <PopperIcon icon="child_friendly" iconColor="primary" />
+                  : null}
+                {checkedIn.booking?.newborns.length > 0
+                  ? <PopperIcon icon="child_care" iconColor="secondary" />
+                  : null}
+              </div>
               <p style={{ margin: '0' }}>
                 {
                   checkedIn?.booking?.patient.admit
