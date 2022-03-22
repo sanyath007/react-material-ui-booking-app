@@ -11,7 +11,7 @@ import { Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import { roomActions, bookingActions } from 'src/redux';
 
-const MovingRoomModal = ({ isOpen, hideModal, booking }) => {
+const MovingRoomModal = ({ isOpen, hideModal, checkedIn }) => {
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state.auth);
   const { filteredRooms } = useSelector((state) => state.room);
@@ -36,10 +36,10 @@ const MovingRoomModal = ({ isOpen, hideModal, booking }) => {
   };
 
   const onSave = () => {
-    const { booking_room: bookingRoom } = booking;
+    const { booking, ...checkin } = checkedIn;
 
     dispatch(bookingActions.changeRoom({
-      bookId: bookingRoom.book_id,
+      bookId: checkin.book_id,
       newRoom: selectedRoom,
       user: auth.username
     }));
@@ -144,7 +144,7 @@ const MovingRoomModal = ({ isOpen, hideModal, booking }) => {
 MovingRoomModal.propTypes = {
   isOpen: PropTypes.bool,
   hideModal: PropTypes.func,
-  booking: PropTypes.any
+  checkedIn: PropTypes.any
 };
 
 export default MovingRoomModal;
