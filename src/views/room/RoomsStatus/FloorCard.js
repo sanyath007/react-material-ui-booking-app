@@ -29,7 +29,7 @@ const FloorCard = ({ floor, rooms, usedRooms }) => {
 
           <Grid container>
             {rooms.map((room) => {
-              const used = usedRooms.filter((us) => us.room_id === room.room_id);
+              const checkedIn = usedRooms.find((us) => parseInt(us.room_id, 10) === room.room_id);
 
               return (
                 <Grid
@@ -42,7 +42,7 @@ const FloorCard = ({ floor, rooms, usedRooms }) => {
                   key={room.room_id}
                   style={{ padding: '10px' }}
                 >
-                  <BedCard room={room} used={used.length > 0 ? used[0] : null} />
+                  <BedCard room={room} used={checkedIn} />
                 </Grid>
               );
             })}

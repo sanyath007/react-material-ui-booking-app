@@ -148,7 +148,7 @@ export const roomSlice = createSlice({
       state.floor1 = action.payload.rooms.filter((room) => parseInt(room.floor, 10) === 1);
       state.floor2 = action.payload.rooms.filter((room) => parseInt(room.floor, 10) === 2);
       state.floor3 = action.payload.rooms.filter((room) => parseInt(room.floor, 10) === 3);
-      state.usedRooms = action.payload.usedRooms;
+      state.usedRooms = action.payload.checkedins;
       state.loading = false;
     },
     [fetchStatus.rejected]: (state, action) => {
