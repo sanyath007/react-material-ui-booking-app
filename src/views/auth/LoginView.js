@@ -116,7 +116,7 @@ const LoginView = () => {
                     gutterBottom
                     variant="body2"
                   >
-                    ลงทะเบียนเข้าสู่ระบบบริหารห้องผู้ป่วยพิเศษ (VIP Room MS)
+                    ลงทะเบียนเข้าสู่ระบบบริหารห้องพิเศษ (VIP Room)
                   </Typography>
                 </Box>
                 {/* <Grid
